@@ -12,6 +12,7 @@ class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "ㅠ_ㅠ"
     }
     
     override func loadView() {
