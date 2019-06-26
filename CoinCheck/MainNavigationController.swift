@@ -17,10 +17,7 @@ class MainNavigationCnotroller:  UINavigationController {
     
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        self.navigationBar.topItem?.title = "^-^"
-        self.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        self.navigationBar.barStyle = .blackTranslucent
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(transitionToSelectView(_:)))
+        setNavigationBar()
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -31,7 +28,13 @@ class MainNavigationCnotroller:  UINavigationController {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    func setNavigationBar() {
+        self.navigationBar.topItem?.title = "^-^"
+        self.navigationBar.barTintColor = UIColor.navigationBarButtonItemBackground
+        self.navigationBar.barStyle = .blackTranslucent
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(transitionToSelectView(_:)))
+    }
     @objc func transitionToSelectView(_ sender: UIBarButtonItem) {
         
     }

@@ -12,7 +12,7 @@ class MainTableViewCell: UITableViewCell {
 
     let priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        priceLabel.textColor = UIColor.cellText
         return priceLabel
     }()
     
@@ -29,7 +29,7 @@ class MainTableViewCell: UITableViewCell {
     func setConstraints() {
         self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            priceLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16),
+            priceLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
             priceLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
             priceLabel.widthAnchor.constraint(equalToConstant: 50)
             ])

@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
     let addBarButton: UIButton = {
         let addBarButton = UIButton(type: .custom)
         addBarButton.setTitle("＋", for: .normal)
-        addBarButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+        addBarButton.setTitleColor(UIColor.navigationBarTitle, for: .normal)
         addBarButton.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         addBarButton.titleLabel?.font = UIFont().mainFont(size: 30)
         addBarButton.isUserInteractionEnabled = true
@@ -84,6 +84,6 @@ extension MainViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return ViewSize.cellHeaderHeight
     }
 }

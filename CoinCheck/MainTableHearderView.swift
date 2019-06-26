@@ -13,13 +13,13 @@ class MainTableHeaderView: UIView {
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "메인 헤더"
-        titleLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        titleLabel.textColor = UIColor.headerTitle
         return titleLabel
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        self.backgroundColor = UIColor.cellHeaderBackground
         addSubviews()
         setConstraints()
     }
@@ -36,7 +36,7 @@ class MainTableHeaderView: UIView {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
-            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16)
+            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset)
             ])
     }
 }
