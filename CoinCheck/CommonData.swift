@@ -48,11 +48,4 @@ class CommonData {
         currencyList = []
         currencyCount = 0
     }
-    
-//    //Type 'TradeData?' does not conform to protocol 'Sequence' 애러가 뜬다 어떻게 해야할까?
-//    func getCurrencyCount() -> Int {
-//        for child in tradeData?.data {
-//
-//        }
-//    }
 }
