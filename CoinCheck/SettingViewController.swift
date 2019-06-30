@@ -51,6 +51,7 @@ class SettingViewController: UIViewController {
             decoder.dateDecodingStrategy = .iso8601
             let contents = try Data(contentsOf: url)
             CommonData.shared.tradeData = try decoder.decode(TradeResponse.self, from: contents)
+            print("\(CommonData.shared.tradeData?.data.ae)")
         } catch let DecodingError.dataCorrupted(context) {
             print(context)
         } catch let DecodingError.keyNotFound(key, context) {

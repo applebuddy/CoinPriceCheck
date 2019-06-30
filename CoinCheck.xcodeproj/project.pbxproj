@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3809EFBE22C8F79C0064A9E5 /* BithumbCurrencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3809EFBD22C8F79C0064A9E5 /* BithumbCurrencies.swift */; };
 		3840D32322BF9DB600FA865D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D32222BF9DB600FA865D /* AppDelegate.swift */; };
 		3840D32522BF9DB600FA865D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D32422BF9DB600FA865D /* MainViewController.swift */; };
 		3840D32822BF9DB600FA865D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3840D32622BF9DB600FA865D /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3809EFBD22C8F79C0064A9E5 /* BithumbCurrencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbCurrencies.swift; sourceTree = "<group>"; };
 		3840D31F22BF9DB600FA865D /* CoinCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3840D32222BF9DB600FA865D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3840D32422BF9DB600FA865D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			children = (
 				3840D33E22BFC0CD00FA865D /* CommonData.swift */,
 				38BC0F4922C37CD60057BBC9 /* APIData.swift */,
+				3809EFBD22C8F79C0064A9E5 /* BithumbCurrencies.swift */,
 			);
 			name = Medel;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				3840D33B22BFB07400FA865D /* MainTableHearderView.swift in Sources */,
 				3840D33522BF9EA900FA865D /* MainNavigationController.swift in Sources */,
 				38BC0F4822C36FBA0057BBC9 /* SettingTableHeaderView.swift in Sources */,
+				3809EFBE22C8F79C0064A9E5 /* BithumbCurrencies.swift in Sources */,
 				3840D33722BFA0D500FA865D /* MainView.swift in Sources */,
 				38BC0F4122C354640057BBC9 /* SettingView.swift in Sources */,
 				3840D32522BF9DB600FA865D /* MainViewController.swift in Sources */,
