@@ -16,7 +16,6 @@ class CurrencyViewController: UIViewController {
     
     let bithumbTableViewCellIdentifier: String = "bithumbTableViewCellIdentifier"
     var currencyNameString: [String] = []
-    
     let mainView: BithumbInfoView = {
         let mainView = BithumbInfoView()
         return mainView

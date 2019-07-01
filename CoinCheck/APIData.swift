@@ -11,7 +11,7 @@ import UIKit
 
 class TradeResponse: Codable {
     let status: String
-    let data: [TradeData]
+    let data: TradeData
 }
 
 class TradeData: Codable {
@@ -38,6 +38,10 @@ class TradeData: Codable {
     let gxc, orbs, valor, con: TradeDataOptions
     let ankr, mix: TradeDataOptions
     let date: String
+    
+    var arr: [TradeDataOptions] {
+        return [btc, eth, dash, ltc,etc, xrp, bch, xmr,zec, qtum, btg, eos, icx, vet, trx, elf,mith, mco, omg, knc,gnt, zil, ethos, pay,wax, powr, lrc, gto,steem, strat, zrx, rep,ae, xem, snt, ada,ppt, ctxc, cmt, theta, wtc, itc, dataTRUE, abt,rnt, ply, waves, link, enj, pst, salt, rdn,loom, pivx, ins, bcd,bznt, xlm, ocn, bsv, tmtg, bat, wet, xvg,iost, poly, hc, rom, amo, etz, arn, apis, mtl, dacc, dac, bhp, btt, hdac, npxs, auto, gxc, orbs, valor, con, ankr, mix ]
+    }
     
     enum CodingKeys: String, CodingKey {
         case btc = "BTC"
@@ -144,6 +148,9 @@ class TradeDataOptions: Codable {
     let fluctateIn24H: String
     let fluctateRateIn24H: String
     
+    var optionArr: [String] {
+        return [openingPrice,closingPrice,minPrice,maxPrice,averagePrice,tradedUnits,volumePer1Day,volumePer7Day,buyPrice,sellPrice,fluctateIn24H,fluctateRateIn24H]
+    }
     enum CodingKeys: String, CodingKey {
         case openingPrice = "opening_price"
         case closingPrice = "closing_price"
