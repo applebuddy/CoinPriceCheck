@@ -18,7 +18,11 @@
 		3840D33922BFABD600FA865D /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D33822BFABD600FA865D /* MainTableViewCell.swift */; };
 		3840D33B22BFB07400FA865D /* MainTableHearderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D33A22BFB07400FA865D /* MainTableHearderView.swift */; };
 		3840D33F22BFC0CD00FA865D /* CommonData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D33E22BFC0CD00FA865D /* CommonData.swift */; };
-		3840D34122BFC25C00FA865D /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D34022BFC25C00FA865D /* SettingViewController.swift */; };
+		3840D34122BFC25C00FA865D /* SettingExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D34022BFC25C00FA865D /* SettingExchangeViewController.swift */; };
+		3896544C22C9AAC200362A60 /* Exchanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896544B22C9AAC200362A60 /* Exchanges.swift */; };
+		3896544E22C9F66200362A60 /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896544D22C9F66200362A60 /* CurrencyViewController.swift */; };
+		3896545022C9F6B200362A60 /* BithumbInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896544F22C9F6B200362A60 /* BithumbInfoView.swift */; };
+		3896545222C9FB6000362A60 /* BithumbTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896545122C9FB6000362A60 /* BithumbTableViewCell.swift */; };
 		38BC0F4122C354640057BBC9 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4022C354640057BBC9 /* SettingView.swift */; };
 		38BC0F4622C3600F0057BBC9 /* SetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */; };
 		38BC0F4822C36FBA0057BBC9 /* SettingTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */; };
@@ -39,7 +43,11 @@
 		3840D33822BFABD600FA865D /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		3840D33A22BFB07400FA865D /* MainTableHearderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableHearderView.swift; sourceTree = "<group>"; };
 		3840D33E22BFC0CD00FA865D /* CommonData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonData.swift; sourceTree = "<group>"; };
-		3840D34022BFC25C00FA865D /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		3840D34022BFC25C00FA865D /* SettingExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingExchangeViewController.swift; sourceTree = "<group>"; };
+		3896544B22C9AAC200362A60 /* Exchanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exchanges.swift; sourceTree = "<group>"; };
+		3896544D22C9F66200362A60 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
+		3896544F22C9F6B200362A60 /* BithumbInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbInfoView.swift; sourceTree = "<group>"; };
+		3896545122C9FB6000362A60 /* BithumbTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbTableViewCell.swift; sourceTree = "<group>"; };
 		38BC0F4022C354640057BBC9 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetingTableViewCell.swift; sourceTree = "<group>"; };
 		38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableHeaderView.swift; sourceTree = "<group>"; };
@@ -93,6 +101,7 @@
 				3840D33E22BFC0CD00FA865D /* CommonData.swift */,
 				38BC0F4922C37CD60057BBC9 /* APIData.swift */,
 				3809EFBD22C8F79C0064A9E5 /* BithumbCurrencies.swift */,
+				3896544B22C9AAC200362A60 /* Exchanges.swift */,
 			);
 			name = Medel;
 			sourceTree = "<group>";
@@ -112,7 +121,8 @@
 			children = (
 				3840D33422BF9EA900FA865D /* MainNavigationController.swift */,
 				3840D32422BF9DB600FA865D /* MainViewController.swift */,
-				3840D34022BFC25C00FA865D /* SettingViewController.swift */,
+				3840D34022BFC25C00FA865D /* SettingExchangeViewController.swift */,
+				3896544D22C9F66200362A60 /* CurrencyViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -131,7 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				38BC0F4022C354640057BBC9 /* SettingView.swift */,
+				3896544F22C9F6B200362A60 /* BithumbInfoView.swift */,
 				38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */,
+				3896545122C9FB6000362A60 /* BithumbTableViewCell.swift */,
 				38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */,
 			);
 			name = Setting;
@@ -210,14 +222,18 @@
 			files = (
 				38BC0F4A22C37CD60057BBC9 /* APIData.swift in Sources */,
 				38BC0F4622C3600F0057BBC9 /* SetingTableViewCell.swift in Sources */,
+				3896545022C9F6B200362A60 /* BithumbInfoView.swift in Sources */,
 				3840D33B22BFB07400FA865D /* MainTableHearderView.swift in Sources */,
+				3896545222C9FB6000362A60 /* BithumbTableViewCell.swift in Sources */,
 				3840D33522BF9EA900FA865D /* MainNavigationController.swift in Sources */,
+				3896544C22C9AAC200362A60 /* Exchanges.swift in Sources */,
+				3896544E22C9F66200362A60 /* CurrencyViewController.swift in Sources */,
 				38BC0F4822C36FBA0057BBC9 /* SettingTableHeaderView.swift in Sources */,
 				3809EFBE22C8F79C0064A9E5 /* BithumbCurrencies.swift in Sources */,
 				3840D33722BFA0D500FA865D /* MainView.swift in Sources */,
 				38BC0F4122C354640057BBC9 /* SettingView.swift in Sources */,
 				3840D32522BF9DB600FA865D /* MainViewController.swift in Sources */,
-				3840D34122BFC25C00FA865D /* SettingViewController.swift in Sources */,
+				3840D34122BFC25C00FA865D /* SettingExchangeViewController.swift in Sources */,
 				3840D32322BF9DB600FA865D /* AppDelegate.swift in Sources */,
 				3840D33F22BFC0CD00FA865D /* CommonData.swift in Sources */,
 				3840D33922BFABD600FA865D /* MainTableViewCell.swift in Sources */,

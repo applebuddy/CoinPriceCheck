@@ -31,7 +31,7 @@ class MainTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             priceLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
             priceLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
-            priceLabel.widthAnchor.constraint(equalToConstant: 50)
+            priceLabel.widthAnchor.constraint(equalToConstant: 300)
             ])
     }
 }

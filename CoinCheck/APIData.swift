@@ -11,7 +11,7 @@ import UIKit
 
 class TradeResponse: Codable {
     let status: String
-    let data: TradeData
+    let data: [TradeData]
 }
 
 class TradeData: Codable {

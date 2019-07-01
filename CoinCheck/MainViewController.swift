@@ -58,19 +58,19 @@ class MainViewController: UIViewController {
     // MARKL- Touch Event Methodds
     @objc func transitionToNextView(_ sender: UIButton) {
         print("???")
-        let settingViewController = SettingViewController()
+        let settingViewController = SettingExchangeViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
     }
 }
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: self.mainTableViewCellIdentifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
-        mainCell.priceLabel.text = "???"
+        mainCell.priceLabel.text = "설정한 종목만 메인에 띄워진다."
         return mainCell
     }
 }

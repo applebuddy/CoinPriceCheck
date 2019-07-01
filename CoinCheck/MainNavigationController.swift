@@ -10,8 +10,8 @@ import UIKit
 
 class MainNavigationCnotroller:  UINavigationController {
     
-    let settingViewController: SettingViewController = {
-        let settingViewController = SettingViewController()
+    let settingViewController: SettingExchangeViewController = {
+        let settingViewController = SettingExchangeViewController()
         return settingViewController
     }()
     

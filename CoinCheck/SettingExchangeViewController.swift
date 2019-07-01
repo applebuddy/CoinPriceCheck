@@ -12,7 +12,7 @@ enum SettingTableViewSections: Int {
     case mainSection = 0
 }
 
-class SettingViewController: UIViewController {
+class SettingExchangeViewController: UIViewController {
     
     let settingTableViewIdentifier = "SettingTableView"
     var exchangeDataList: TradeResponse?
@@ -29,7 +29,6 @@ class SettingViewController: UIViewController {
         self.settingView.settingTableView.delegate = self
         self.settingView.settingTableView.dataSource = self
         registCell()
-        setCellData()
     }
     
     override func loadView() {
@@ -40,54 +39,25 @@ class SettingViewController: UIViewController {
     func registCell() {
         self.settingView.settingTableView.register(SettingTableViewCell.self, forCellReuseIdentifier: settingTableViewIdentifier)
     }
-    
-    func setCellData() {
-        // "https://api.bithumb.com/public/orderbook/ALL"
-        // "https://api.bithumb.com/public/ticker/ALL"
-        let urlString: String = "https://api.bithumb.com/public/ticker/ALL"
-        guard let url = URL(string: urlString) else { return }
-        do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            let contents = try Data(contentsOf: url)
-            CommonData.shared.tradeData = try decoder.decode(TradeResponse.self, from: contents)
-            print("\(CommonData.shared.tradeData?.data.ae)")
-        } catch let DecodingError.dataCorrupted(context) {
-            print(context)
-        } catch let DecodingError.keyNotFound(key, context) {
-            print("Key '\(key)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        } catch let DecodingError.valueNotFound(value, context) {
-            print("Type '\(value)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        } catch let DecodingError.typeMismatch(type, context) {
-            print("Type '\(type)' mismatch:", context.debugDescription)
-            print("codingPath:",context.codingPath)
-        } catch {
-            print("Unable to parse JSON : \(error.localizedDescription)")
-        }
-    }
 }
 
-extension SettingViewController: UITableViewDataSource {
+extension SettingExchangeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionIndex = SettingTableViewSections(rawValue: section),
-        let exchangeData = exchangeDataList else { return 0 }
+        guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return 0 }
         switch sectionIndex {
-        case .mainSection: return 10
+        case .mainSection: return Exchanges.ExchangeListString.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let settingTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? SettingTableViewCell,
-        let exchangeData = exchangeDataList else { return UITableViewCell() }
-
+        guard let settingTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
+        settingTableViewCell.titleLabel.text = "\(Exchanges.ExchangeListString[indexPath.row])"
 //        settingTableViewCell.titleLabel.text = exchangeData.data.abt.
         return settingTableViewCell
     }
 }
 
-extension SettingViewController: UITableViewDelegate {
+extension SettingExchangeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return UIView() }
         switch sectionIndex {
@@ -104,5 +74,15 @@ extension SettingViewController: UITableViewDelegate {
         switch sectionIndex {
         case .mainSection: return ViewSize.cellHeaderHeight
         }
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        CommonData.shared.selectedExchangeIndex = indexPath.row
+        return indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currencyViewController = CurrencyViewController()
+        self.navigationController?.pushViewController(currencyViewController, animated: true)
     }
 }

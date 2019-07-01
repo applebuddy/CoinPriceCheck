@@ -8,6 +8,19 @@
 
 import UIKit
 
+class CommonData {
+    static let shared: CommonData = CommonData()
+    var currencyList: [String]
+    var selectedExchangeIndex: Int
+    var currencyCount: Int
+    
+    init() {
+        currencyList = []
+        currencyCount = 0
+        selectedExchangeIndex = 0
+    }
+}
+
 struct ViewInsets {
     static let leftInset: CGFloat = 16
     static let rightInset: CGFloat = 16
@@ -38,14 +51,4 @@ extension UIColor {
     static let cellText = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 }
 
-class CommonData {
-    static let shared: CommonData = CommonData()
-    var tradeData: TradeResponse?
-    var currencyList: [String]
-    var currencyCount: Int
-    
-    init() {
-        currencyList = []
-        currencyCount = 0
-    }
-}
+
