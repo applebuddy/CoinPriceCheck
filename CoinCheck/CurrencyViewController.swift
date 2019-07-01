@@ -56,7 +56,7 @@ class CurrencyViewController: UIViewController {
             decoder.dateDecodingStrategy = .iso8601
             let contents = try Data(contentsOf: url)
             let tradeData = try decoder.decode(TradeResponse.self, from: contents)
-            tradeData.data["BTC"]
+            // 데이터 처리하는 곳
         } catch let DecodingError.dataCorrupted(context) {
             print(context)
         } catch let DecodingError.keyNotFound(key, context) {
