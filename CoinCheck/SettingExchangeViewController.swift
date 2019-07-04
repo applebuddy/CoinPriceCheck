@@ -13,42 +13,40 @@ enum SettingTableViewSections: Int {
 }
 
 class SettingExchangeViewController: UIViewController {
-    
     let settingTableViewIdentifier = "SettingTableView"
     var exchangeDataList: TradeResponse?
-    
-    
+
     let settingView: SettingView = {
         let settingView = SettingView()
         return settingView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "ㅠ_ㅠ"
         self.settingView.settingTableView.delegate = self
         self.settingView.settingTableView.dataSource = self
-        registCell()
+        self.registCell()
     }
-    
+
     override func loadView() {
         super.loadView()
-        self.view = settingView
+        self.view = self.settingView
     }
-    
+
     func registCell() {
-        self.settingView.settingTableView.register(SettingTableViewCell.self, forCellReuseIdentifier: settingTableViewIdentifier)
+        self.settingView.settingTableView.register(SettingTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
     }
 }
 
 extension SettingExchangeViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return 0 }
         switch sectionIndex {
         case .mainSection: return Exchanges.ExchangeListString.count
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let settingTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
         settingTableViewCell.titleLabel.text = "\(Exchanges.ExchangeListString[indexPath.row])"
@@ -58,30 +56,30 @@ extension SettingExchangeViewController: UITableViewDataSource {
 }
 
 extension SettingExchangeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return UIView() }
         switch sectionIndex {
         case .mainSection: return SettingTableHeaderView()
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return CGFloat.leastNonzeroMagnitude }
         switch sectionIndex {
         case .mainSection: return ViewSize.cellHeaderHeight
         }
     }
-    
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+
+    func tableView(_: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         CommonData.shared.selectedExchangeIndex = indexPath.row
         return indexPath
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
         let currencyViewController = CurrencyViewController()
         self.navigationController?.pushViewController(currencyViewController, animated: true)
     }

@@ -13,38 +13,38 @@ enum BithumbTableViewSections: Int {
 }
 
 class CurrencyViewController: UIViewController {
-    
     let bithumbTableViewCellIdentifier: String = "bithumbTableViewCellIdentifier"
     var currencyNameString: [String] = []
     let mainView: BithumbInfoView = {
         let mainView = BithumbInfoView()
         return mainView
     }()
-    
-    // MARK:- ViewController App Cycle
+
+    // MARK: - ViewController App Cycle
+
     override func loadView() {
         super.loadView()
-        self.view = mainView
+        self.view = self.mainView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainView.bithumbTableView.register(BithumbTableViewCell.self, forCellReuseIdentifier: bithumbTableViewCellIdentifier)
+        self.mainView.bithumbTableView.register(BithumbTableViewCell.self, forCellReuseIdentifier: self.bithumbTableViewCellIdentifier)
         self.mainView.bithumbTableView.delegate = self
         self.mainView.bithumbTableView.dataSource = self
-        setCellData()
+        self.setCellData()
     }
-    
+
     func setCellData() {
         guard let exchangeIndex = ExchangeIndex(rawValue: CommonData.shared.selectedExchangeIndex) else { return }
         switch exchangeIndex {
         case .bithumb:
             self.currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
             self.navigationItem.title = "Bithumb 암호화폐 현항"
-            setBithumbData()
+            self.setBithumbData()
         }
     }
-    
+
     func setBithumbData() {
         // "https://api.bithumb.com/public/orderbook/ALL"
         // "https://api.bithumb.com/public/ticker/ALL"
@@ -66,7 +66,7 @@ class CurrencyViewController: UIViewController {
             print("codingPath:", context.codingPath)
         } catch let DecodingError.typeMismatch(type, context) {
             print("Type '\(type)' mismatch:", context.debugDescription)
-            print("codingPath:",context.codingPath)
+            print("codingPath:", context.codingPath)
         } catch {
             print("Unable to parse JSON : \(error.localizedDescription)")
         }
@@ -76,22 +76,20 @@ class CurrencyViewController: UIViewController {
 extension CurrencyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? BithumbTableViewCell else { return UITableViewCell() }
-        bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])"
+        bithumbTableViewCell.titleLabel.text = "\(self.currencyNameString[indexPath.row])"
         return bithumbTableViewCell
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionIndex = BithumbTableViewSections(rawValue: section) else { return 0 }
         switch sectionIndex {
-        case .mainSection: return currencyNameString.count
+        case .mainSection: return self.currencyNameString.count
         }
     }
 }
 
 extension CurrencyViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 100
     }
 }
-
-

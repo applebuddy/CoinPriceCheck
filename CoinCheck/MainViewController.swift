@@ -13,13 +13,12 @@ enum MainTableViewSections: Int {
 }
 
 class MainViewController: UIViewController {
-
     let mainTableViewCellIdentifier = "mainTableViewCell"
     let mainView: MainView = {
         let mainView = MainView()
         return mainView
     }()
-    
+
     let addBarButton: UIButton = {
         let addBarButton = UIButton(type: .custom)
         addBarButton.setTitle("＋", for: .normal)
@@ -29,14 +28,14 @@ class MainViewController: UIViewController {
         addBarButton.isUserInteractionEnabled = true
         return addBarButton
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.mainView.mainTableView.delegate = self
         self.mainView.mainTableView.dataSource = self
-        registerCell()
-        setBarButtonItem()
+        self.registerCell()
+        self.setBarButtonItem()
     }
 
     override func loadView() {
@@ -44,19 +43,20 @@ class MainViewController: UIViewController {
         self.view = self.mainView
     }
 
-    // MARK:- Setting Methods
+    // MARK: - Setting Methods
+
     func registerCell() {
-        self.mainView.mainTableView.register(MainTableViewCell.self, forCellReuseIdentifier: mainTableViewCellIdentifier)
+        self.mainView.mainTableView.register(MainTableViewCell.self, forCellReuseIdentifier: self.mainTableViewCellIdentifier)
     }
-    
+
     func setBarButtonItem() {
-        addBarButton.addTarget(self, action: #selector(transitionToNextView(_:)), for: UIControl.Event.touchUpInside)
+        self.addBarButton.addTarget(self, action: #selector(self.transitionToNextView(_:)), for: UIControl.Event.touchUpInside)
         let addBarButtonItem = UIBarButtonItem(customView: addBarButton)
         self.navigationItem.rightBarButtonItem = addBarButtonItem
     }
-    
+
     // MARKL- Touch Event Methodds
-    @objc func transitionToNextView(_ sender: UIButton) {
+    @objc func transitionToNextView(_: UIButton) {
         print("???")
         let settingViewController = SettingExchangeViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
@@ -64,10 +64,10 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return 3
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: self.mainTableViewCellIdentifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         mainCell.priceLabel.text = "설정한 종목만 메인에 띄워진다."
@@ -76,14 +76,14 @@ extension MainViewController: UITableViewDataSource {
 }
 
 extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let nowSection = MainTableViewSections(rawValue: section) else { return UIView() }
         switch nowSection {
         case .mainSection: return MainTableHeaderView()
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         return ViewSize.cellHeaderHeight
     }
 }

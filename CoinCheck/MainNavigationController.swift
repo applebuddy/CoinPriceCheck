@@ -8,22 +8,21 @@
 
 import UIKit
 
-class MainNavigationCnotroller:  UINavigationController {
-    
+class MainNavigationCnotroller: UINavigationController {
     let settingViewController: SettingExchangeViewController = {
         let settingViewController = SettingExchangeViewController()
         return settingViewController
     }()
-    
+
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
-        setNavigationBar()
+        self.setNavigationBar()
     }
-    
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
@@ -33,9 +32,8 @@ class MainNavigationCnotroller:  UINavigationController {
         self.navigationBar.topItem?.title = "^-^"
         self.navigationBar.barTintColor = UIColor.navigationBarButtonItemBackground
         self.navigationBar.barStyle = .blackTranslucent
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(transitionToSelectView(_:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.transitionToSelectView(_:)))
     }
-    @objc func transitionToSelectView(_ sender: UIBarButtonItem) {
-        
-    }
+
+    @objc func transitionToSelectView(_: UIBarButtonItem) {}
 }

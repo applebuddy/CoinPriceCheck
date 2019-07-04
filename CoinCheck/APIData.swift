@@ -6,7 +6,6 @@
 //  Copyright © 2019 Min Kyeong Tae. All rights reserved.
 //
 
-
 import UIKit
 
 class TradeResponse: Codable {
@@ -38,11 +37,11 @@ class TradeData: Codable {
     let gxc, orbs, valor, con: TradeDataOptions
     let ankr, mix: TradeDataOptions
     let date: String
-    
+
     var arr: [TradeDataOptions] {
-        return [btc, eth, dash, ltc,etc, xrp, bch, xmr,zec, qtum, btg, eos, icx, vet, trx, elf,mith, mco, omg, knc,gnt, zil, ethos, pay,wax, powr, lrc, gto,steem, strat, zrx, rep,ae, xem, snt, ada,ppt, ctxc, cmt, theta, wtc, itc, dataTRUE, abt,rnt, ply, waves, link, enj, pst, salt, rdn,loom, pivx, ins, bcd,bznt, xlm, ocn, bsv, tmtg, bat, wet, xvg,iost, poly, hc, rom, amo, etz, arn, apis, mtl, dacc, dac, bhp, btt, hdac, npxs, auto, gxc, orbs, valor, con, ankr, mix ]
+        return [btc, eth, dash, ltc, etc, xrp, bch, xmr, zec, qtum, btg, eos, icx, vet, trx, elf, mith, mco, omg, knc, gnt, zil, ethos, pay, wax, powr, lrc, gto, steem, strat, zrx, rep, ae, xem, snt, ada, ppt, ctxc, cmt, theta, wtc, itc, dataTRUE, abt, rnt, ply, waves, link, enj, pst, salt, rdn, loom, pivx, ins, bcd, bznt, xlm, ocn, bsv, tmtg, bat, wet, xvg, iost, poly, hc, rom, amo, etz, arn, apis, mtl, dacc, dac, bhp, btt, hdac, npxs, auto, gxc, orbs, valor, con, ankr, mix]
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case btc = "BTC"
         case eth = "ETH"
@@ -147,10 +146,11 @@ class TradeDataOptions: Codable {
     let sellPrice: String
     let fluctateIn24H: String
     let fluctateRateIn24H: String
-    
+
     var optionArr: [String] {
-        return [openingPrice,closingPrice,minPrice,maxPrice,averagePrice,tradedUnits,volumePer1Day,volumePer7Day,buyPrice,sellPrice,fluctateIn24H,fluctateRateIn24H]
+        return [openingPrice, closingPrice, minPrice, maxPrice, averagePrice, tradedUnits, volumePer1Day, volumePer7Day, buyPrice, sellPrice, fluctateIn24H, fluctateRateIn24H]
     }
+
     enum CodingKeys: String, CodingKey {
         case openingPrice = "opening_price"
         case closingPrice = "closing_price"
@@ -168,10 +168,10 @@ class TradeDataOptions: Codable {
 }
 
 ///// MARK: - TradeData Responses
-//struct TradeDetailResponse: Codable {
+// struct TradeDetailResponse: Codable {
 //    let status: String
 //    let data: DataClass
-//}
+// }
 //
 ////
 //// To parse values from Alamofire responses:
@@ -183,7 +183,7 @@ class TradeDataOptions: Codable {
 ////   }
 //
 //// MARK: - DataClass
-//struct DataClass: Codable {
+// struct DataClass: Codable {
 //    let timestamp, paymentCurrency: String
 //    let btc, eth, dash, ltc: Curruncy
 //    let etc, xrp, bch, xmr: Curruncy
@@ -298,7 +298,7 @@ class TradeDataOptions: Codable {
 //        case bhp = "BHP"
 //        case btt = "BTT"
 //    }
-//}
+// }
 //
 ////
 //// To parse values from Alamofire responses:
@@ -310,7 +310,7 @@ class TradeDataOptions: Codable {
 ////   }
 //
 //// MARK: - PuneHedgehog
-//struct Curruncy: Codable {
+// struct Curruncy: Codable {
 //    let orderCurrency: String
 //    let bids, asks: [Ask]
 //
@@ -318,18 +318,18 @@ class TradeDataOptions: Codable {
 //        case orderCurrency = "order_currency"
 //        case bids, asks
 //    }
-//}
+// }
 //
 //// MARK: - Ask
-//struct Ask: Codable {
+// struct Ask: Codable {
 //    let quantity, price: String
-//}
+// }
 //
 //
-//struct BithumbList: Codable {
+// struct BithumbList: Codable {
 //    let orderCurrency: String
 //
 //    enum CodingKeys: String, CodingKey {
 //        case orderCurrency = "order_currency"
 //    }
-//}
+// }

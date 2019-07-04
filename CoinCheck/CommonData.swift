@@ -13,11 +13,11 @@ class CommonData {
     var currencyList: [String]
     var selectedExchangeIndex: Int
     var currencyCount: Int
-    
+
     init() {
-        currencyList = []
-        currencyCount = 0
-        selectedExchangeIndex = 0
+        self.currencyList = []
+        self.currencyCount = 0
+        self.selectedExchangeIndex = 0
     }
 }
 
@@ -34,7 +34,6 @@ struct ViewSize {
 
 let alert = UIAlertController(title: "dqwd", message: "qww", preferredStyle: UIAlertController.Style.alert)
 
-
 extension UIFont {
     func mainFont(size: CGFloat) -> UIFont {
         guard let mainFont = UIFont(name: "HelveticaNeue-Thin", size: size) else { return UIFont() }
@@ -50,5 +49,3 @@ extension UIColor {
     static let cellHeaderBackground = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
     static let cellText = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 }
-
-
