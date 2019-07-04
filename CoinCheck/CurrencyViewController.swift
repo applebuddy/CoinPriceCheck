@@ -24,7 +24,7 @@ class CurrencyViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        self.view = self.mainView
+        view = self.mainView
     }
 
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class CurrencyViewController: UIViewController {
         switch exchangeIndex {
         case .bithumb:
             self.currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
-            self.navigationItem.title = "Bithumb 암호화폐 현항"
+            navigationItem.title = "Bithumb 암호화폐 현항"
             self.setBithumbData()
         }
     }
@@ -54,7 +54,7 @@ class CurrencyViewController: UIViewController {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
             let contents = try Data(contentsOf: url)
-            let tradeData = try decoder.decode(TradeResponse.self, from: contents)
+            CommonData.shared.tradeData = try decoder.decode(TradeResponse.self, from: contents)
             // 데이터 처리하는 곳
         } catch let DecodingError.dataCorrupted(context) {
             print(context)
@@ -75,8 +75,10 @@ class CurrencyViewController: UIViewController {
 
 extension CurrencyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? BithumbTableViewCell else { return UITableViewCell() }
+        guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? BithumbTableViewCell,
+            let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice else { return UITableViewCell() }
         bithumbTableViewCell.titleLabel.text = "\(self.currencyNameString[indexPath.row])"
+        bithumbTableViewCell.priceLabel.text = "\(currencyPrice)"
         return bithumbTableViewCell
     }
 
