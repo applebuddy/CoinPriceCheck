@@ -13,6 +13,7 @@ class CommonData {
     var currencyList: [String]
     var selectedExchangeIndex: Int
     var currencyCount: Int
+    var tradeData: TradeResponse?
 
     init() {
         self.currencyList = []

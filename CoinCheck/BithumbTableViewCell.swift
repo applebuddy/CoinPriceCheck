@@ -20,6 +20,11 @@ class BithumbTableViewCell: UITableViewCell {
         return titleLabel
     }()
 
+    let priceLabel: UILabel = {
+        let priceLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        return priceLabel
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubviews()
@@ -33,6 +38,7 @@ class BithumbTableViewCell: UITableViewCell {
     func addSubviews() {
         addSubview(self.titleImageView)
         addSubview(self.titleLabel)
+        addSubview(self.priceLabel)
     }
 
     func addContraints() {
@@ -49,6 +55,16 @@ class BithumbTableViewCell: UITableViewCell {
             titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor),
+            titleLabel.widthAnchor.constraint(equalToConstant: 100),
+        ])
+
+        self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.priceLabel.adjustsFontSizeToFitWidth = true
+        NSLayoutConstraint.activate([
+            priceLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor, constant: 0),
+            priceLabel.heightAnchor.constraint(equalTo: titleLabel.heightAnchor, constant: 0),
+            priceLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: ViewInsets.leftInset / 2),
+            priceLabel.widthAnchor.constraint(equalToConstant: 60),
         ])
     }
 }
