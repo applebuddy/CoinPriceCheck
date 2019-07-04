@@ -9,34 +9,33 @@
 import UIKit
 
 class MainTableHeaderView: UIView {
-    
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "메인 헤더"
         titleLabel.textColor = UIColor.headerTitle
         return titleLabel
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.cellHeaderBackground
-        addSubviews()
-        setConstraints()
+        self.addSubviews()
+        self.setConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     func addSubviews() {
-        addSubview(titleLabel)
+        addSubview(self.titleLabel)
     }
-    
+
     func setConstraints() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
-            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset)
-            ])
+            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
+        ])
     }
 }

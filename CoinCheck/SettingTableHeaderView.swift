@@ -9,36 +9,34 @@
 import UIKit
 
 class SettingTableHeaderView: UIView {
-    
     let headerTitleLabel: UILabel = {
         let headerTitleLabel = UILabel()
         headerTitleLabel.text = "SettingTableView Header"
         headerTitleLabel.textColor = UIColor.headerTitle
         return headerTitleLabel
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.cellHeaderBackground
-        addSubviews()
-        setConstraints()
+        self.addSubviews()
+        self.setConstraints()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     func addSubviews() {
-        addSubview(headerTitleLabel)
+        addSubview(self.headerTitleLabel)
     }
-    
+
     func setConstraints() {
         self.headerTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             headerTitleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             headerTitleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
-            headerTitleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset)
-            ])
+            headerTitleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+        ])
     }
-    
 }
