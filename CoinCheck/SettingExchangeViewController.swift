@@ -15,7 +15,7 @@ enum SettingTableViewSections: Int {
 class SettingExchangeViewController: UIViewController {
     let settingTableViewIdentifier = "SettingTableView"
     var exchangeDataList: TradeResponse?
-
+    
     let settingView: SettingView = {
         let settingView = SettingView()
         return settingView

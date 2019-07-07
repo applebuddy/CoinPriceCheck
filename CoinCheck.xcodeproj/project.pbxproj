@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,14 +22,16 @@
 		3896544C22C9AAC200362A60 /* Exchanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896544B22C9AAC200362A60 /* Exchanges.swift */; };
 		3896544E22C9F66200362A60 /* CurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896544D22C9F66200362A60 /* CurrencyViewController.swift */; };
 		3896545022C9F6B200362A60 /* BithumbInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896544F22C9F6B200362A60 /* BithumbInfoView.swift */; };
-		3896545222C9FB6000362A60 /* BithumbTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896545122C9FB6000362A60 /* BithumbTableViewCell.swift */; };
+		3896545222C9FB6000362A60 /* CurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */; };
 		38BC0F4122C354640057BBC9 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4022C354640057BBC9 /* SettingView.swift */; };
 		38BC0F4622C3600F0057BBC9 /* SetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */; };
 		38BC0F4822C36FBA0057BBC9 /* SettingTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */; };
 		38BC0F4A22C37CD60057BBC9 /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4922C37CD60057BBC9 /* APIData.swift */; };
+		BEA6234E44CCB3244A71D6CF /* Pods_CoinCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 399C8235BD1B17AB4FF3744A /* Pods_CoinCheck.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23832D191D586499B1C0C7B9 /* Pods-CoinCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinCheck.debug.xcconfig"; path = "Target Support Files/Pods-CoinCheck/Pods-CoinCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		3809EFBD22C8F79C0064A9E5 /* BithumbCurrencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbCurrencies.swift; sourceTree = "<group>"; };
 		3840D31F22BF9DB600FA865D /* CoinCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3840D32222BF9DB600FA865D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,11 +49,13 @@
 		3896544B22C9AAC200362A60 /* Exchanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exchanges.swift; sourceTree = "<group>"; };
 		3896544D22C9F66200362A60 /* CurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewController.swift; sourceTree = "<group>"; };
 		3896544F22C9F6B200362A60 /* BithumbInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbInfoView.swift; sourceTree = "<group>"; };
-		3896545122C9FB6000362A60 /* BithumbTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbTableViewCell.swift; sourceTree = "<group>"; };
+		3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		38BC0F4022C354640057BBC9 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetingTableViewCell.swift; sourceTree = "<group>"; };
 		38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableHeaderView.swift; sourceTree = "<group>"; };
 		38BC0F4922C37CD60057BBC9 /* APIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIData.swift; sourceTree = "<group>"; };
+		399C8235BD1B17AB4FF3744A /* Pods_CoinCheck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinCheck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3AC2D4B575F5DCA9BB368BE /* Pods-CoinCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinCheck.release.xcconfig"; path = "Target Support Files/Pods-CoinCheck/Pods-CoinCheck.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEA6234E44CCB3244A71D6CF /* Pods_CoinCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +75,8 @@
 			children = (
 				3840D32122BF9DB600FA865D /* CoinCheck */,
 				3840D32022BF9DB600FA865D /* Products */,
+				A280C93AB597455E5B78706C /* Pods */,
+				6AC1A7CA925705FEE54E3A6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,10 +150,27 @@
 				38BC0F4022C354640057BBC9 /* SettingView.swift */,
 				3896544F22C9F6B200362A60 /* BithumbInfoView.swift */,
 				38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */,
-				3896545122C9FB6000362A60 /* BithumbTableViewCell.swift */,
+				3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */,
 				38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */,
 			);
 			name = Setting;
+			sourceTree = "<group>";
+		};
+		6AC1A7CA925705FEE54E3A6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				399C8235BD1B17AB4FF3744A /* Pods_CoinCheck.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A280C93AB597455E5B78706C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				23832D191D586499B1C0C7B9 /* Pods-CoinCheck.debug.xcconfig */,
+				E3AC2D4B575F5DCA9BB368BE /* Pods-CoinCheck.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,9 +180,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3840D33122BF9DB700FA865D /* Build configuration list for PBXNativeTarget "CoinCheck" */;
 			buildPhases = (
+				C2BBAC20E29F1AB82B604FCF /* [CP] Check Pods Manifest.lock */,
 				3840D31B22BF9DB600FA865D /* Sources */,
 				3840D31C22BF9DB600FA865D /* Frameworks */,
 				3840D31D22BF9DB600FA865D /* Resources */,
+				BC58F83B911B3543D0A274BA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -215,6 +241,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BC58F83B911B3543D0A274BA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CoinCheck/Pods-CoinCheck-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CoinCheck/Pods-CoinCheck-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CoinCheck/Pods-CoinCheck-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C2BBAC20E29F1AB82B604FCF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CoinCheck-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3840D31B22BF9DB600FA865D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -224,7 +292,7 @@
 				38BC0F4622C3600F0057BBC9 /* SetingTableViewCell.swift in Sources */,
 				3896545022C9F6B200362A60 /* BithumbInfoView.swift in Sources */,
 				3840D33B22BFB07400FA865D /* MainTableHearderView.swift in Sources */,
-				3896545222C9FB6000362A60 /* BithumbTableViewCell.swift in Sources */,
+				3896545222C9FB6000362A60 /* CurrencyTableViewCell.swift in Sources */,
 				3840D33522BF9EA900FA865D /* MainNavigationController.swift in Sources */,
 				3896544C22C9AAC200362A60 /* Exchanges.swift in Sources */,
 				3896544E22C9F66200362A60 /* CurrencyViewController.swift in Sources */,
@@ -380,6 +448,7 @@
 		};
 		3840D33222BF9DB700FA865D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23832D191D586499B1C0C7B9 /* Pods-CoinCheck.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -398,6 +467,7 @@
 		};
 		3840D33322BF9DB700FA865D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E3AC2D4B575F5DCA9BB368BE /* Pods-CoinCheck.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

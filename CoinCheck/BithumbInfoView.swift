@@ -17,6 +17,12 @@ class BithumbInfoView: UIView {
     
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.textContentType = .name
+        searchBar.autocapitalizationType = .none
+        searchBar.spellCheckingType = .no
+        searchBar.autocorrectionType = .no
+        searchBar.keyboardType = .namePhonePad
+        
         return searchBar
     }()
 
