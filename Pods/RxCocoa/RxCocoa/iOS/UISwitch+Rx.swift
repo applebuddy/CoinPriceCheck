@@ -8,14 +8,13 @@
 
 #if os(iOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 extension Reactive where Base: UISwitch {
-
     /// Reactive wrapper for `isOn` property.
     public var isOn: ControlProperty<Bool> {
-        return value
+        return self.value
     }
 
     /// Reactive wrapper for `isOn` property.
@@ -32,7 +31,6 @@ extension Reactive where Base: UISwitch {
             }
         )
     }
-    
 }
 
 #endif

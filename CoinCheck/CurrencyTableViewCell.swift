@@ -9,7 +9,6 @@
 import UIKit
 
 class CurrencyTableViewCell: UITableViewCell {
-    
     let titleImageView: UIImageView = {
         let titleImageView = UIImageView()
         titleImageView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
@@ -18,11 +17,13 @@ class CurrencyTableViewCell: UITableViewCell {
 
     let titleLabel: UILabel = {
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        titleLabel.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         return titleLabel
     }()
 
     let priceLabel: UILabel = {
         let priceLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        priceLabel.font = UIFont.boldSystemFont(ofSize: 23)
         return priceLabel
     }()
 
@@ -53,19 +54,18 @@ class CurrencyTableViewCell: UITableViewCell {
 
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor),
-            titleLabel.widthAnchor.constraint(equalToConstant: 100),
+            titleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+            titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor),
         ])
 
         self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.priceLabel.adjustsFontSizeToFitWidth = true
         NSLayoutConstraint.activate([
-            priceLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor, constant: 0),
-            priceLabel.heightAnchor.constraint(equalTo: titleLabel.heightAnchor, constant: 0),
-            priceLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: ViewInsets.leftInset / 2),
-            priceLabel.widthAnchor.constraint(equalToConstant: 60),
+            priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            priceLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor),
+            priceLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 0),
+            priceLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
         ])
     }
 }

@@ -7,7 +7,6 @@
 //
 
 extension ObservableType {
-
     /**
      Enumerates the elements of an observable sequence.
 
@@ -21,32 +20,31 @@ extension ObservableType {
     }
 }
 
-final private class EnumeratedSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == (index: Int, element: Element) {
+private final class EnumeratedSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == (index: Int, element: Element) {
     var index = 0
-    
+
     func on(_ event: Event<Element>) {
         switch event {
-        case .next(let value):
+        case let .next(value):
             do {
                 let nextIndex = try incrementChecked(&self.index)
                 let next = (index: nextIndex, element: value)
                 self.forwardOn(.next(next))
-            }
-            catch let e {
+            } catch let e {
                 self.forwardOn(.error(e))
                 self.dispose()
             }
         case .completed:
             self.forwardOn(.completed)
             self.dispose()
-        case .error(let error):
+        case let .error(error):
             self.forwardOn(.error(error))
             self.dispose()
         }
     }
 }
 
-final private class Enumerated<Element>: Producer<(index: Int, element: Element)> {
+private final class Enumerated<Element>: Producer<(index: Int, element: Element)> {
     private let _source: Observable<Element>
 
     init(source: Observable<Element>) {

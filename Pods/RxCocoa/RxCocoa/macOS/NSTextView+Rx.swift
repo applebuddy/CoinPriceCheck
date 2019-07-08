@@ -15,9 +15,8 @@ import RxSwift
 ///
 /// For more information take a look at `DelegateProxyType`.
 open class RxTextViewDelegateProxy: DelegateProxy<NSTextView, NSTextViewDelegate>, DelegateProxyType, NSTextViewDelegate {
-
     /// Typed parent object.
-    public weak private(set) var textView: NSTextView?
+    public private(set) weak var textView: NSTextView?
 
     /// Initializes `RxTextViewDelegateProxy`
     ///
@@ -53,11 +52,9 @@ open class RxTextViewDelegateProxy: DelegateProxy<NSTextView, NSTextViewDelegate
     open class func setCurrentDelegate(_ delegate: NSTextViewDelegate?, to object: ParentObject) {
         object.delegate = delegate
     }
-
 }
 
 extension Reactive where Base: NSTextView {
-
     /// Reactive wrapper for `delegate`.
     ///
     /// For more information take a look at `DelegateProxyType` protocol documentation.
@@ -79,7 +76,6 @@ extension Reactive where Base: NSTextView {
 
         return ControlProperty(values: source, valueSink: observer.asObserver())
     }
-
 }
 
 #endif

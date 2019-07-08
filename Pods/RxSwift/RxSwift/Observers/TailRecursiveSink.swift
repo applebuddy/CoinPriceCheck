@@ -12,15 +12,15 @@ enum TailRecursiveSinkCommand {
 }
 
 #if DEBUG || TRACE_RESOURCES
-    public var maxTailRecursiveSinkStackSize = 0
+public var maxTailRecursiveSinkStackSize = 0
 #endif
 
 /// This class is usually used with `Generator` version of the operators.
-class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
-    : Sink<Observer>
-    , InvocableWithValueType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
+class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>:
+    Sink<Observer>,
+    InvocableWithValueType where Sequence.Element: ObservableConvertibleType, Sequence.Element.Element == Observer.Element {
     typealias Value = TailRecursiveSinkCommand
-    typealias Element = Observer.Element 
+    typealias Element = Observer.Element
     typealias SequenceGenerator = (generator: Sequence.Iterator, remaining: IntMax?)
 
     var _generators: [SequenceGenerator] = []
@@ -61,7 +61,7 @@ class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
         self.dispose()
     }
 
-    func extract(_ observable: Observable<Element>) -> SequenceGenerator? {
+    func extract(_: Observable<Element>) -> SequenceGenerator? {
         rxAbstractMethod()
     }
 
@@ -74,13 +74,13 @@ class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
             guard let (g, left) = self._generators.last else {
                 break
             }
-            
+
             if self._isDisposed {
                 return
             }
 
             self._generators.removeLast()
-            
+
             var e = g
 
             guard let nextCandidate = e.next()?.asObservable() else {
@@ -100,8 +100,7 @@ class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
                 if knownOriginalLeft - 1 >= 1 {
                     self._generators.append((e, knownOriginalLeft - 1))
                 }
-            }
-            else {
+            } else {
                 self._generators.append((e, nil))
             }
 
@@ -110,12 +109,11 @@ class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
             if let nextGenerator = nextGenerator {
                 self._generators.append(nextGenerator)
                 #if DEBUG || TRACE_RESOURCES
-                    if maxTailRecursiveSinkStackSize < self._generators.count {
-                        maxTailRecursiveSinkStackSize = self._generators.count
-                    }
+                if maxTailRecursiveSinkStackSize < self._generators.count {
+                    maxTailRecursiveSinkStackSize = self._generators.count
+                }
                 #endif
-            }
-            else {
+            } else {
                 next = nextCandidate
             }
         } while next == nil
@@ -130,7 +128,7 @@ class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
         disposable.setDisposable(self.subscribeToNext(existingNext))
     }
 
-    func subscribeToNext(_ source: Observable<Element>) -> Disposable {
+    func subscribeToNext(_: Observable<Element>) -> Disposable {
         rxAbstractMethod()
     }
 
@@ -141,11 +139,10 @@ class TailRecursiveSink<Sequence: Swift.Sequence, Observer: ObserverType>
 
     override func dispose() {
         super.dispose()
-        
+
         self._subscription.dispose()
         self._gate.dispose()
-        
+
         self.schedule(.dispose)
     }
 }
-

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class ObserverBase<Element> : Disposable, ObserverType {
+class ObserverBase<Element>: Disposable, ObserverType {
     private let _isStopped = AtomicInt(0)
 
     func on(_ event: Event<Element>) {
@@ -22,7 +22,7 @@ class ObserverBase<Element> : Disposable, ObserverType {
         }
     }
 
-    func onCore(_ event: Event<Element>) {
+    func onCore(_: Event<Element>) {
         rxAbstractMethod()
     }
 

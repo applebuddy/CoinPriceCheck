@@ -6,54 +6,57 @@
 //  Copyright © 2019 Min Kyeong Tae. All rights reserved.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 enum BithumbTableViewSections: Int {
     case mainSection = 0
 }
 
 class CurrencyViewController: UIViewController {
-    
-    // MARK:- Properties
+    // MARK: - Properties
+
     let disposeBag = DisposeBag() // 뷰가 할당 해제될 때 놓아줄 수 있는 일회용품의 Rx 가방
     let bithumbTableViewCellIdentifier: String = "bithumbTableViewCellIdentifier"
     var currencyNameString: [String]?
     var shownCurrencyNameString: [String]?
     var isSearched: Bool = false
-    
-    // MARK:- UIs
+
+    // MARK: - UIs
+
     let mainView: BithumbInfoView = {
         let mainView = BithumbInfoView()
         return mainView
     }()
-    
+
     // MARK: - ViewController App Cycle
-    
+
     override func loadView() {
         super.loadView()
         view = self.mainView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mainView.bithumbTableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: self.bithumbTableViewCellIdentifier)
         self.mainView.bithumbTableView.delegate = self
         self.mainView.bithumbTableView.dataSource = self
+        self.mainView.searchBar.delegate = self
+        self.mainView.bithumbTableView.allowsSelection = false
         self.setCellData()
         self.setSearchBar()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
+
+    override func viewDidAppear(_: Bool) {
         super.viewDidAppear(true)
-        isSearched = true
     }
-    
-    // MARK:- Setting Methods
+
+    // MARK: - Setting Methods
+
     func setSearchBar() {
         guard let currencyNameString = self.currencyNameString else { return }
-        mainView.searchBar
+        self.mainView.searchBar
             .rx.text
             .orEmpty
             .debounce(RxTimeInterval.seconds(Int(0.3)), scheduler: MainScheduler.instance)
@@ -65,9 +68,9 @@ class CurrencyViewController: UIViewController {
                 }
                 self?.mainView.bithumbTableView.reloadData()
             })
-            .disposed(by: disposeBag)
+            .disposed(by: self.disposeBag)
     }
-    
+
     func setCellData() {
         guard let exchangeIndex = ExchangeIndex(rawValue: CommonData.shared.selectedExchangeIndex) else { return }
         switch exchangeIndex {
@@ -77,7 +80,7 @@ class CurrencyViewController: UIViewController {
             self.setBithumbData()
         }
     }
-    
+
     func setBithumbData() {
         // "https://api.bithumb.com/public/orderbook/ALL"
         // "https://api.bithumb.com/public/ticker/ALL"
@@ -110,26 +113,27 @@ extension CurrencyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? CurrencyTableViewCell,
             let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice,
-        let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString as? [String] else { return UITableViewCell() }
-        if isSearched == true {
+            let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString as? [String] else { return UITableViewCell() }
+        if self.isSearched == true {
             guard let shownCurrencyNameString = self.shownCurrencyNameString as? [String] else { return UITableViewCell() }
-        bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString[indexPath.row])"
-        bithumbTableViewCell.priceLabel.text = "\(currencyPrice)"
+            bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString[indexPath.row])/KRW"
+            bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
         } else {
-            bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])"
-            bithumbTableViewCell.priceLabel.text = "\(currencyPrice)"
+            bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])/KRW"
+            bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
         }
         return bithumbTableViewCell
     }
-    
+
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionIndex = BithumbTableViewSections(rawValue: section),
-        let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString as? [String] else { return 0 }
-        if isSearched == true {
-            guard let shownCurrencyNameString = self.shownCurrencyNameString as? [String] else { return 0 }
-        switch sectionIndex {
-        case .mainSection: return shownCurrencyNameString.count
-        }
+        guard let sectionIndex = BithumbTableViewSections(rawValue: section) else { return 0 }
+        let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
+
+        if self.isSearched == true {
+            let shownCurrencyNameString = self.shownCurrencyNameString
+            switch sectionIndex {
+            case .mainSection: return shownCurrencyNameString?.count ?? 0
+            }
         } else {
             switch sectionIndex {
             case .mainSection: return currencyNameString.count
@@ -141,5 +145,17 @@ extension CurrencyViewController: UITableViewDataSource {
 extension CurrencyViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return 100
+    }
+}
+
+extension CurrencyViewController: UISearchBarDelegate {
+    func searchBar(_: UISearchBar, textDidChange _: String) {
+        if self.mainView.searchBar.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
+            self.isSearched = false
+            self.mainView.bithumbTableView.reloadData()
+        } else {
+            self.isSearched = true
+            self.mainView.bithumbTableView.reloadData()
+        }
     }
 }

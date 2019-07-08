@@ -8,8 +8,8 @@
 
 #if os(iOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 extension Reactive where Base: UIRefreshControl {
     /// Bindable sink for `beginRefreshing()`, `endRefreshing()` methods.
@@ -22,7 +22,6 @@ extension Reactive where Base: UIRefreshControl {
             }
         }
     }
-
 }
 
 #endif

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingTableViewCell: UITableViewCell {
+class ExchangeTableViewCell: UITableViewCell {
     let titleImageView: UIImageView = {
         let titleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         titleImageView.backgroundColor = #colorLiteral(red: 0.5514791608, green: 0.6702116728, blue: 0.2510133386, alpha: 1)

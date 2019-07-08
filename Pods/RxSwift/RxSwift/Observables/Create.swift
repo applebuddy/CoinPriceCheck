@@ -22,15 +22,15 @@ extension ObservableType {
     }
 }
 
-final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
-    typealias Element = Observer.Element 
+private final class AnonymousObservableSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element
     typealias Parent = AnonymousObservable<Element>
 
     // state
     private let _isStopped = AtomicInt(0)
 
     #if DEBUG
-        fileprivate let _synchronizationTracker = SynchronizationTracker()
+    fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
 
     override init(observer: Observer, cancel: Cancelable) {
@@ -39,8 +39,8 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
 
     func on(_ event: Event<Element>) {
         #if DEBUG
-            self._synchronizationTracker.register(synchronizationErrorMessage: .default)
-            defer { self._synchronizationTracker.unregister() }
+        self._synchronizationTracker.register(synchronizationErrorMessage: .default)
+        defer { self._synchronizationTracker.unregister() }
         #endif
         switch event {
         case .next:
@@ -61,7 +61,7 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
     }
 }
 
-final private class AnonymousObservable<Element>: Producer<Element> {
+private final class AnonymousObservable<Element>: Producer<Element> {
     typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 
     let _subscribeHandler: SubscribeHandler

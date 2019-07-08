@@ -7,12 +7,11 @@
 //
 
 /**
-Represents a disposable resource which only allows a single assignment of its underlying disposable resource.
+ Represents a disposable resource which only allows a single assignment of its underlying disposable resource.
 
-If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
-*/
-public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
-
+ If an underlying disposable resource has already been set, future attempts to set the underlying disposable resource will throw an exception.
+ */
+public final class SingleAssignmentDisposable: DisposeBase, Cancelable {
     fileprivate enum DisposeState: Int32 {
         case disposed = 1
         case disposableSet = 2
@@ -66,5 +65,4 @@ public final class SingleAssignmentDisposable : DisposeBase, Cancelable {
             self._disposable = nil
         }
     }
-
 }

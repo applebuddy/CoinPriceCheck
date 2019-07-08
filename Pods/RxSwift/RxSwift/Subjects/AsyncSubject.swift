@@ -10,11 +10,11 @@
 /// and only after that source Observable completes.
 ///
 /// (If the source Observable does not emit any values, the AsyncSubject also completes without emitting any values.)
-public final class AsyncSubject<Element>
-    : Observable<Element>
-    , SubjectType
-    , ObserverType
-    , SynchronizedUnsubscribeType {
+public final class AsyncSubject<Element>:
+    Observable<Element>,
+    SubjectType,
+    ObserverType,
+    SynchronizedUnsubscribeType {
     public typealias SubjectObserverType = AsyncSubject<Element>
 
     typealias Observers = AnyObserver<Element>.s
@@ -36,17 +36,17 @@ public final class AsyncSubject<Element>
             self._isStopped = self._stoppedEvent != nil
         }
     }
+
     private var _lastElement: Element?
 
     #if DEBUG
-        fileprivate let _synchronizationTracker = SynchronizationTracker()
+    fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
-
 
     /// Creates a subject.
     public override init() {
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
+        _ = Resources.incrementTotal()
         #endif
         super.init()
     }
@@ -56,8 +56,8 @@ public final class AsyncSubject<Element>
     /// - parameter event: Event to send to the observers.
     public func on(_ event: Event<Element>) {
         #if DEBUG
-            self._synchronizationTracker.register(synchronizationErrorMessage: .default)
-            defer { self._synchronizationTracker.unregister() }
+        self._synchronizationTracker.register(synchronizationErrorMessage: .default)
+        defer { self._synchronizationTracker.unregister() }
         #endif
         let (observers, event) = self._synchronized_on(event)
         switch event {
@@ -78,7 +78,7 @@ public final class AsyncSubject<Element>
         }
 
         switch event {
-        case .next(let element):
+        case let .next(element):
             self._lastElement = element
             return (Observers(), .completed)
         case .error:
@@ -96,8 +96,7 @@ public final class AsyncSubject<Element>
             if let lastElement = self._lastElement {
                 self._stoppedEvent = .next(lastElement)
                 return (observers, .next(lastElement))
-            }
-            else {
+            } else {
                 self._stoppedEvent = event
                 return (observers, .completed)
             }
@@ -136,11 +135,11 @@ public final class AsyncSubject<Element>
         self._lock.lock(); defer { self._lock.unlock() }
         self._synchronized_unsubscribe(disposeKey)
     }
-    
+
     func _synchronized_unsubscribe(_ disposeKey: DisposeKey) {
         _ = self._observers.removeKey(disposeKey)
     }
-    
+
     /// Returns observer interface for subject.
     public func asObserver() -> AsyncSubject<Element> {
         return self
@@ -152,4 +151,3 @@ public final class AsyncSubject<Element>
     }
     #endif
 }
-

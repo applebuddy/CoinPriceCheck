@@ -7,7 +7,7 @@
 //
 
 /// Represents an observable sequence of elements that have a common key.
-public struct GroupedObservable<Key, Element> : ObservableType {
+public struct GroupedObservable<Key, Element>: ObservableType {
     /// Gets the common key.
     public let key: Key
 
@@ -28,7 +28,7 @@ public struct GroupedObservable<Key, Element> : ObservableType {
         return self.source.subscribe(observer)
     }
 
-    /// Converts `self` to `Observable` sequence. 
+    /// Converts `self` to `Observable` sequence.
     public func asObservable() -> Observable<Element> {
         return self.source
     }

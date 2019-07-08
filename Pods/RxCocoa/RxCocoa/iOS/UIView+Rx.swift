@@ -8,8 +8,8 @@
 
 #if os(iOS) || os(tvOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 extension Reactive where Base: UIView {
     /// Bindable sink for `hidden` property.
@@ -39,7 +39,6 @@ extension Reactive where Base: UIView {
             view.isUserInteractionEnabled = userInteractionEnabled
         }
     }
-    
 }
 
 #endif

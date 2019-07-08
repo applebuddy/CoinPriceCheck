@@ -14,7 +14,7 @@ class BithumbInfoView: UIView {
         bithumbTableView.backgroundColor = UIColor.tableViewBackground
         return bithumbTableView
     }()
-    
+
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.textContentType = .name
@@ -22,7 +22,7 @@ class BithumbInfoView: UIView {
         searchBar.spellCheckingType = .no
         searchBar.autocorrectionType = .no
         searchBar.keyboardType = .namePhonePad
-        
+
         return searchBar
     }()
 
@@ -46,9 +46,9 @@ class BithumbInfoView: UIView {
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0),
             searchBar.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
-            searchBar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor)
-            ])
-        
+            searchBar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+        ])
+
         self.bithumbTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             bithumbTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),

@@ -7,7 +7,6 @@
 //
 
 extension ObservableType {
-
     /**
      Wraps the source sequence in order to run its observer callbacks on the specified scheduler.
 
@@ -21,16 +20,15 @@ extension ObservableType {
      */
     public func observeOn(_ scheduler: ImmediateSchedulerType)
         -> Observable<Element> {
-            if let scheduler = scheduler as? SerialDispatchQueueScheduler {
-                return ObserveOnSerialDispatchQueue(source: self.asObservable(), scheduler: scheduler)
-            }
-            else {
-                return ObserveOn(source: self.asObservable(), scheduler: scheduler)
-            }
+        if let scheduler = scheduler as? SerialDispatchQueueScheduler {
+            return ObserveOnSerialDispatchQueue(source: self.asObservable(), scheduler: scheduler)
+        } else {
+            return ObserveOn(source: self.asObservable(), scheduler: scheduler)
+        }
     }
 }
 
-final private class ObserveOn<Element>: Producer<Element> {
+private final class ObserveOn<Element>: Producer<Element> {
     let scheduler: ImmediateSchedulerType
     let source: Observable<Element>
 
@@ -38,9 +36,9 @@ final private class ObserveOn<Element>: Producer<Element> {
         self.scheduler = scheduler
         self.source = source
 
-#if TRACE_RESOURCES
+        #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
-#endif
+        #endif
     }
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
@@ -49,22 +47,22 @@ final private class ObserveOn<Element>: Producer<Element> {
         return (sink: sink, subscription: subscription)
     }
 
-#if TRACE_RESOURCES
+    #if TRACE_RESOURCES
     deinit {
         _ = Resources.decrementTotal()
     }
-#endif
+    #endif
 }
 
-enum ObserveOnState : Int32 {
+enum ObserveOnState: Int32 {
     // pump is not running
     case stopped = 0
     // pump is running
     case running = 1
 }
 
-final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
-    typealias Element = Observer.Element 
+private final class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+    typealias Element = Observer.Element
 
     let _scheduler: ImmediateSchedulerType
 
@@ -102,12 +100,11 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
         }
     }
 
-    func run(_ state: (), _ recurse: (()) -> Void) {
+    func run(_: (), _ recurse: (()) -> Void) {
         let (nextEvent, observer) = self._lock.calculateLocked { () -> (Event<Element>?, Observer) in
             if !self._queue.isEmpty {
                 return (self._queue.dequeue(), self._observer)
-            }
-            else {
+            } else {
                 self._state = .stopped
                 return (nil, self._observer)
             }
@@ -118,8 +115,7 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
             if nextEvent.isStopEvent {
                 self.dispose()
             }
-        }
-        else {
+        } else {
             return
         }
 
@@ -132,13 +128,12 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
 
     func _shouldContinue_synchronized() -> Bool {
         self._lock.lock(); defer { self._lock.unlock() } // {
-            if !self._queue.isEmpty {
-                return true
-            }
-            else {
-                self._state = .stopped
-                return false
-            }
+        if !self._queue.isEmpty {
+            return true
+        } else {
+            self._state = .stopped
+            return false
+        }
         // }
     }
 
@@ -151,20 +146,20 @@ final private class ObserveOnSink<Observer: ObserverType>: ObserverBase<Observer
 }
 
 #if TRACE_RESOURCES
-    fileprivate let _numberOfSerialDispatchQueueObservables = AtomicInt(0)
-    extension Resources {
-        /**
-         Counts number of `SerialDispatchQueueObservables`.
+fileprivate let _numberOfSerialDispatchQueueObservables = AtomicInt(0)
+extension Resources {
+    /**
+     Counts number of `SerialDispatchQueueObservables`.
 
-         Purposed for unit tests.
-         */
-        public static var numberOfSerialDispatchQueueObservables: Int32 {
-            return load(_numberOfSerialDispatchQueueObservables)
-        }
+     Purposed for unit tests.
+     */
+    public static var numberOfSerialDispatchQueueObservables: Int32 {
+        return load(_numberOfSerialDispatchQueueObservables)
     }
+}
 #endif
 
-final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
+private final class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: ObserverBase<Observer.Element> {
     let scheduler: SerialDispatchQueueScheduler
     let observer: Observer
 
@@ -202,7 +197,7 @@ final private class ObserveOnSerialDispatchQueueSink<Observer: ObserverType>: Ob
     }
 }
 
-final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
+private final class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
     let scheduler: SerialDispatchQueueScheduler
     let source: Observable<Element>
 
@@ -211,8 +206,8 @@ final private class ObserveOnSerialDispatchQueue<Element>: Producer<Element> {
         self.source = source
 
         #if TRACE_RESOURCES
-            _ = Resources.incrementTotal()
-            _ = increment(_numberOfSerialDispatchQueueObservables)
+        _ = Resources.incrementTotal()
+        _ = increment(_numberOfSerialDispatchQueueObservables)
         #endif
     }
 

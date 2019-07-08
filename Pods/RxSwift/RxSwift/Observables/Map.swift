@@ -7,7 +7,6 @@
 //
 
 extension ObservableType {
-
     /**
      Projects each element of an observable sequence into a new form.
 
@@ -23,10 +22,10 @@ extension ObservableType {
     }
 }
 
-final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {
+private final class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>, ObserverType {
     typealias Transform = (SourceType) throws -> ResultType
 
-    typealias ResultType = Observer.Element 
+    typealias ResultType = Observer.Element
     typealias Element = SourceType
 
     private let _transform: Transform
@@ -38,16 +37,15 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
 
     func on(_ event: Event<SourceType>) {
         switch event {
-        case .next(let element):
+        case let .next(element):
             do {
                 let mappedElement = try self._transform(element)
                 self.forwardOn(.next(mappedElement))
-            }
-            catch let e {
+            } catch let e {
                 self.forwardOn(.error(e))
                 self.dispose()
             }
-        case .error(let error):
+        case let .error(error):
             self.forwardOn(.error(error))
             self.dispose()
         case .completed:
@@ -58,19 +56,19 @@ final private class MapSink<SourceType, Observer: ObserverType>: Sink<Observer>,
 }
 
 #if TRACE_RESOURCES
-    fileprivate let _numberOfMapOperators = AtomicInt(0)
-    extension Resources {
-        public static var numberOfMapOperators: Int32 {
-            return load(_numberOfMapOperators)
-        }
+fileprivate let _numberOfMapOperators = AtomicInt(0)
+extension Resources {
+    public static var numberOfMapOperators: Int32 {
+        return load(_numberOfMapOperators)
     }
+}
 #endif
 
 internal func _map<Element, Result>(source: Observable<Element>, transform: @escaping (Element) throws -> Result) -> Observable<Result> {
     return Map(source: source, transform: transform)
 }
 
-final private class Map<SourceType, ResultType>: Producer<ResultType> {
+private final class Map<SourceType, ResultType>: Producer<ResultType> {
     typealias Transform = (SourceType) throws -> ResultType
 
     private let _source: Observable<SourceType>
@@ -81,9 +79,9 @@ final private class Map<SourceType, ResultType>: Producer<ResultType> {
         self._source = source
         self._transform = transform
 
-#if TRACE_RESOURCES
+        #if TRACE_RESOURCES
         _ = increment(_numberOfMapOperators)
-#endif
+        #endif
     }
 
     override func composeMap<Result>(_ selector: @escaping (ResultType) throws -> Result) -> Observable<Result> {

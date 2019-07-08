@@ -8,11 +8,10 @@
 
 #if os(iOS) || os(tvOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 extension Reactive where Base: UIActivityIndicatorView {
-
     /// Bindable sink for `startAnimating()`, `stopAnimating()` methods.
     public var isAnimating: Binder<Bool> {
         return Binder(self.base) { activityIndicator, active in
@@ -23,7 +22,6 @@ extension Reactive where Base: UIActivityIndicatorView {
             }
         }
     }
-
 }
 
 #endif

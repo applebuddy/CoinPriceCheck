@@ -7,7 +7,6 @@
 //
 
 extension ObservableType {
-
     /**
      Bypasses elements in an observable sequence as long as a specified condition is true and then returns the remaining elements.
 
@@ -21,8 +20,8 @@ extension ObservableType {
     }
 }
 
-final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
-    typealias Element = Observer.Element 
+private final class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+    typealias Element = Observer.Element
     typealias Parent = SkipWhile<Element>
 
     fileprivate let _parent: Parent
@@ -35,7 +34,7 @@ final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, Obser
 
     func on(_ event: Event<Element>) {
         switch event {
-        case .next(let value):
+        case let .next(value):
             if !self._running {
                 do {
                     self._running = try !self._parent._predicate(value)
@@ -56,7 +55,7 @@ final private class SkipWhileSink<Observer: ObserverType>: Sink<Observer>, Obser
     }
 }
 
-final private class SkipWhile<Element>: Producer<Element> {
+private final class SkipWhile<Element>: Producer<Element> {
     typealias Predicate = (Element) throws -> Bool
 
     fileprivate let _source: Observable<Element>

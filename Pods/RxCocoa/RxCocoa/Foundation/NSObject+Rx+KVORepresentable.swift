@@ -27,7 +27,6 @@ public struct KeyValueObservingOptions: OptionSet {
 }
 
 extension Reactive where Base: NSObject {
-
     /**
      Specialization of generic `observe` method.
 
@@ -36,25 +35,25 @@ extension Reactive where Base: NSObject {
 
      For more information take a look at `observe` method.
      */
-    public func observe<Element: KVORepresentable>(_ type: Element.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<Element?> {
+    public func observe<Element: KVORepresentable>(_: Element.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial], retainSelf: Bool = true) -> Observable<Element?> {
         return self.observe(Element.KVOType.self, keyPath, options: options, retainSelf: retainSelf)
             .map(Element.init)
     }
 }
 
 #if !DISABLE_SWIZZLING && !os(Linux)
-    // KVO
-    extension Reactive where Base: NSObject {
-        /**
-        Specialization of generic `observeWeakly` method.
+// KVO
+extension Reactive where Base: NSObject {
+    /**
+     Specialization of generic `observeWeakly` method.
 
-        For more information take a look at `observeWeakly` method.
-        */
-        public func observeWeakly<Element: KVORepresentable>(_ type: Element.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Element?> {
-            return self.observeWeakly(Element.KVOType.self, keyPath, options: options)
-                .map(Element.init)
-        }
+     For more information take a look at `observeWeakly` method.
+     */
+    public func observeWeakly<Element: KVORepresentable>(_: Element.Type, _ keyPath: String, options: KeyValueObservingOptions = [.new, .initial]) -> Observable<Element?> {
+        return self.observeWeakly(Element.KVOType.self, keyPath, options: options)
+            .map(Element.init)
     }
+}
 #endif
 
 #endif

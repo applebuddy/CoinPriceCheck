@@ -7,7 +7,7 @@
 //
 
 import RxSwift
-    
+
 extension ControlEvent {
     /// Converts `ControlEvent` to `Driver` trait.
     ///
@@ -15,9 +15,9 @@ extension ControlEvent {
     public func asDriver() -> Driver<Element> {
         return self.asDriver { _ -> Driver<Element> in
             #if DEBUG
-                rxFatalError("Somehow driver received error from a source that shouldn't fail.")
+            rxFatalError("Somehow driver received error from a source that shouldn't fail.")
             #else
-                return Driver.empty()
+            return Driver.empty()
             #endif
         }
     }

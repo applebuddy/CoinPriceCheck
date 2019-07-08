@@ -9,7 +9,6 @@
 import RxSwift
 
 extension Reactive where Base: AnyObject {
-    
     /// Bindable sink for arbitrary property using the given key path.
     /// Binding runs on the MainScheduler.
     ///
@@ -19,7 +18,7 @@ extension Reactive where Base: AnyObject {
             base[keyPath: keyPath] = value
         }
     }
-    
+
     /// Bindable sink for arbitrary property using the given key path.
     /// Binding runs on the specified scheduler.
     ///
@@ -30,5 +29,4 @@ extension Reactive where Base: AnyObject {
             base[keyPath: keyPath] = value
         }
     }
-    
 }

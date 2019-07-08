@@ -9,9 +9,9 @@
 #if !os(Linux)
 
 #if os(macOS)
-    import Cocoa
+import Cocoa
 #else
-    import UIKit
+import UIKit
 #endif
 
 import RxSwift
@@ -24,7 +24,7 @@ extension Reactive where Base: NSLayoutConstraint {
             constraint.constant = constant
         }
     }
-    
+
     /// Bindable sink for `active` property.
     @available(iOS 8, OSX 10.10, *)
     public var active: Binder<Bool> {

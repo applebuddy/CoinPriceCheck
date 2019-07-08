@@ -6,16 +6,16 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-fileprivate final class FirstSink<Element, Observer: ObserverType> : Sink<Observer>, ObserverType where Observer.Element == Element? {
+private final class FirstSink<Element, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == Element? {
     typealias Parent = First<Element>
 
     func on(_ event: Event<Element>) {
         switch event {
-        case .next(let value):
+        case let .next(value):
             self.forwardOn(.next(value))
             self.forwardOn(.completed)
             self.dispose()
-        case .error(let error):
+        case let .error(error):
             self.forwardOn(.error(error))
             self.dispose()
         case .completed:

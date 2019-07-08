@@ -47,7 +47,7 @@ extension ObservableType {
     }
 }
 
-final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>: Sink<Observer> where Sequence.Element == Observer.Element {
+private final class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: ObserverType>: Sink<Observer> where Sequence.Element == Observer.Element {
     typealias Parent = ObservableSequence<Sequence>
 
     private let _parent: Parent
@@ -63,8 +63,7 @@ final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: O
             if let next = mutableIterator.next() {
                 self.forwardOn(.next(next))
                 recurse(mutableIterator)
-            }
-            else {
+            } else {
                 self.forwardOn(.completed)
                 self.dispose()
             }
@@ -72,7 +71,7 @@ final private class ObservableSequenceSink<Sequence: Swift.Sequence, Observer: O
     }
 }
 
-final private class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element> {
+private final class ObservableSequence<Sequence: Swift.Sequence>: Producer<Sequence.Element> {
     fileprivate let _elements: Sequence
     fileprivate let _scheduler: ImmediateSchedulerType
 

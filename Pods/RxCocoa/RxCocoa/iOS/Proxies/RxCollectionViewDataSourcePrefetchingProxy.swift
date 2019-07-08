@@ -8,8 +8,8 @@
 
 #if os(iOS) || os(tvOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 @available(iOS 10.0, tvOS 10.0, *)
 extension UICollectionView: HasPrefetchDataSource {
@@ -20,22 +20,19 @@ extension UICollectionView: HasPrefetchDataSource {
 fileprivate let collectionViewPrefetchDataSourceNotSet = CollectionViewPrefetchDataSourceNotSet()
 
 @available(iOS 10.0, tvOS 10.0, *)
-fileprivate final class CollectionViewPrefetchDataSourceNotSet
-    : NSObject
-    , UICollectionViewDataSourcePrefetching {
-
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {}
-
+fileprivate final class CollectionViewPrefetchDataSourceNotSet:
+    NSObject,
+    UICollectionViewDataSourcePrefetching {
+    func collectionView(_: UICollectionView, prefetchItemsAt _: [IndexPath]) {}
 }
 
 @available(iOS 10.0, tvOS 10.0, *)
-open class RxCollectionViewDataSourcePrefetchingProxy
-    : DelegateProxy<UICollectionView, UICollectionViewDataSourcePrefetching>
-    , DelegateProxyType
-    , UICollectionViewDataSourcePrefetching {
-
+open class RxCollectionViewDataSourcePrefetchingProxy:
+    DelegateProxy<UICollectionView, UICollectionViewDataSourcePrefetching>,
+    DelegateProxyType,
+    UICollectionViewDataSourcePrefetching {
     /// Typed parent object.
-    public weak private(set) var collectionView: UICollectionView?
+    public private(set) weak var collectionView: UICollectionView?
 
     /// - parameter collectionView: Parent object for delegate proxy.
     public init(collectionView: ParentObject) {
@@ -72,12 +69,12 @@ open class RxCollectionViewDataSourcePrefetchingProxy
             subject.on(.next(indexPaths))
         }
 
-        (_requiredMethodsPrefetchDataSource ?? collectionViewPrefetchDataSourceNotSet).collectionView(collectionView, prefetchItemsAt: indexPaths)
+        (self._requiredMethodsPrefetchDataSource ?? collectionViewPrefetchDataSourceNotSet).collectionView(collectionView, prefetchItemsAt: indexPaths)
     }
 
     /// For more information take a look at `DelegateProxyType`.
     open override func setForwardToDelegate(_ forwardToDelegate: UICollectionViewDataSourcePrefetching?, retainDelegate: Bool) {
-        _requiredMethodsPrefetchDataSource = forwardToDelegate ?? collectionViewPrefetchDataSourceNotSet
+        self._requiredMethodsPrefetchDataSource = forwardToDelegate ?? collectionViewPrefetchDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 
@@ -86,7 +83,6 @@ open class RxCollectionViewDataSourcePrefetchingProxy
             subject.on(.completed)
         }
     }
-
 }
 
 #endif

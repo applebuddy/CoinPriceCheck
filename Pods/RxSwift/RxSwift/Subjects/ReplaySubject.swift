@@ -9,11 +9,11 @@
 /// Represents an object that is both an observable sequence as well as an observer.
 ///
 /// Each notification is broadcasted to all subscribed and future observers, subject to buffer trimming policies.
-public class ReplaySubject<Element>
-    : Observable<Element>
-    , SubjectType
-    , ObserverType
-    , Disposable {
+public class ReplaySubject<Element>:
+    Observable<Element>,
+    SubjectType,
+    ObserverType,
+    Disposable {
     public typealias SubjectObserverType = ReplaySubject<Element>
 
     typealias Observers = AnyObserver<Element>.s
@@ -26,9 +26,9 @@ public class ReplaySubject<Element>
         self._lock.unlock()
         return value
     }
-    
+
     fileprivate let _lock = RecursiveLock()
-    
+
     // state
     fileprivate var _isDisposed = false
     fileprivate var _isStopped = false
@@ -37,35 +37,35 @@ public class ReplaySubject<Element>
             self._isStopped = self._stoppedEvent != nil
         }
     }
+
     fileprivate var _observers = Observers()
 
     #if DEBUG
-        fileprivate let _synchronizationTracker = SynchronizationTracker()
+    fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
 
-    func unsubscribe(_ key: DisposeKey) {
+    func unsubscribe(_: DisposeKey) {
         rxAbstractMethod()
     }
 
     final var isStopped: Bool {
         return self._isStopped
     }
-    
+
     /// Notifies all subscribed observers about next event.
     ///
     /// - parameter event: Event to send to the observers.
-    public func on(_ event: Event<Element>) {
+    public func on(_: Event<Element>) {
         rxAbstractMethod()
     }
-    
+
     /// Returns observer interface for subject.
     public func asObserver() -> SubjectObserverType {
         return self
     }
-    
+
     /// Unsubscribe all observers and release resources.
-    public func dispose() {
-    }
+    public func dispose() {}
 
     /// Creates new instance of `ReplaySubject` that replays at most `bufferSize` last elements of sequence.
     ///
@@ -74,8 +74,7 @@ public class ReplaySubject<Element>
     public static func create(bufferSize: Int) -> ReplaySubject<Element> {
         if bufferSize == 1 {
             return ReplayOne()
-        }
-        else {
+        } else {
             return ReplayMany(bufferSize: bufferSize)
         }
     }
@@ -88,36 +87,35 @@ public class ReplaySubject<Element>
     }
 
     #if TRACE_RESOURCES
-        override init() {
-            _ = Resources.incrementTotal()
-        }
+    override init() {
+        _ = Resources.incrementTotal()
+    }
 
-        deinit {
-            _ = Resources.decrementTotal()
-        }
+    deinit {
+        _ = Resources.decrementTotal()
+    }
     #endif
 }
 
-private class ReplayBufferBase<Element>
-    : ReplaySubject<Element>
-    , SynchronizedUnsubscribeType {
-    
+private class ReplayBufferBase<Element>:
+    ReplaySubject<Element>,
+    SynchronizedUnsubscribeType {
     func trim() {
         rxAbstractMethod()
     }
-    
-    func addValueToBuffer(_ value: Element) {
+
+    func addValueToBuffer(_: Element) {
         rxAbstractMethod()
     }
-    
-    func replayBuffer<Observer: ObserverType>(_ observer: Observer) where Observer.Element == Element {
+
+    func replayBuffer<Observer: ObserverType>(_: Observer) where Observer.Element == Element {
         rxAbstractMethod()
     }
-    
+
     override func on(_ event: Event<Element>) {
         #if DEBUG
-            self._synchronizationTracker.register(synchronizationErrorMessage: .default)
-            defer { self._synchronizationTracker.unregister() }
+        self._synchronizationTracker.register(synchronizationErrorMessage: .default)
+        defer { self._synchronizationTracker.unregister() }
         #endif
         dispatch(self._synchronized_on(event), event)
     }
@@ -127,13 +125,13 @@ private class ReplayBufferBase<Element>
         if self._isDisposed {
             return Observers()
         }
-        
+
         if self._isStopped {
             return Observers()
         }
-        
+
         switch event {
-        case .next(let element):
+        case let .next(element):
             self.addValueToBuffer(element)
             self.trim()
             return self._observers
@@ -145,7 +143,7 @@ private class ReplayBufferBase<Element>
             return observers
         }
     }
-    
+
     override func subscribe<Observer: ObserverType>(_ observer: Observer) -> Disposable where Observer.Element == Element {
         self._lock.lock()
         let subscription = self._synchronized_subscribe(observer)
@@ -158,15 +156,14 @@ private class ReplayBufferBase<Element>
             observer.on(.error(RxError.disposed(object: self)))
             return Disposables.create()
         }
-     
+
         let anyObserver = observer.asObserver()
-        
+
         self.replayBuffer(anyObserver)
         if let stoppedEvent = self._stoppedEvent {
             observer.on(stoppedEvent)
             return Disposables.create()
-        }
-        else {
+        } else {
             let key = self._observers.insert(observer.on)
             return SubscriptionDisposable(owner: self, key: key)
         }
@@ -182,10 +179,10 @@ private class ReplayBufferBase<Element>
         if self._isDisposed {
             return
         }
-        
+
         _ = self._observers.removeKey(disposeKey)
     }
-    
+
     override func dispose() {
         super.dispose()
 
@@ -204,17 +201,15 @@ private class ReplayBufferBase<Element>
     }
 }
 
-fileprivate final class ReplayOne<Element> : ReplayBufferBase<Element> {
+private final class ReplayOne<Element>: ReplayBufferBase<Element> {
     private var _value: Element?
-    
+
     override init() {
         super.init()
     }
-    
-    override func trim() {
-        
-    }
-    
+
+    override func trim() {}
+
     override func addValueToBuffer(_ value: Element) {
         self._value = value
     }
@@ -233,11 +228,11 @@ fileprivate final class ReplayOne<Element> : ReplayBufferBase<Element> {
 
 private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
     fileprivate var _queue: Queue<Element>
-    
+
     init(queueSize: Int) {
         self._queue = Queue(capacity: queueSize + 1)
     }
-    
+
     override func addValueToBuffer(_ value: Element) {
         self._queue.enqueue(value)
     }
@@ -254,15 +249,15 @@ private class ReplayManyBase<Element>: ReplayBufferBase<Element> {
     }
 }
 
-fileprivate final class ReplayMany<Element> : ReplayManyBase<Element> {
+private final class ReplayMany<Element>: ReplayManyBase<Element> {
     private let _bufferSize: Int
-    
+
     init(bufferSize: Int) {
         self._bufferSize = bufferSize
-        
+
         super.init(queueSize: bufferSize)
     }
-    
+
     override func trim() {
         while self._queue.count > self._bufferSize {
             _ = self._queue.dequeue()
@@ -270,12 +265,10 @@ fileprivate final class ReplayMany<Element> : ReplayManyBase<Element> {
     }
 }
 
-fileprivate final class ReplayAll<Element> : ReplayManyBase<Element> {
+private final class ReplayAll<Element>: ReplayManyBase<Element> {
     init() {
         super.init(queueSize: 0)
     }
-    
-    override func trim() {
-        
-    }
+
+    override func trim() {}
 }

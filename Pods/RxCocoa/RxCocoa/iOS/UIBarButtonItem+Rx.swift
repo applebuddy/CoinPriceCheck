@@ -8,20 +8,19 @@
 
 #if os(iOS) || os(tvOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 fileprivate var rx_tap_key: UInt8 = 0
 
 extension Reactive where Base: UIBarButtonItem {
-    
     /// Bindable sink for `enabled` property.
     public var isEnabled: Binder<Bool> {
         return Binder(self.base) { element, value in
             element.isEnabled = value
         }
     }
-    
+
     /// Bindable sink for `title` property.
     public var title: Binder<String> {
         return Binder(self.base) { element, value in
@@ -45,19 +44,18 @@ extension Reactive where Base: UIBarButtonItem {
             .takeUntil(self.deallocated)
             .share()
         }
-        
+
         return ControlEvent(events: source)
     }
 }
 
-
 @objc
 final class BarButtonItemTarget: RxTarget {
     typealias Callback = () -> Void
-    
+
     weak var barButtonItem: UIBarButtonItem?
     var callback: Callback!
-    
+
     init(barButtonItem: UIBarButtonItem, callback: @escaping () -> Void) {
         self.barButtonItem = barButtonItem
         self.callback = callback
@@ -65,23 +63,22 @@ final class BarButtonItemTarget: RxTarget {
         barButtonItem.target = self
         barButtonItem.action = #selector(BarButtonItemTarget.action(_:))
     }
-    
+
     override func dispose() {
         super.dispose()
-#if DEBUG
+        #if DEBUG
         MainScheduler.ensureRunningOnMainThread()
-#endif
-        
-        barButtonItem?.target = nil
-        barButtonItem?.action = nil
-        
-        callback = nil
+        #endif
+
+        self.barButtonItem?.target = nil
+        self.barButtonItem?.action = nil
+
+        self.callback = nil
     }
-    
-    @objc func action(_ sender: AnyObject) {
-        callback()
+
+    @objc func action(_: AnyObject) {
+        self.callback()
     }
-    
 }
 
 #endif

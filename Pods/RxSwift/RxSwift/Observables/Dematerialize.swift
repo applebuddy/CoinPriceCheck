@@ -15,13 +15,12 @@ extension ObservableType where Element: EventConvertible {
     public func dematerialize() -> Observable<Element.Element> {
         return Dematerialize(source: self.asObservable())
     }
-
 }
 
-fileprivate final class DematerializeSink<T: EventConvertible, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == T.Element {
+private final class DematerializeSink<T: EventConvertible, Observer: ObserverType>: Sink<Observer>, ObserverType where Observer.Element == T.Element {
     fileprivate func on(_ event: Event<T>) {
         switch event {
-        case .next(let element):
+        case let .next(element):
             self.forwardOn(element.event)
             if element.event.isStopEvent {
                 self.dispose()
@@ -29,14 +28,14 @@ fileprivate final class DematerializeSink<T: EventConvertible, Observer: Observe
         case .completed:
             self.forwardOn(.completed)
             self.dispose()
-        case .error(let error):
+        case let .error(error):
             self.forwardOn(.error(error))
             self.dispose()
         }
     }
 }
 
-final private class Dematerialize<T: EventConvertible>: Producer<T.Element> {
+private final class Dematerialize<T: EventConvertible>: Producer<T.Element> {
     private let _source: Observable<T>
 
     init(source: Observable<T>) {

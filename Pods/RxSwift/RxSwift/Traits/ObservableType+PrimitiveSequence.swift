@@ -18,13 +18,13 @@ extension ObservableType {
     public func asSingle() -> Single<Element> {
         return PrimitiveSequence(raw: AsSingle(source: self.asObservable()))
     }
-    
+
     /**
      The `first` operator emits only the very first item emitted by this Observable,
      or nil if this Observable completes without emitting anything.
-     
+
      - seealso: [single operator on reactivex.io](http://reactivex.io/documentation/operators/first.html)
-     
+
      - returns: An observable sequence that emits a single element or nil if the source observable sequence completes without emitting any items.
      */
     public func first() -> Single<Element?> {
@@ -50,6 +50,6 @@ extension ObservableType where Element == Never {
      */
     public func asCompletable()
         -> Completable {
-            return PrimitiveSequence(raw: self.asObservable())
+        return PrimitiveSequence(raw: self.asObservable())
     }
 }

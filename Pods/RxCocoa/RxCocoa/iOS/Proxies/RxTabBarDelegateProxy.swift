@@ -8,21 +8,20 @@
 
 #if os(iOS) || os(tvOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 extension UITabBar: HasDelegate {
     public typealias Delegate = UITabBarDelegate
 }
 
 /// For more information take a look at `DelegateProxyType`.
-open class RxTabBarDelegateProxy
-    : DelegateProxy<UITabBar, UITabBarDelegate>
-    , DelegateProxyType 
-    , UITabBarDelegate {
-
+open class RxTabBarDelegateProxy:
+    DelegateProxy<UITabBar, UITabBarDelegate>,
+    DelegateProxyType,
+    UITabBarDelegate {
     /// Typed parent object.
-    public weak private(set) var tabBar: UITabBar?
+    public private(set) weak var tabBar: UITabBar?
 
     /// - parameter tabBar: Parent object for delegate proxy.
     public init(tabBar: ParentObject) {

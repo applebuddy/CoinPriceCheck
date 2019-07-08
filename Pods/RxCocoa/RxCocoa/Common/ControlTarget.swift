@@ -11,13 +11,13 @@
 import RxSwift
 
 #if os(iOS) || os(tvOS)
-    import UIKit
+import UIKit
 
-    typealias Control = UIKit.UIControl
+typealias Control = UIKit.UIControl
 #elseif os(macOS)
-    import Cocoa
+import Cocoa
 
-    typealias Control = Cocoa.NSControl
+typealias Control = Cocoa.NSControl
 #endif
 
 // This should be only used from `MainScheduler`
@@ -27,9 +27,9 @@ final class ControlTarget: RxTarget {
     let selector: Selector = #selector(ControlTarget.eventHandler(_:))
 
     weak var control: Control?
-#if os(iOS) || os(tvOS)
+    #if os(iOS) || os(tvOS)
     let controlEvents: UIControl.Event
-#endif
+    #endif
     var callback: Callback?
     #if os(iOS) || os(tvOS)
     init(control: Control, controlEvents: UIControl.Event, callback: @escaping Callback) {
@@ -41,14 +41,15 @@ final class ControlTarget: RxTarget {
 
         super.init()
 
-        control.addTarget(self, action: selector, for: controlEvents)
+        control.addTarget(self, action: self.selector, for: controlEvents)
 
-        let method = self.method(for: selector)
+        let method = self.method(for: self.selector)
         if method == nil {
             rxFatalError("Can't find method")
         }
     }
-#elseif os(macOS)
+
+    #elseif os(macOS)
     init(control: Control, callback: @escaping Callback) {
         MainScheduler.ensureRunningOnMainThread()
 
@@ -65,9 +66,9 @@ final class ControlTarget: RxTarget {
             rxFatalError("Can't find method")
         }
     }
-#endif
+    #endif
 
-    @objc func eventHandler(_ sender: Control!) {
+    @objc func eventHandler(_: Control!) {
         if let callback = self.callback, let control = self.control {
             callback(control)
         }
@@ -75,12 +76,12 @@ final class ControlTarget: RxTarget {
 
     override func dispose() {
         super.dispose()
-#if os(iOS) || os(tvOS)
+        #if os(iOS) || os(tvOS)
         self.control?.removeTarget(self, action: self.selector, for: self.controlEvents)
-#elseif os(macOS)
+        #elseif os(macOS)
         self.control?.target = nil
         self.control?.action = nil
-#endif
+        #endif
         self.callback = nil
     }
 }

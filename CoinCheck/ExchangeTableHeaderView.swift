@@ -11,7 +11,7 @@ import UIKit
 class SettingTableHeaderView: UIView {
     let headerTitleLabel: UILabel = {
         let headerTitleLabel = UILabel()
-        headerTitleLabel.text = "SettingTableView Header"
+        headerTitleLabel.text = "암호화폐 거래소를 선택해주세요."
         headerTitleLabel.textColor = UIColor.headerTitle
         return headerTitleLabel
     }()

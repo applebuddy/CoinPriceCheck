@@ -8,8 +8,8 @@
 
 #if os(iOS) || os(tvOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 @available(iOS 10.0, tvOS 10.0, *)
 extension UITableView: HasPrefetchDataSource {
@@ -20,22 +20,19 @@ extension UITableView: HasPrefetchDataSource {
 fileprivate let tableViewPrefetchDataSourceNotSet = TableViewPrefetchDataSourceNotSet()
 
 @available(iOS 10.0, tvOS 10.0, *)
-fileprivate final class TableViewPrefetchDataSourceNotSet
-    : NSObject
-    , UITableViewDataSourcePrefetching {
-
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {}
-
+fileprivate final class TableViewPrefetchDataSourceNotSet:
+    NSObject,
+    UITableViewDataSourcePrefetching {
+    func tableView(_: UITableView, prefetchRowsAt _: [IndexPath]) {}
 }
 
 @available(iOS 10.0, tvOS 10.0, *)
-open class RxTableViewDataSourcePrefetchingProxy
-    : DelegateProxy<UITableView, UITableViewDataSourcePrefetching>
-    , DelegateProxyType
-    , UITableViewDataSourcePrefetching {
-
+open class RxTableViewDataSourcePrefetchingProxy:
+    DelegateProxy<UITableView, UITableViewDataSourcePrefetching>,
+    DelegateProxyType,
+    UITableViewDataSourcePrefetching {
     /// Typed parent object.
-    public weak private(set) var tableView: UITableView?
+    public private(set) weak var tableView: UITableView?
 
     /// - parameter tableView: Parent object for delegate proxy.
     public init(tableView: ParentObject) {
@@ -72,12 +69,12 @@ open class RxTableViewDataSourcePrefetchingProxy
             subject.on(.next(indexPaths))
         }
 
-        (_requiredMethodsPrefetchDataSource ?? tableViewPrefetchDataSourceNotSet).tableView(tableView, prefetchRowsAt: indexPaths)
+        (self._requiredMethodsPrefetchDataSource ?? tableViewPrefetchDataSourceNotSet).tableView(tableView, prefetchRowsAt: indexPaths)
     }
 
     /// For more information take a look at `DelegateProxyType`.
     open override func setForwardToDelegate(_ forwardToDelegate: UITableViewDataSourcePrefetching?, retainDelegate: Bool) {
-        _requiredMethodsPrefetchDataSource = forwardToDelegate ?? tableViewPrefetchDataSourceNotSet
+        self._requiredMethodsPrefetchDataSource = forwardToDelegate ?? tableViewPrefetchDataSourceNotSet
         super.setForwardToDelegate(forwardToDelegate, retainDelegate: retainDelegate)
     }
 
@@ -86,8 +83,6 @@ open class RxTableViewDataSourcePrefetchingProxy
             subject.on(.completed)
         }
     }
-
 }
 
 #endif
-

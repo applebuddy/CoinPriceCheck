@@ -24,8 +24,8 @@
 		3896545022C9F6B200362A60 /* BithumbInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896544F22C9F6B200362A60 /* BithumbInfoView.swift */; };
 		3896545222C9FB6000362A60 /* CurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */; };
 		38BC0F4122C354640057BBC9 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4022C354640057BBC9 /* SettingView.swift */; };
-		38BC0F4622C3600F0057BBC9 /* SetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */; };
-		38BC0F4822C36FBA0057BBC9 /* SettingTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */; };
+		38BC0F4622C3600F0057BBC9 /* ExchangeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4522C3600F0057BBC9 /* ExchangeTableViewCell.swift */; };
+		38BC0F4822C36FBA0057BBC9 /* ExchangeTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4722C36FBA0057BBC9 /* ExchangeTableHeaderView.swift */; };
 		38BC0F4A22C37CD60057BBC9 /* APIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BC0F4922C37CD60057BBC9 /* APIData.swift */; };
 		BEA6234E44CCB3244A71D6CF /* Pods_CoinCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 399C8235BD1B17AB4FF3744A /* Pods_CoinCheck.framework */; };
 /* End PBXBuildFile section */
@@ -51,8 +51,8 @@
 		3896544F22C9F6B200362A60 /* BithumbInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbInfoView.swift; sourceTree = "<group>"; };
 		3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		38BC0F4022C354640057BBC9 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetingTableViewCell.swift; sourceTree = "<group>"; };
-		38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableHeaderView.swift; sourceTree = "<group>"; };
+		38BC0F4522C3600F0057BBC9 /* ExchangeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTableViewCell.swift; sourceTree = "<group>"; };
+		38BC0F4722C36FBA0057BBC9 /* ExchangeTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTableHeaderView.swift; sourceTree = "<group>"; };
 		38BC0F4922C37CD60057BBC9 /* APIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIData.swift; sourceTree = "<group>"; };
 		399C8235BD1B17AB4FF3744A /* Pods_CoinCheck.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CoinCheck.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3AC2D4B575F5DCA9BB368BE /* Pods-CoinCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinCheck.release.xcconfig"; path = "Target Support Files/Pods-CoinCheck/Pods-CoinCheck.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,9 +149,9 @@
 			children = (
 				38BC0F4022C354640057BBC9 /* SettingView.swift */,
 				3896544F22C9F6B200362A60 /* BithumbInfoView.swift */,
-				38BC0F4522C3600F0057BBC9 /* SetingTableViewCell.swift */,
+				38BC0F4522C3600F0057BBC9 /* ExchangeTableViewCell.swift */,
 				3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */,
-				38BC0F4722C36FBA0057BBC9 /* SettingTableHeaderView.swift */,
+				38BC0F4722C36FBA0057BBC9 /* ExchangeTableHeaderView.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -289,14 +289,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				38BC0F4A22C37CD60057BBC9 /* APIData.swift in Sources */,
-				38BC0F4622C3600F0057BBC9 /* SetingTableViewCell.swift in Sources */,
+				38BC0F4622C3600F0057BBC9 /* ExchangeTableViewCell.swift in Sources */,
 				3896545022C9F6B200362A60 /* BithumbInfoView.swift in Sources */,
 				3840D33B22BFB07400FA865D /* MainTableHearderView.swift in Sources */,
 				3896545222C9FB6000362A60 /* CurrencyTableViewCell.swift in Sources */,
 				3840D33522BF9EA900FA865D /* MainNavigationController.swift in Sources */,
 				3896544C22C9AAC200362A60 /* Exchanges.swift in Sources */,
 				3896544E22C9F66200362A60 /* CurrencyViewController.swift in Sources */,
-				38BC0F4822C36FBA0057BBC9 /* SettingTableHeaderView.swift in Sources */,
+				38BC0F4822C36FBA0057BBC9 /* ExchangeTableHeaderView.swift in Sources */,
 				3809EFBE22C8F79C0064A9E5 /* BithumbCurrencies.swift in Sources */,
 				3840D33722BFA0D500FA865D /* MainView.swift in Sources */,
 				38BC0F4122C354640057BBC9 /* SettingView.swift in Sources */,

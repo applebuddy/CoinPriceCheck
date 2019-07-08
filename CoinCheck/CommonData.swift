@@ -33,8 +33,6 @@ struct ViewSize {
     static let cellHeaderHeight: CGFloat = 60
 }
 
-let alert = UIAlertController(title: "dqwd", message: "qww", preferredStyle: UIAlertController.Style.alert)
-
 extension UIFont {
     func mainFont(size: CGFloat) -> UIFont {
         guard let mainFont = UIFont(name: "HelveticaNeue-Thin", size: size) else { return UIFont() }

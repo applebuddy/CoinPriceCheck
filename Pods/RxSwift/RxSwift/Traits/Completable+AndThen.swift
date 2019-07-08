@@ -60,7 +60,7 @@ extension PrimitiveSequenceType where Trait == CompletableTrait, Element == Neve
     }
 }
 
-final private class ConcatCompletable<Element>: Producer<Element> {
+private final class ConcatCompletable<Element>: Producer<Element> {
     fileprivate let _completable: Observable<Never>
     fileprivate let _second: Observable<Element>
 
@@ -76,15 +76,15 @@ final private class ConcatCompletable<Element>: Producer<Element> {
     }
 }
 
-final private class ConcatCompletableSink<Observer: ObserverType>
-    : Sink<Observer>
-    , ObserverType {
+private final class ConcatCompletableSink<Observer: ObserverType>:
+    Sink<Observer>,
+    ObserverType {
     typealias Element = Never
     typealias Parent = ConcatCompletable<Observer.Element>
 
     private let _parent: Parent
     private let _subscription = SerialDisposable()
-    
+
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         super.init(observer: observer, cancel: cancel)
@@ -92,7 +92,7 @@ final private class ConcatCompletableSink<Observer: ObserverType>
 
     func on(_ event: Event<Element>) {
         switch event {
-        case .error(let error):
+        case let .error(error):
             self.forwardOn(.error(error))
             self.dispose()
         case .next:
@@ -111,12 +111,12 @@ final private class ConcatCompletableSink<Observer: ObserverType>
     }
 }
 
-final private class ConcatCompletableSinkOther<Observer: ObserverType>
-    : ObserverType {
-    typealias Element = Observer.Element 
+private final class ConcatCompletableSinkOther<Observer: ObserverType>:
+    ObserverType {
+    typealias Element = Observer.Element
 
     typealias Parent = ConcatCompletableSink<Observer>
-    
+
     private let _parent: Parent
 
     init(parent: Parent) {

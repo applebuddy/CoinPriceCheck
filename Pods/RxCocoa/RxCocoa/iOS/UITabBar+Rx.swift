@@ -8,21 +8,19 @@
 
 #if os(iOS) || os(tvOS)
 
-import UIKit
 import RxSwift
+import UIKit
 
 /**
  iOS only
  */
 #if os(iOS)
 extension Reactive where Base: UITabBar {
-
     /// Reactive wrapper for `delegate` message `tabBar(_:willBeginCustomizing:)`.
     public var willBeginCustomizing: ControlEvent<[UITabBarItem]> {
-        
         let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:willBeginCustomizing:)))
             .map { a in
-                return try castOrThrow([UITabBarItem].self, a[1])
+                try castOrThrow([UITabBarItem].self, a[1])
             }
 
         return ControlEvent(events: source)
@@ -32,7 +30,7 @@ extension Reactive where Base: UITabBar {
     public var didBeginCustomizing: ControlEvent<[UITabBarItem]> {
         let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:didBeginCustomizing:)))
             .map { a in
-                return try castOrThrow([UITabBarItem].self, a[1])
+                try castOrThrow([UITabBarItem].self, a[1])
             }
 
         return ControlEvent(events: source)
@@ -61,14 +59,13 @@ extension Reactive where Base: UITabBar {
 
         return ControlEvent(events: source)
     }
-
 }
 #endif
 
 /**
  iOS and tvOS
  */
-    
+
 extension Reactive where Base: UITabBar {
     /// Reactive wrapper for `delegate`.
     ///
@@ -79,14 +76,13 @@ extension Reactive where Base: UITabBar {
 
     /// Reactive wrapper for `delegate` message `tabBar(_:didSelect:)`.
     public var didSelectItem: ControlEvent<UITabBarItem> {
-        let source = delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:didSelect:)))
+        let source = self.delegate.methodInvoked(#selector(UITabBarDelegate.tabBar(_:didSelect:)))
             .map { a in
-                return try castOrThrow(UITabBarItem.self, a[1])
+                try castOrThrow(UITabBarItem.self, a[1])
             }
 
         return ControlEvent(events: source)
     }
-
 }
 
 #endif

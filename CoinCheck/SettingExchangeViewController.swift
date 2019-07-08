@@ -15,7 +15,7 @@ enum SettingTableViewSections: Int {
 class SettingExchangeViewController: UIViewController {
     let settingTableViewIdentifier = "SettingTableView"
     var exchangeDataList: TradeResponse?
-    
+
     let settingView: SettingView = {
         let settingView = SettingView()
         return settingView
@@ -23,7 +23,7 @@ class SettingExchangeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "ㅠ_ㅠ"
+        self.navigationItem.title = "암호화폐 거래소 목록"
         self.settingView.settingTableView.delegate = self
         self.settingView.settingTableView.dataSource = self
         self.registCell()
@@ -35,7 +35,7 @@ class SettingExchangeViewController: UIViewController {
     }
 
     func registCell() {
-        self.settingView.settingTableView.register(SettingTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
+        self.settingView.settingTableView.register(ExchangeTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
     }
 }
 
@@ -48,7 +48,7 @@ extension SettingExchangeViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let settingTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? SettingTableViewCell else { return UITableViewCell() }
+        guard let settingTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? ExchangeTableViewCell else { return UITableViewCell() }
         settingTableViewCell.titleLabel.text = "\(Exchanges.ExchangeListString[indexPath.row])"
 //        settingTableViewCell.titleLabel.text = exchangeData.data.abt.
         return settingTableViewCell

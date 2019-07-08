@@ -8,72 +8,69 @@
 
 #if !os(Linux)
 
-    import func Foundation.objc_getAssociatedObject
-    import func Foundation.objc_setAssociatedObject
+import func Foundation.objc_getAssociatedObject
+import func Foundation.objc_setAssociatedObject
 
-    import RxSwift
+import RxSwift
 
 /**
-`DelegateProxyType` protocol enables using both normal delegates and Rx observable sequences with
-views that can have only one delegate/datasource registered.
+ `DelegateProxyType` protocol enables using both normal delegates and Rx observable sequences with
+ views that can have only one delegate/datasource registered.
 
-`Proxies` store information about observers, subscriptions and delegates
-for specific views.
+ `Proxies` store information about observers, subscriptions and delegates
+ for specific views.
 
-Type implementing `DelegateProxyType` should never be initialized directly.
+ Type implementing `DelegateProxyType` should never be initialized directly.
 
-To fetch initialized instance of type implementing `DelegateProxyType`, `proxy` method
-should be used.
+ To fetch initialized instance of type implementing `DelegateProxyType`, `proxy` method
+ should be used.
 
-This is more or less how it works.
+ This is more or less how it works.
 
+   +-------------------------------------------+
+   |                                           |
+   | UIView subclass (UIScrollView)            |
+   |                                           |
+   +-----------+-------------------------------+
+               |
+               | Delegate
+               |
+               |
+   +-----------v-------------------------------+
+   |                                           |
+   | Delegate proxy : DelegateProxyType        +-----+---->  Observable<T1>
+   |                , UIScrollViewDelegate     |     |
+   +-----------+-------------------------------+     +---->  Observable<T2>
+               |                                     |
+               |                                     +---->  Observable<T3>
+               |                                     |
+               | forwards events                     |
+               | to custom delegate                  |
+               |                                     v
+   +-----------v-------------------------------+
+   |                                           |
+   | Custom delegate (UIScrollViewDelegate)    |
+   |                                           |
+   +-------------------------------------------+
 
+ Since RxCocoa needs to automagically create those Proxys and because views that have delegates can be hierarchical
 
-      +-------------------------------------------+
-      |                                           |                           
-      | UIView subclass (UIScrollView)            |                           
-      |                                           |
-      +-----------+-------------------------------+                           
-                  |                                                           
-                  | Delegate                                                  
-                  |                                                           
-                  |                                                           
-      +-----------v-------------------------------+                           
-      |                                           |                           
-      | Delegate proxy : DelegateProxyType        +-----+---->  Observable<T1>
-      |                , UIScrollViewDelegate     |     |
-      +-----------+-------------------------------+     +---->  Observable<T2>
-                  |                                     |                     
-                  |                                     +---->  Observable<T3>
-                  |                                     |                     
-                  | forwards events                     |
-                  | to custom delegate                  |
-                  |                                     v                     
-      +-----------v-------------------------------+                           
-      |                                           |                           
-      | Custom delegate (UIScrollViewDelegate)    |                           
-      |                                           |
-      +-------------------------------------------+                           
+  UITableView : UIScrollView : UIView
 
+ .. and corresponding delegates are also hierarchical
 
-Since RxCocoa needs to automagically create those Proxys and because views that have delegates can be hierarchical
+  UITableViewDelegate : UIScrollViewDelegate : NSObject
 
-     UITableView : UIScrollView : UIView
+ ... this mechanism can be extended by using the following snippet in `registerKnownImplementations` or in some other
+  part of your app that executes before using `rx.*` (e.g. appDidFinishLaunching).
 
-.. and corresponding delegates are also hierarchical
+ RxScrollViewDelegateProxy.register { RxTableViewDelegateProxy(parentObject: $0) }
 
-     UITableViewDelegate : UIScrollViewDelegate : NSObject
-
-... this mechanism can be extended by using the following snippet in `registerKnownImplementations` or in some other
-     part of your app that executes before using `rx.*` (e.g. appDidFinishLaunching).
-
-    RxScrollViewDelegateProxy.register { RxTableViewDelegateProxy(parentObject: $0) }
-
-*/
-public protocol DelegateProxyType: class {
+ */
+public protocol DelegateProxyType: AnyObject {
     associatedtype ParentObject: AnyObject
     associatedtype Delegate
-    
+
     /// It is require that enumerate call `register` of the extended DelegateProxy subclasses here.
     static func registerKnownImplementations()
 
@@ -133,22 +130,21 @@ extension DelegateProxyType {
     static func _currentDelegate(for object: ParentObject) -> AnyObject? {
         return currentDelegate(for: object).map { $0 as AnyObject }
     }
-    
+
     static func _setCurrentDelegate(_ delegate: AnyObject?, to object: ParentObject) {
         return setCurrentDelegate(castOptionalOrFatalError(delegate), to: object)
     }
-    
+
     func _forwardToDelegate() -> AnyObject? {
         return self.forwardToDelegate().map { $0 as AnyObject }
     }
-    
+
     func _setForwardToDelegate(_ forwardToDelegate: AnyObject?, retainDelegate: Bool) {
         return self.setForwardToDelegate(castOptionalOrFatalError(forwardToDelegate), retainDelegate: retainDelegate)
     }
 }
 
 extension DelegateProxyType {
-
     /// Store DelegateProxy subclass to factory.
     /// When make 'Rx*DelegateProxy' subclass, call 'Rx*DelegateProxySubclass.register(for:_)' 1 time, or use it in DelegateProxyFactory
     /// 'Rx*DelegateProxy' can have one subclass implementation per concrete ParentObject type.
@@ -188,8 +184,7 @@ extension DelegateProxyType {
         let proxy: AnyObject
         if let existingProxy = maybeProxy {
             proxy = existingProxy
-        }
-        else {
+        } else {
             proxy = castOrFatalError(self.createProxy(for: object))
             self.assignProxy(proxy, toObject: object)
             assert(self.assignedProxy(for: object) === proxy)
@@ -238,7 +233,6 @@ extension DelegateProxyType {
         }
     }
 }
-
 
 // fileprivate extensions
 extension DelegateProxyType {
@@ -315,115 +309,114 @@ extension DelegateProxyType where ParentObject: HasPrefetchDataSource, Self.Dele
     }
 }
 
-    #if os(iOS) || os(tvOS)
-        import UIKit
+#if os(iOS) || os(tvOS)
+import UIKit
 
-        extension ObservableType {
-            func subscribeProxyDataSource<DelegateProxy: DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<Element>) -> Void)
-                -> Disposable
-                where DelegateProxy.ParentObject: UIView
-                , DelegateProxy.Delegate: AnyObject {
-                let proxy = DelegateProxy.proxy(for: object)
-                let unregisterDelegate = DelegateProxy.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
-                // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
-                object.layoutIfNeeded()
+extension ObservableType {
+    func subscribeProxyDataSource<DelegateProxy: DelegateProxyType>(ofObject object: DelegateProxy.ParentObject, dataSource: DelegateProxy.Delegate, retainDataSource: Bool, binding: @escaping (DelegateProxy, Event<Element>) -> Void)
+        -> Disposable
+        where DelegateProxy.ParentObject: UIView,
+        DelegateProxy.Delegate: AnyObject {
+        let proxy = DelegateProxy.proxy(for: object)
+        let unregisterDelegate = DelegateProxy.installForwardDelegate(dataSource, retainDelegate: retainDataSource, onProxyForObject: object)
+        // this is needed to flush any delayed old state (https://github.com/RxSwiftCommunity/RxDataSources/pull/75)
+        object.layoutIfNeeded()
 
-                let subscription = self.asObservable()
-                    .observeOn(MainScheduler())
-                    .catchError { error in
-                        bindingError(error)
-                        return Observable.empty()
-                    }
-                    // source can never end, otherwise it would release the subscriber, and deallocate the data source
-                    .concat(Observable.never())
-                    .takeUntil(object.rx.deallocated)
-                    .subscribe { [weak object] (event: Event<Element>) in
+        let subscription = self.asObservable()
+            .observeOn(MainScheduler())
+            .catchError { error in
+                bindingError(error)
+                return Observable.empty()
+            }
+            // source can never end, otherwise it would release the subscriber, and deallocate the data source
+            .concat(Observable.never())
+            .takeUntil(object.rx.deallocated)
+            .subscribe { [weak object] (event: Event<Element>) in
 
-                        if let object = object {
-                            assert(proxy === DelegateProxy.currentDelegate(for: object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(String(describing: DelegateProxy.currentDelegate(for: object)))")
-                        }
-                        
-                        binding(proxy, event)
-                        
-                        switch event {
-                        case .error(let error):
-                            bindingError(error)
-                            unregisterDelegate.dispose()
-                        case .completed:
-                            unregisterDelegate.dispose()
-                        default:
-                            break
-                        }
-                    }
-                    
-                return Disposables.create { [weak object] in
-                    subscription.dispose()
-                    object?.layoutIfNeeded()
+                if let object = object {
+                    assert(proxy === DelegateProxy.currentDelegate(for: object), "Proxy changed from the time it was first set.\nOriginal: \(proxy)\nExisting: \(String(describing: DelegateProxy.currentDelegate(for: object)))")
+                }
+
+                binding(proxy, event)
+
+                switch event {
+                case let .error(error):
+                    bindingError(error)
                     unregisterDelegate.dispose()
+                case .completed:
+                    unregisterDelegate.dispose()
+                default:
+                    break
                 }
             }
-        }
 
-    #endif
-
-    /**
-
-     To add delegate proxy subclasses call `DelegateProxySubclass.register()` in `registerKnownImplementations` or in some other
-     part of your app that executes before using `rx.*` (e.g. appDidFinishLaunching).
-
-         class RxScrollViewDelegateProxy: DelegateProxy {
-             public static func registerKnownImplementations() {
-                 self.register { RxTableViewDelegateProxy(parentObject: $0) }
-         }
-         ...
-
-
-     */
-    private class DelegateProxyFactory {
-        private static var _sharedFactories: [UnsafeRawPointer: DelegateProxyFactory] = [:]
-
-        fileprivate static func sharedFactory<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) -> DelegateProxyFactory {
-            MainScheduler.ensureRunningOnMainThread()
-            let identifier = DelegateProxy.identifier
-            if let factory = _sharedFactories[identifier] {
-                return factory
-            }
-            let factory = DelegateProxyFactory(for: proxyType)
-            _sharedFactories[identifier] = factory
-            DelegateProxy.registerKnownImplementations()
-            return factory
-        }
-
-        private var _factories: [ObjectIdentifier: ((AnyObject) -> AnyObject)]
-        private var _delegateProxyType: Any.Type
-        private var _identifier: UnsafeRawPointer
-
-        private init<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) {
-            self._factories = [:]
-            self._delegateProxyType = proxyType
-            self._identifier = proxyType.identifier
-        }
-
-        fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping (ParentObject) -> DelegateProxy) {
-                MainScheduler.ensureRunningOnMainThread()
-                precondition(self._identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
-                guard self._factories[ObjectIdentifier(ParentObject.self)] == nil else {
-                    rxFatalError("The factory of \(ParentObject.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
-                }
-                self._factories[ObjectIdentifier(ParentObject.self)] = { make(castOrFatalError($0)) }
-        }
-
-        fileprivate func createProxy(for object: AnyObject) -> AnyObject {
-            MainScheduler.ensureRunningOnMainThread()
-            var maybeMirror: Mirror? = Mirror(reflecting: object)
-            while let mirror = maybeMirror {
-                if let factory = self._factories[ObjectIdentifier(mirror.subjectType)] {
-                    return factory(object)
-                }
-                maybeMirror = mirror.superclassMirror
-            }
-            rxFatalError("DelegateProxy has no factory of \(object). Implement DelegateProxy subclass for \(object) first.")
+        return Disposables.create { [weak object] in
+            subscription.dispose()
+            object?.layoutIfNeeded()
+            unregisterDelegate.dispose()
         }
     }
+}
+
+#endif
+
+/**
+
+ To add delegate proxy subclasses call `DelegateProxySubclass.register()` in `registerKnownImplementations` or in some other
+ part of your app that executes before using `rx.*` (e.g. appDidFinishLaunching).
+
+     class RxScrollViewDelegateProxy: DelegateProxy {
+         public static func registerKnownImplementations() {
+             self.register { RxTableViewDelegateProxy(parentObject: $0) }
+     }
+     ...
+
+ */
+private class DelegateProxyFactory {
+    private static var _sharedFactories: [UnsafeRawPointer: DelegateProxyFactory] = [:]
+
+    fileprivate static func sharedFactory<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) -> DelegateProxyFactory {
+        MainScheduler.ensureRunningOnMainThread()
+        let identifier = DelegateProxy.identifier
+        if let factory = _sharedFactories[identifier] {
+            return factory
+        }
+        let factory = DelegateProxyFactory(for: proxyType)
+        _sharedFactories[identifier] = factory
+        DelegateProxy.registerKnownImplementations()
+        return factory
+    }
+
+    private var _factories: [ObjectIdentifier: (AnyObject) -> AnyObject]
+    private var _delegateProxyType: Any.Type
+    private var _identifier: UnsafeRawPointer
+
+    private init<DelegateProxy: DelegateProxyType>(for proxyType: DelegateProxy.Type) {
+        self._factories = [:]
+        self._delegateProxyType = proxyType
+        self._identifier = proxyType.identifier
+    }
+
+    fileprivate func extend<DelegateProxy: DelegateProxyType, ParentObject>(make: @escaping (ParentObject) -> DelegateProxy) {
+        MainScheduler.ensureRunningOnMainThread()
+        precondition(self._identifier == DelegateProxy.identifier, "Delegate proxy has inconsistent identifier")
+        guard self._factories[ObjectIdentifier(ParentObject.self)] == nil else {
+            rxFatalError("The factory of \(ParentObject.self) is duplicated. DelegateProxy is not allowed of duplicated base object type.")
+        }
+        self._factories[ObjectIdentifier(ParentObject.self)] = { make(castOrFatalError($0)) }
+    }
+
+    fileprivate func createProxy(for object: AnyObject) -> AnyObject {
+        MainScheduler.ensureRunningOnMainThread()
+        var maybeMirror: Mirror? = Mirror(reflecting: object)
+        while let mirror = maybeMirror {
+            if let factory = self._factories[ObjectIdentifier(mirror.subjectType)] {
+                return factory(object)
+            }
+            maybeMirror = mirror.superclassMirror
+        }
+        rxFatalError("DelegateProxy has no factory of \(object). Implement DelegateProxy subclass for \(object) first.")
+    }
+}
 
 #endif

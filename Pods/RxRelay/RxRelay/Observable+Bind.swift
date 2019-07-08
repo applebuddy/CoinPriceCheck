@@ -17,7 +17,7 @@ extension ObservableType {
      - returns: Disposable object that can be used to unsubscribe the observer.
      */
     public func bind(to relays: PublishRelay<Element>...) -> Disposable {
-        return bind(to: relays)
+        return self.bind(to: relays)
     }
 
     /**

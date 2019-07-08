@@ -7,7 +7,6 @@
 //
 
 extension ObservableType {
-
     /**
      Returns a sequence emitting only element _n_ emitted by an Observable
 
@@ -22,20 +21,20 @@ extension ObservableType {
     }
 }
 
-final private class ElementAtSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+private final class ElementAtSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
     typealias SourceType = Observer.Element
     typealias Parent = ElementAt<SourceType>
-    
+
     let _parent: Parent
     var _i: Int
-    
+
     init(parent: Parent, observer: Observer, cancel: Cancelable) {
         self._parent = parent
         self._i = parent._index
-        
+
         super.init(observer: observer, cancel: cancel)
     }
-    
+
     func on(_ event: Event<SourceType>) {
         switch event {
         case .next:
@@ -45,7 +44,7 @@ final private class ElementAtSink<Observer: ObserverType>: Sink<Observer>, Obser
                 self.forwardOn(.completed)
                 self.dispose()
             }
-            
+
             do {
                 _ = try decrementChecked(&self._i)
             } catch let e {
@@ -53,8 +52,8 @@ final private class ElementAtSink<Observer: ObserverType>: Sink<Observer>, Obser
                 self.dispose()
                 return
             }
-            
-        case .error(let e):
+
+        case let .error(e):
             self.forwardOn(.error(e))
             self.dispose()
         case .completed:
@@ -63,17 +62,17 @@ final private class ElementAtSink<Observer: ObserverType>: Sink<Observer>, Obser
             } else {
                 self.forwardOn(.completed)
             }
-            
+
             self.dispose()
         }
     }
 }
 
-final private class ElementAt<SourceType>: Producer<SourceType> {
+private final class ElementAt<SourceType>: Producer<SourceType> {
     let _source: Observable<SourceType>
     let _throwOnEmpty: Bool
     let _index: Int
-    
+
     init(source: Observable<SourceType>, index: Int, throwOnEmpty: Bool) {
         if index < 0 {
             rxFatalError("index can't be negative")
@@ -83,7 +82,7 @@ final private class ElementAt<SourceType>: Producer<SourceType> {
         self._index = index
         self._throwOnEmpty = throwOnEmpty
     }
-    
+
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == SourceType {
         let sink = ElementAtSink(parent: self, observer: observer, cancel: cancel)
         let subscription = self._source.subscribe(sink)

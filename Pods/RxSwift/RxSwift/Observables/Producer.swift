@@ -6,7 +6,7 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class Producer<Element> : Observable<Element> {
+class Producer<Element>: Observable<Element> {
     override init() {
         super.init()
     }
@@ -19,8 +19,7 @@ class Producer<Element> : Observable<Element> {
             disposer.setSinkAndSubscription(sink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
 
             return disposer
-        }
-        else {
+        } else {
             return CurrentThreadScheduler.instance.schedule(()) { _ in
                 let disposer = SinkDisposer()
                 let sinkAndSubscription = self.run(observer, cancel: disposer)
@@ -31,12 +30,12 @@ class Producer<Element> : Observable<Element> {
         }
     }
 
-    func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
+    func run<Observer: ObserverType>(_: Observer, cancel _: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         rxAbstractMethod()
     }
 }
 
-fileprivate final class SinkDisposer: Cancelable {
+private final class SinkDisposer: Cancelable {
     fileprivate enum DisposeState: Int32 {
         case disposed = 1
         case sinkAndSubscriptionSet = 2

@@ -6,12 +6,11 @@
 //  Copyright © 2017 Krunoslav Zaher. All rights reserved.
 //
 
-import RxSwift
 import Dispatch
 import Foundation
+import RxSwift
 
 extension ObservableType {
-
     /**
      Creates new subscription and sends elements to observer.
 
@@ -58,9 +57,9 @@ extension ObservableType {
             case let .error(error):
                 let error = "Binding error to variable: \(error)"
                 #if DEBUG
-                    rxFatalError(error)
+                rxFatalError(error)
                 #else
-                    print(error)
+                print(error)
                 #endif
             case .completed:
                 break
@@ -110,7 +109,6 @@ extension ObservableType {
         return binder(self)(curriedArgument)
     }
 
-
     /**
      Subscribes an element handler to an observable sequence.
 
@@ -125,118 +123,119 @@ extension ObservableType {
         return self.subscribe(onNext: onNext, onError: { error in
             let error = "Binding error: \(error)"
             #if DEBUG
-                rxFatalError(error)
+            rxFatalError(error)
             #else
-                print(error)
+            print(error)
             #endif
         })
     }
 }
 
 #if os(iOS) || os(tvOS)
-    import UIKit
+import UIKit
 
-    extension NSTextStorage {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTextStorageDelegateProxy {
-            fatalError()
-        }
+extension NSTextStorage {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxTextStorageDelegateProxy {
+        fatalError()
     }
+}
 
-    extension UIScrollView {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
-            fatalError()
-        }
+extension UIScrollView {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxScrollViewDelegateProxy {
+        fatalError()
     }
+}
 
-    extension UICollectionView {
-        @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
-            fatalError()
-        }
+extension UICollectionView {
+    @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDataSourceProxy() -> RxCollectionViewDataSourceProxy {
+        fatalError()
     }
+}
 
-    extension UITableView {
-        @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDataSourceProxy() -> RxTableViewDataSourceProxy {
-            fatalError()
-        }
+extension UITableView {
+    @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDataSourceProxy() -> RxTableViewDataSourceProxy {
+        fatalError()
     }
+}
 
-    extension UINavigationBar {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
-            fatalError()
-        }
+extension UINavigationBar {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
+        fatalError()
     }
+}
 
-    extension UINavigationController {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
-            fatalError()
-        }
+extension UINavigationController {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxNavigationControllerDelegateProxy {
+        fatalError()
     }
+}
 
-    extension UITabBar {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTabBarDelegateProxy {
-            fatalError()
-        }
+extension UITabBar {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxTabBarDelegateProxy {
+        fatalError()
     }
+}
 
-    extension UITabBarController {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTabBarControllerDelegateProxy {
-            fatalError()
-        }
+extension UITabBarController {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxTabBarControllerDelegateProxy {
+        fatalError()
     }
+}
 
-    extension UISearchBar {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxSearchBarDelegateProxy {
-            fatalError()
-        }
+extension UISearchBar {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxSearchBarDelegateProxy {
+        fatalError()
     }
+}
 
 #endif
 
 #if os(iOS)
-    extension UISearchController {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxSearchControllerDelegateProxy {
-            fatalError()
-        }
+extension UISearchController {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxSearchControllerDelegateProxy {
+        fatalError()
+    }
+}
+
+extension UIPickerView {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxPickerViewDelegateProxy {
+        fatalError()
     }
 
-    extension UIPickerView {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxPickerViewDelegateProxy {
-            fatalError()
-        }
+    @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDataSourceProxy() -> RxPickerViewDataSourceProxy {
+        fatalError()
+    }
+}
 
-        @available(*, unavailable, message: "createRxDataSourceProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDataSourceProxy() -> RxPickerViewDataSourceProxy {
-            fatalError()
-        }
+extension UIWebView {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxWebViewDelegateProxy {
+        fatalError()
     }
-    extension UIWebView {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxWebViewDelegateProxy {
-            fatalError()
-        }
-    }
+}
 #endif
 
 #if os(macOS)
-    import Cocoa
+import Cocoa
 
-    extension NSTextField {
-        @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
-        public func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
-            fatalError()
-        }
+extension NSTextField {
+    @available(*, unavailable, message: "createRxDelegateProxy is now unavailable, check DelegateProxyFactory")
+    public func createRxDelegateProxy() -> RxTextFieldDelegateProxy {
+        fatalError()
     }
+}
 #endif
 
 /**
@@ -256,7 +255,7 @@ extension Variable {
     ///
     /// - returns: Observable sequence.
     @available(*, deprecated, renamed: "asDriver()")
-    public func asSharedSequence<SharingStrategy: SharingStrategyProtocol>(strategy: SharingStrategy.Type = SharingStrategy.self) -> SharedSequence<SharingStrategy, Element> {
+    public func asSharedSequence<SharingStrategy: SharingStrategyProtocol>(strategy _: SharingStrategy.Type = SharingStrategy.self) -> SharedSequence<SharingStrategy, Element> {
         let source = self.asObservable()
             .observeOn(SharingStrategy.scheduler)
         return SharedSequence(source)
@@ -267,12 +266,12 @@ extension Variable {
 
 extension DelegateProxy {
     @available(*, unavailable, renamed: "assignedProxy(for:)")
-    public static func assignedProxyFor(_ object: ParentObject) -> Delegate? {
+    public static func assignedProxyFor(_: ParentObject) -> Delegate? {
         fatalError()
     }
-    
+
     @available(*, unavailable, renamed: "currentDelegate(for:)")
-    public static func currentDelegateFor(_ object: ParentObject) -> Delegate? {
+    public static func currentDelegateFor(_: ParentObject) -> Delegate? {
         fatalError()
     }
 }
@@ -280,17 +279,17 @@ extension DelegateProxy {
 #endif
 
 /**
-Observer that enforces interface binding rules:
+ Observer that enforces interface binding rules:
  * can't bind errors (in debug builds binding of errors causes `fatalError` in release builds errors are being logged)
  * ensures binding is performed on main thread
- 
-`UIBindingObserver` doesn't retain target interface and in case owned interface element is released, element isn't bound.
- 
+
+ `UIBindingObserver` doesn't retain target interface and in case owned interface element is released, element isn't bound.
+
  In case event binding is attempted from non main dispatch queue, event binding will be dispatched async to main dispatch
  queue.
-*/
+ */
 @available(*, deprecated, renamed: "Binder")
-public final class UIBindingObserver<UIElement, Value> : ObserverType where UIElement: AnyObject {
+public final class UIBindingObserver<UIElement, Value>: ObserverType where UIElement: AnyObject {
     public typealias Element = Value
 
     weak var UIElement: UIElement?
@@ -314,11 +313,11 @@ public final class UIBindingObserver<UIElement, Value> : ObserverType where UIEl
         }
 
         switch event {
-        case .next(let element):
+        case let .next(element):
             if let view = self.UIElement {
                 self.binding(view, element)
             }
-        case .error(let error):
+        case let .error(error):
             bindingError(error)
         case .completed:
             break
@@ -333,21 +332,18 @@ public final class UIBindingObserver<UIElement, Value> : ObserverType where UIEl
     }
 }
 
-
 #if os(iOS)
-    extension Reactive where Base: UIRefreshControl {
-
-        /// Bindable sink for `beginRefreshing()`, `endRefreshing()` methods.
-        @available(*, deprecated, renamed: "isRefreshing")
-        public var refreshing: Binder<Bool> {
-            return self.isRefreshing
-        }
+extension Reactive where Base: UIRefreshControl {
+    /// Bindable sink for `beginRefreshing()`, `endRefreshing()` methods.
+    @available(*, deprecated, renamed: "isRefreshing")
+    public var refreshing: Binder<Bool> {
+        return self.isRefreshing
     }
+}
 #endif
 
 #if os(iOS) || os(tvOS)
 extension Reactive where Base: UIImageView {
-
     /// Bindable sink for `image` property.
     /// - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
     @available(*, deprecated, renamed: "image")
@@ -362,15 +358,14 @@ extension Reactive where Base: UIImageView {
 
                     imageView.layer.add(transition, forKey: kCATransition)
                 }
-            }
-            else {
+            } else {
                 imageView.layer.removeAllAnimations()
             }
             imageView.image = image
         }
     }
 }
-    
+
 extension Reactive where Base: UISegmentedControl {
     @available(*, deprecated, renamed: "enabledForSegment(at:)")
     public func enabled(forSegmentAt segmentAt: Int) -> Binder<Bool> {
@@ -381,30 +376,28 @@ extension Reactive where Base: UISegmentedControl {
 
 #if os(macOS)
 
-    extension Reactive where Base: NSImageView {
-
-        /// Bindable sink for `image` property.
-        ///
-        /// - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
-        @available(*, deprecated, renamed: "image")
-        public func image(transitionType: String? = nil) -> Binder<NSImage?> {
-            return Binder(self.base) { control, value in
-                if let transitionType = transitionType {
-                    if value != nil {
-                        let transition = CATransition()
-                        transition.duration = 0.25
-                        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-                        transition.type = CATransitionType(rawValue: transitionType)
-                        control.layer?.add(transition, forKey: kCATransition)
-                    }
+extension Reactive where Base: NSImageView {
+    /// Bindable sink for `image` property.
+    ///
+    /// - parameter transitionType: Optional transition type while setting the image (kCATransitionFade, kCATransitionMoveIn, ...)
+    @available(*, deprecated, renamed: "image")
+    public func image(transitionType: String? = nil) -> Binder<NSImage?> {
+        return Binder(self.base) { control, value in
+            if let transitionType = transitionType {
+                if value != nil {
+                    let transition = CATransition()
+                    transition.duration = 0.25
+                    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+                    transition.type = CATransitionType(rawValue: transitionType)
+                    control.layer?.add(transition, forKey: kCATransition)
                 }
-                else {
-                    control.layer?.removeAllAnimations()
-                }
-                control.image = value
+            } else {
+                control.layer?.removeAllAnimations()
             }
+            control.image = value
         }
     }
+}
 #endif
 
 import RxSwift
@@ -421,9 +414,8 @@ extension Variable {
     }
 }
 
-
 private let errorMessage = "`drive*` family of methods can be only called from `MainThread`.\n" +
-"This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
+    "This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
 
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
     /**
@@ -476,9 +468,9 @@ extension ObservableType {
             case let .error(error):
                 let error = "Binding error to variable: \(error)"
                 #if DEBUG
-                    rxFatalError(error)
+                rxFatalError(error)
                 #else
-                    print(error)
+                print(error)
                 #endif
             case .completed:
                 break
@@ -501,6 +493,7 @@ extension ObservableType {
 }
 
 // MARK: throttle
+
 extension SharedSequenceConvertibleType {
     /**
      Returns an Observable that emits the first and the latest item emitted by the source Observable during sequential time windows of a specified duration.
@@ -516,7 +509,7 @@ extension SharedSequenceConvertibleType {
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timeout(_:latest:)")
     public func throttle(_ dueTime: Foundation.TimeInterval, latest: Bool = true)
         -> SharedSequence<SharingStrategy, Element> {
-        return throttle(.milliseconds(Int(dueTime * 1000.0)), latest: latest)
+        return self.throttle(.milliseconds(Int(dueTime * 1000.0)), latest: latest)
     }
 
     /**
@@ -528,18 +521,18 @@ extension SharedSequenceConvertibleType {
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "debounce(_:)")
     public func debounce(_ dueTime: Foundation.TimeInterval)
         -> SharedSequence<SharingStrategy, Element> {
-        return debounce(.milliseconds(Int(dueTime * 1000.0)))
+        return self.debounce(.milliseconds(Int(dueTime * 1000.0)))
     }
 }
 
 // MARK: delay
+
 extension SharedSequenceConvertibleType {
-    
     /**
      Returns an observable sequence by the source observable sequence shifted forward in time by a specified delay. Error events from the source observable sequence are not delayed.
-     
+
      - seealso: [delay operator on reactivex.io](http://reactivex.io/documentation/operators/delay.html)
-     
+
      - parameter dueTime: Relative time shift of the source by.
      - parameter scheduler: Scheduler to run the subscription delay timer on.
      - returns: the source Observable shifted in time by the specified delay.
@@ -547,23 +540,23 @@ extension SharedSequenceConvertibleType {
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "delay(_:)")
     public func delay(_ dueTime: Foundation.TimeInterval)
         -> SharedSequence<SharingStrategy, Element> {
-        return delay(.milliseconds(Int(dueTime * 1000.0)))
+        return self.delay(.milliseconds(Int(dueTime * 1000.0)))
     }
 }
 
-extension SharedSequence where Element : RxAbstractInteger {
+extension SharedSequence where Element: RxAbstractInteger {
     /**
      Returns an observable sequence that produces a value after each period, using the specified scheduler to run timers and to send out observer messages.
-     
+
      - seealso: [interval operator on reactivex.io](http://reactivex.io/documentation/operators/interval.html)
-     
+
      - parameter period: Period for producing the values in the resulting sequence.
      - returns: An observable sequence that produces a value after each period.
      */
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "interval(_:)")
     public static func interval(_ period: Foundation.TimeInterval)
         -> SharedSequence<SharingStrategy, Element> {
-        return interval(.milliseconds(Int(period * 1000.0)))
+        return self.interval(.milliseconds(Int(period * 1000.0)))
     }
 }
 
@@ -572,9 +565,9 @@ extension SharedSequence where Element : RxAbstractInteger {
 extension SharedSequence where Element: RxAbstractInteger {
     /**
      Returns an observable sequence that periodically produces a value after the specified initial relative due time has elapsed, using the specified scheduler to run timers.
-     
+
      - seealso: [timer operator on reactivex.io](http://reactivex.io/documentation/operators/timer.html)
-     
+
      - parameter dueTime: Relative time at which to produce the first value.
      - parameter period: Period to produce subsequent values.
      - returns: An observable sequence that produces a value after due time has elapsed and then each period.
@@ -582,7 +575,6 @@ extension SharedSequence where Element: RxAbstractInteger {
     @available(*, deprecated, message: "Use DispatchTimeInterval overload instead.", renamed: "timer(_:)")
     public static func timer(_ dueTime: Foundation.TimeInterval, period: Foundation.TimeInterval)
         -> SharedSequence<SharingStrategy, Element> {
-        return timer(.milliseconds(Int(dueTime * 1000.0)), period: .milliseconds(Int(period * 1000.0)))
+        return self.timer(.milliseconds(Int(dueTime * 1000.0)), period: .milliseconds(Int(period * 1000.0)))
     }
 }
-

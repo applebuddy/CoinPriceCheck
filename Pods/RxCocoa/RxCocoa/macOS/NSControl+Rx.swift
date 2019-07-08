@@ -15,7 +15,6 @@ private var rx_value_key: UInt8 = 0
 private var rx_control_events_key: UInt8 = 0
 
 extension Reactive where Base: NSControl {
-
     /// Reactive wrapper for control event.
     public var controlEvent: ControlEvent<()> {
         MainScheduler.ensureRunningOnMainThread()
@@ -32,11 +31,11 @@ extension Reactive where Base: NSControl {
                 let observer = ControlTarget(control: control) { _ in
                     observer.on(.next(()))
                 }
-                
+
                 return observer
             }
-			.takeUntil(self.deallocated)
-			.share()
+            .takeUntil(self.deallocated)
+            .share()
         }
 
         return ControlEvent(events: source)
@@ -53,29 +52,29 @@ extension Reactive where Base: NSControl {
         MainScheduler.ensureRunningOnMainThread()
 
         let source = self.base.rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<()> in
-                return Observable.create { [weak weakControl = self.base] (observer: AnyObserver<()>) in
-                    guard let control = weakControl else {
-                        observer.on(.completed)
-                        return Disposables.create()
-                    }
-
-                    observer.on(.next(()))
-
-                    let observer = ControlTarget(control: control) { _ in
-                        if weakControl != nil {
-                            observer.on(.next(()))
-                        }
-                    }
-
-                    return observer
+            Observable.create { [weak weakControl = self.base] (observer: AnyObserver<()>) in
+                guard let control = weakControl else {
+                    observer.on(.completed)
+                    return Disposables.create()
                 }
-                .takeUntil(self.deallocated)
-                .share(replay: 1, scope: .whileConnected)
+
+                observer.on(.next(()))
+
+                let observer = ControlTarget(control: control) { _ in
+                    if weakControl != nil {
+                        observer.on(.next(()))
+                    }
+                }
+
+                return observer
             }
-            .flatMap { [weak base] _ -> Observable<T> in
-                guard let control = base else { return Observable.empty() }
-                return Observable.just(getter(control))
-            }
+            .takeUntil(self.deallocated)
+            .share(replay: 1, scope: .whileConnected)
+        }
+        .flatMap { [weak base] _ -> Observable<T> in
+            guard let control = base else { return Observable.empty() }
+            return Observable.just(getter(control))
+        }
 
         let bindingObserver = Binder(self.base, binding: setter)
 
@@ -89,6 +88,5 @@ extension Reactive where Base: NSControl {
         }
     }
 }
-
 
 #endif

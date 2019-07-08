@@ -6,27 +6,27 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-class Sink<Observer: ObserverType> : Disposable {
+class Sink<Observer: ObserverType>: Disposable {
     fileprivate let _observer: Observer
     fileprivate let _cancel: Cancelable
     fileprivate let _disposed = AtomicInt(0)
 
     #if DEBUG
-        fileprivate let _synchronizationTracker = SynchronizationTracker()
+    fileprivate let _synchronizationTracker = SynchronizationTracker()
     #endif
 
     init(observer: Observer, cancel: Cancelable) {
-#if TRACE_RESOURCES
+        #if TRACE_RESOURCES
         _ = Resources.incrementTotal()
-#endif
+        #endif
         self._observer = observer
         self._cancel = cancel
     }
 
     final func forwardOn(_ event: Event<Observer.Element>) {
         #if DEBUG
-            self._synchronizationTracker.register(synchronizationErrorMessage: .default)
-            defer { self._synchronizationTracker.unregister() }
+        self._synchronizationTracker.register(synchronizationErrorMessage: .default)
+        defer { self._synchronizationTracker.unregister() }
         #endif
         if isFlagSet(self._disposed, 1) {
             return
@@ -48,14 +48,14 @@ class Sink<Observer: ObserverType> : Disposable {
     }
 
     deinit {
-#if TRACE_RESOURCES
-       _ =  Resources.decrementTotal()
-#endif
+        #if TRACE_RESOURCES
+        _ = Resources.decrementTotal()
+        #endif
     }
 }
 
 final class SinkForward<Observer: ObserverType>: ObserverType {
-    typealias Element = Observer.Element 
+    typealias Element = Observer.Element
 
     private let _forward: Sink<Observer>
 
