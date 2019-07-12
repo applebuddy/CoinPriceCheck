@@ -18,7 +18,7 @@ class MainViewController: UIViewController {
         let mainView = MainView()
         return mainView
     }()
-
+    
     let addBarButton: UIButton = {
         let addBarButton = UIButton(type: .custom)
         addBarButton.setTitle("＋", for: .normal)
@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
         addBarButton.isUserInteractionEnabled = true
         return addBarButton
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -37,24 +37,24 @@ class MainViewController: UIViewController {
         self.registerCell()
         self.setBarButtonItem()
     }
-
+    
     override func loadView() {
         super.loadView()
         self.view = self.mainView
     }
-
+    
     // MARK: - Setting Methods
-
+    
     func registerCell() {
         self.mainView.mainTableView.register(MainTableViewCell.self, forCellReuseIdentifier: self.mainTableViewCellIdentifier)
     }
-
+    
     func setBarButtonItem() {
         self.addBarButton.addTarget(self, action: #selector(self.transitionToNextView(_:)), for: UIControl.Event.touchUpInside)
         let addBarButtonItem = UIBarButtonItem(customView: addBarButton)
         self.navigationItem.rightBarButtonItem = addBarButtonItem
     }
-
+    
     // MARKL- Touch Event Methodds
     @objc func transitionToNextView(_: UIButton) {
         print("???")
@@ -65,9 +65,9 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 3
+        return 1
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: self.mainTableViewCellIdentifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         mainCell.priceLabel.text = "설정한 종목만 메인에 띄워진다."
@@ -82,7 +82,7 @@ extension MainViewController: UITableViewDelegate {
         case .mainSection: return MainTableHeaderView()
         }
     }
-
+    
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         return ViewSize.cellHeaderHeight
     }

@@ -26,6 +26,13 @@ class CurrencyTableViewCell: UITableViewCell {
         priceLabel.font = UIFont.boldSystemFont(ofSize: 23)
         return priceLabel
     }()
+    
+    let starImageView: UIImageView = {
+        let starImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        starImageView.isUserInteractionEnabled = false
+        starImageView.image = #imageLiteral(resourceName: "star")
+        return starImageView
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,14 +48,23 @@ class CurrencyTableViewCell: UITableViewCell {
         addSubview(self.titleImageView)
         addSubview(self.titleLabel)
         addSubview(self.priceLabel)
+        addSubview(self.starImageView)
     }
 
     func addContraints() {
+        self.starImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            starImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
+            starImageView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+            starImageView.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.3),
+            starImageView.widthAnchor.constraint(equalTo: starImageView.heightAnchor)
+            ])
+        
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
-            titleImageView.heightAnchor.constraint(equalToConstant: 70),
+            titleImageView.heightAnchor.constraint(equalToConstant: 60),
             titleImageView.widthAnchor.constraint(equalTo: titleImageView.heightAnchor, multiplier: 1.0),
         ])
 
@@ -56,7 +72,7 @@ class CurrencyTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor),
-            titleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+            titleLabel.rightAnchor.constraint(equalTo: starImageView.rightAnchor, constant: -ViewInsets.rightInset),
             titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor),
         ])
 

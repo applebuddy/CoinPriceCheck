@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3802E69522D8619A000F251D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3802E69422D8618C000F251D /* Assets.xcassets */; };
 		3809EFBE22C8F79C0064A9E5 /* BithumbCurrencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3809EFBD22C8F79C0064A9E5 /* BithumbCurrencies.swift */; };
 		3840D32322BF9DB600FA865D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D32222BF9DB600FA865D /* AppDelegate.swift */; };
 		3840D32522BF9DB600FA865D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D32422BF9DB600FA865D /* MainViewController.swift */; };
 		3840D32822BF9DB600FA865D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3840D32622BF9DB600FA865D /* Main.storyboard */; };
-		3840D32A22BF9DB700FA865D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3840D32922BF9DB700FA865D /* Assets.xcassets */; };
 		3840D32D22BF9DB700FA865D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3840D32B22BF9DB700FA865D /* LaunchScreen.storyboard */; };
 		3840D33522BF9EA900FA865D /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D33422BF9EA900FA865D /* MainNavigationController.swift */; };
 		3840D33722BFA0D500FA865D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3840D33622BFA0D500FA865D /* MainView.swift */; };
@@ -32,12 +32,12 @@
 
 /* Begin PBXFileReference section */
 		23832D191D586499B1C0C7B9 /* Pods-CoinCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CoinCheck.debug.xcconfig"; path = "Target Support Files/Pods-CoinCheck/Pods-CoinCheck.debug.xcconfig"; sourceTree = "<group>"; };
+		3802E69422D8618C000F251D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3809EFBD22C8F79C0064A9E5 /* BithumbCurrencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbCurrencies.swift; sourceTree = "<group>"; };
 		3840D31F22BF9DB600FA865D /* CoinCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3840D32222BF9DB600FA865D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3840D32422BF9DB600FA865D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		3840D32722BF9DB600FA865D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3840D32922BF9DB700FA865D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3840D32C22BF9DB700FA865D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3840D32E22BF9DB700FA865D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3840D33422BF9EA900FA865D /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
@@ -75,6 +75,7 @@
 			children = (
 				3840D32122BF9DB600FA865D /* CoinCheck */,
 				3840D32022BF9DB600FA865D /* Products */,
+				3802E69422D8618C000F251D /* Assets.xcassets */,
 				A280C93AB597455E5B78706C /* Pods */,
 				6AC1A7CA925705FEE54E3A6D /* Frameworks */,
 			);
@@ -94,7 +95,6 @@
 				3840D32222BF9DB600FA865D /* AppDelegate.swift */,
 				38BC0F3E22C353E20057BBC9 /* View */,
 				38BC0F3F22C353EC0057BBC9 /* Controller */,
-				3840D32922BF9DB700FA865D /* Assets.xcassets */,
 				3840D32622BF9DB600FA865D /* Main.storyboard */,
 				3840D32B22BF9DB700FA865D /* LaunchScreen.storyboard */,
 				3840D32E22BF9DB700FA865D /* Info.plist */,
@@ -234,7 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3840D32D22BF9DB700FA865D /* LaunchScreen.storyboard in Resources */,
-				3840D32A22BF9DB700FA865D /* Assets.xcassets in Resources */,
+				3802E69522D8619A000F251D /* Assets.xcassets in Resources */,
 				3840D32822BF9DB600FA865D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,7 +461,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ourtrees.myProfile.CoinCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -480,7 +480,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ourtrees.myProfile.CoinCheck;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

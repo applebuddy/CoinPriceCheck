@@ -16,27 +16,27 @@ enum BithumbTableViewSections: Int {
 
 class CurrencyViewController: UIViewController {
     // MARK: - Properties
-
+    
     let disposeBag = DisposeBag() // 뷰가 할당 해제될 때 놓아줄 수 있는 일회용품의 Rx 가방
     let bithumbTableViewCellIdentifier: String = "bithumbTableViewCellIdentifier"
     var currencyNameString: [String]?
     var shownCurrencyNameString: [String]?
     var isSearched: Bool = false
-
+    
     // MARK: - UIs
-
+    
     let mainView: BithumbInfoView = {
         let mainView = BithumbInfoView()
         return mainView
     }()
-
+    
     // MARK: - ViewController App Cycle
-
+    
     override func loadView() {
         super.loadView()
         view = self.mainView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mainView.bithumbTableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: self.bithumbTableViewCellIdentifier)
@@ -47,13 +47,13 @@ class CurrencyViewController: UIViewController {
         self.setCellData()
         self.setSearchBar()
     }
-
+    
     override func viewDidAppear(_: Bool) {
         super.viewDidAppear(true)
     }
-
+    
     // MARK: - Setting Methods
-
+    
     func setSearchBar() {
         guard let currencyNameString = self.currencyNameString else { return }
         self.mainView.searchBar
@@ -70,7 +70,7 @@ class CurrencyViewController: UIViewController {
             })
             .disposed(by: self.disposeBag)
     }
-
+    
     func setCellData() {
         guard let exchangeIndex = ExchangeIndex(rawValue: CommonData.shared.selectedExchangeIndex) else { return }
         switch exchangeIndex {
@@ -80,7 +80,7 @@ class CurrencyViewController: UIViewController {
             self.setBithumbData()
         }
     }
-
+    
     func setBithumbData() {
         // "https://api.bithumb.com/public/orderbook/ALL"
         // "https://api.bithumb.com/public/ticker/ALL"
@@ -107,28 +107,51 @@ class CurrencyViewController: UIViewController {
             print("Unable to parse JSON : \(error.localizedDescription)")
         }
     }
+    
+    func checkCurrencyIndex(_ imageView: UIImageView){
+        let selectedIndex = imageView.tag
+        if isSearched == false {
+            guard let nowCurrencyString = self.currencyNameString else { return }
+            print("\(selectedIndex): \(nowCurrencyString[selectedIndex])")
+        } else {
+            guard let shownCurrencyString = self.shownCurrencyNameString else { return }
+            print("\(selectedIndex): \(shownCurrencyString[selectedIndex])")
+        }
+    }
+    @objc func cellStarImageViewPressed(_ sender: UITapGestureRecognizer){
+        guard let selectedCellStarView = sender.view as? UIImageView else { return }
+        // 클릭한 셀의 암호화폐 정보를 즐겨찾기 설정한다.
+        checkCurrencyIndex(selectedCellStarView)
+    }
 }
 
 extension CurrencyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? CurrencyTableViewCell,
-            let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice,
-            let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString as? [String] else { return UITableViewCell() }
+            let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice else { return UITableViewCell() }
+        
+        let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
         if self.isSearched == true {
-            guard let shownCurrencyNameString = self.shownCurrencyNameString as? [String] else { return UITableViewCell() }
+            guard let shownCurrencyNameString = self.shownCurrencyNameString else { return UITableViewCell() }
             bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString[indexPath.row])/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
         } else {
             bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
         }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellStarImageViewPressed(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        bithumbTableViewCell.starImageView.tag = indexPath.row
+        bithumbTableViewCell.starImageView.isUserInteractionEnabled = true
+ bithumbTableViewCell.starImageView.addGestureRecognizer(tapGestureRecognizer)
         return bithumbTableViewCell
     }
-
+    
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionIndex = BithumbTableViewSections(rawValue: section) else { return 0 }
         let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
-
+        
         if self.isSearched == true {
             let shownCurrencyNameString = self.shownCurrencyNameString
             switch sectionIndex {
