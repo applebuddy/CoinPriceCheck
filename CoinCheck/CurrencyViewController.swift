@@ -109,7 +109,7 @@ class CurrencyViewController: UIViewController {
     }
     
     func checkCurrencyIndex(_ imageView: UIImageView){
-        let selectedIndex = imageView.tag
+        let selectedIndex = imageView.tag - 100
         if isSearched == false {
             guard let nowCurrencyString = self.currencyNameString else { return }
             print("\(selectedIndex): \(nowCurrencyString[selectedIndex])")
@@ -118,9 +118,18 @@ class CurrencyViewController: UIViewController {
             print("\(selectedIndex): \(shownCurrencyString[selectedIndex])")
         }
     }
+    
     @objc func cellStarImageViewPressed(_ sender: UITapGestureRecognizer){
         guard let selectedCellStarView = sender.view as? UIImageView else { return }
         // 클릭한 셀의 암호화폐 정보를 즐겨찾기 설정한다.
+        
+        // issue) 전체 암호화폐 정보 셋팅 유무를 싱글턴으로 관리해서 셋팅 된 것만 메인에 뿌려주도록 한다.
+//        if selectedCellStarView.image == #imageLiteral(resourceName: "star") {
+//            selectedCellStarView.image = #imageLiteral(resourceName: "star_")
+//        } else {
+//            selectedCellStarView.image = #imageLiteral(resourceName: "star")
+//        }
+        
         checkCurrencyIndex(selectedCellStarView)
     }
 }
@@ -142,7 +151,7 @@ extension CurrencyViewController: UITableViewDataSource {
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellStarImageViewPressed(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
-        bithumbTableViewCell.starImageView.tag = indexPath.row
+        bithumbTableViewCell.starImageView.tag = 100 + indexPath.row
         bithumbTableViewCell.starImageView.isUserInteractionEnabled = true
  bithumbTableViewCell.starImageView.addGestureRecognizer(tapGestureRecognizer)
         return bithumbTableViewCell
