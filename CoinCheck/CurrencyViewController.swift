@@ -16,34 +16,35 @@ enum BithumbTableViewSections: Int {
 
 class CurrencyViewController: UIViewController {
     // MARK: - Properties
-    
+
     let disposeBag = DisposeBag() // 뷰가 할당 해제될 때 놓아줄 수 있는 일회용품의 Rx 가방
     let bithumbTableViewCellIdentifier: String = "bithumbTableViewCellIdentifier"
     var currencyNameString: [String]?
     var shownCurrencyNameString: [String]?
     var nowIndexPath: IndexPath?
     var isSearched: Bool = false
-    
+
     // MARK: Timer
+
     var checkTimer: Timer = {
         let checkTimer = Timer()
         return checkTimer
     }()
-    
+
     // MARK: - UIs
-    
+
     let mainView: BithumbInfoView = {
         let mainView = BithumbInfoView()
         return mainView
     }()
-    
+
     // MARK: - ViewController App Cycle
-    
+
     override func loadView() {
         super.loadView()
         view = self.mainView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mainView.bithumbTableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: self.bithumbTableViewCellIdentifier)
@@ -54,16 +55,15 @@ class CurrencyViewController: UIViewController {
         self.setBithumbData()
         self.setCellData()
         self.setSearchBar()
-        checkTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(refreshBithumbData(_:)), userInfo: nil, repeats: true)
-        
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.refreshBithumbData(_:)), userInfo: nil, repeats: true)
     }
-    
+
     override func viewDidAppear(_: Bool) {
         super.viewDidAppear(true)
     }
-    
+
     // MARK: - Setting Methods
-    
+
     func setSearchBar() {
         guard let currencyNameString = self.currencyNameString else { return }
         self.mainView.searchBar
@@ -80,7 +80,7 @@ class CurrencyViewController: UIViewController {
             })
             .disposed(by: self.disposeBag)
     }
-    
+
     func setCellData() {
         guard let exchangeIndex = ExchangeIndex(rawValue: CommonData.shared.selectedExchangeIndex) else { return }
         switch exchangeIndex {
@@ -89,13 +89,13 @@ class CurrencyViewController: UIViewController {
             navigationItem.title = "Bithumb 암호화폐 현항"
         }
     }
-    
-    @objc func refreshBithumbData(_ timer: Timer) {
-        setBithumbData()
-        setCellData()
-        mainView.bithumbTableView.reloadData()
+
+    @objc func refreshBithumbData(_: Timer) {
+        self.setBithumbData()
+        self.setCellData()
+        self.mainView.bithumbTableView.reloadData()
     }
-    
+
     func setBithumbData() {
         // "https://api.bithumb.com/public/orderbook/ALL"
         // "https://api.bithumb.com/public/ticker/ALL"
@@ -122,10 +122,10 @@ class CurrencyViewController: UIViewController {
             print("Unable to parse JSON : \(error.localizedDescription)")
         }
     }
-    
-    func checkCurrencyIndex(_ imageView: UIImageView){
+
+    func checkCurrencyIndex(_ imageView: UIImageView) {
         let selectedIndex = imageView.tag - 100
-        if isSearched == false {
+        if self.isSearched == false {
             guard let nowCurrencyString = self.currencyNameString else { return }
             print("\(selectedIndex): \(nowCurrencyString[selectedIndex])")
         } else {
@@ -133,20 +133,20 @@ class CurrencyViewController: UIViewController {
             print("\(selectedIndex): \(shownCurrencyString[selectedIndex])")
         }
     }
-    
-    @objc func cellStarImageViewPressed(_ sender: UITapGestureRecognizer){
+
+    @objc func cellStarImageViewPressed(_ sender: UITapGestureRecognizer) {
         guard let selectedCellStarView = sender.view as? UIImageView,
             let nowIndexPath = mainView.bithumbTableView.indexPathForSelectedRow,
             let selectedCell = mainView.bithumbTableView.cellForRow(at: nowIndexPath) as? CurrencyTableViewCell,
-        let selectedCellText = selectedCell.titleLabel.text else { return }
-        
+            let selectedCellText = selectedCell.titleLabel.text else { return }
+
         if BithumbCurrencies.bithumbCurrencySetKey[selectedCellText] == 0 {
             BithumbCurrencies.bithumbCurrencySetKey.updateValue(1, forKey: selectedCellText)
         } else {
             BithumbCurrencies.bithumbCurrencySetKey.updateValue(0, forKey: selectedCellText)
         }
-        
-        checkCurrencyIndex(selectedCellStarView)
+
+        self.checkCurrencyIndex(selectedCellStarView)
     }
 }
 
@@ -154,7 +154,7 @@ extension CurrencyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? CurrencyTableViewCell,
             let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice else { return UITableViewCell() }
-        
+
         self.nowIndexPath = indexPath
         let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
         if self.isSearched == true {
@@ -166,26 +166,24 @@ extension CurrencyViewController: UITableViewDataSource {
             } else {
                 bithumbTableViewCell.starImageView.image = UIImage(named: "star_")
             }
-            
-                
-            
+
         } else {
             bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
         }
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellStarImageViewPressed(_:)))
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.cellStarImageViewPressed(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
         bithumbTableViewCell.starImageView.tag = 100 + indexPath.row
         bithumbTableViewCell.starImageView.isUserInteractionEnabled = true
- bithumbTableViewCell.starImageView.addGestureRecognizer(tapGestureRecognizer)
+        bithumbTableViewCell.starImageView.addGestureRecognizer(tapGestureRecognizer)
         return bithumbTableViewCell
     }
-    
+
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionIndex = BithumbTableViewSections(rawValue: section) else { return 0 }
         let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
-        
+
         if self.isSearched == true {
             let shownCurrencyNameString = self.shownCurrencyNameString
             switch sectionIndex {

@@ -9,9 +9,8 @@
 import UIKit
 
 class CurrencyTableViewCell: UITableViewCell {
-    
     var setCode: Int = 0
-    
+
     let titleImageView: UIImageView = {
         let titleImageView = UIImageView()
         titleImageView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
@@ -29,7 +28,7 @@ class CurrencyTableViewCell: UITableViewCell {
         priceLabel.font = UIFont.boldSystemFont(ofSize: 23)
         return priceLabel
     }()
-    
+
     let starImageView: UIImageView = {
         let starImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         starImageView.isUserInteractionEnabled = false
@@ -60,9 +59,9 @@ class CurrencyTableViewCell: UITableViewCell {
             starImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             starImageView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
             starImageView.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.3),
-            starImageView.widthAnchor.constraint(equalTo: starImageView.heightAnchor)
-            ])
-        
+            starImageView.widthAnchor.constraint(equalTo: starImageView.heightAnchor),
+        ])
+
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
