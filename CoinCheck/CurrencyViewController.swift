@@ -21,7 +21,14 @@ class CurrencyViewController: UIViewController {
     let bithumbTableViewCellIdentifier: String = "bithumbTableViewCellIdentifier"
     var currencyNameString: [String]?
     var shownCurrencyNameString: [String]?
+    var nowIndexPath: IndexPath?
     var isSearched: Bool = false
+    
+    // MARK: Timer
+    var checkTimer: Timer = {
+        let checkTimer = Timer()
+        return checkTimer
+    }()
     
     // MARK: - UIs
     
@@ -44,8 +51,11 @@ class CurrencyViewController: UIViewController {
         self.mainView.bithumbTableView.dataSource = self
         self.mainView.searchBar.delegate = self
         self.mainView.bithumbTableView.allowsSelection = false
+        self.setBithumbData()
         self.setCellData()
         self.setSearchBar()
+        checkTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(refreshBithumbData(_:)), userInfo: nil, repeats: true)
+        
     }
     
     override func viewDidAppear(_: Bool) {
@@ -77,8 +87,13 @@ class CurrencyViewController: UIViewController {
         case .bithumb:
             self.currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
             navigationItem.title = "Bithumb 암호화폐 현항"
-            self.setBithumbData()
         }
+    }
+    
+    @objc func refreshBithumbData(_ timer: Timer) {
+        setBithumbData()
+        setCellData()
+        mainView.bithumbTableView.reloadData()
     }
     
     func setBithumbData() {
@@ -120,15 +135,16 @@ class CurrencyViewController: UIViewController {
     }
     
     @objc func cellStarImageViewPressed(_ sender: UITapGestureRecognizer){
-        guard let selectedCellStarView = sender.view as? UIImageView else { return }
-        // 클릭한 셀의 암호화폐 정보를 즐겨찾기 설정한다.
+        guard let selectedCellStarView = sender.view as? UIImageView,
+            let nowIndexPath = mainView.bithumbTableView.indexPathForSelectedRow,
+            let selectedCell = mainView.bithumbTableView.cellForRow(at: nowIndexPath) as? CurrencyTableViewCell,
+        let selectedCellText = selectedCell.titleLabel.text else { return }
         
-        // issue) 전체 암호화폐 정보 셋팅 유무를 싱글턴으로 관리해서 셋팅 된 것만 메인에 뿌려주도록 한다.
-//        if selectedCellStarView.image == #imageLiteral(resourceName: "star") {
-//            selectedCellStarView.image = #imageLiteral(resourceName: "star_")
-//        } else {
-//            selectedCellStarView.image = #imageLiteral(resourceName: "star")
-//        }
+        if BithumbCurrencies.bithumbCurrencySetKey[selectedCellText] == 0 {
+            BithumbCurrencies.bithumbCurrencySetKey.updateValue(1, forKey: selectedCellText)
+        } else {
+            BithumbCurrencies.bithumbCurrencySetKey.updateValue(0, forKey: selectedCellText)
+        }
         
         checkCurrencyIndex(selectedCellStarView)
     }
@@ -139,11 +155,20 @@ extension CurrencyViewController: UITableViewDataSource {
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? CurrencyTableViewCell,
             let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice else { return UITableViewCell() }
         
+        self.nowIndexPath = indexPath
         let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
         if self.isSearched == true {
-            guard let shownCurrencyNameString = self.shownCurrencyNameString else { return UITableViewCell() }
-            bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString[indexPath.row])/KRW"
+            guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row] else { return UITableViewCell() }
+            bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString)/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
+            if BithumbCurrencies.bithumbCurrencySetKey[shownCurrencyNameString] == 0 {
+                bithumbTableViewCell.starImageView.image = UIImage(named: "star")
+            } else {
+                bithumbTableViewCell.starImageView.image = UIImage(named: "star_")
+            }
+            
+                
+            
         } else {
             bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
