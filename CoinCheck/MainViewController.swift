@@ -57,7 +57,6 @@ class MainViewController: UIViewController {
 
     // MARKL- Touch Event Methodds
     @objc func transitionToNextView(_: UIButton) {
-        print("???")
         let settingViewController = SettingExchangeViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
     }

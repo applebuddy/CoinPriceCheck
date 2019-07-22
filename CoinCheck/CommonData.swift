@@ -23,6 +23,10 @@ class CommonData {
     }
 }
 
+struct ViewTag {
+    static let starImageViewTag = 100
+}
+
 struct ViewInsets {
     static let leftInset: CGFloat = 16
     static let rightInset: CGFloat = 16

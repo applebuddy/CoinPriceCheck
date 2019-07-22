@@ -108,29 +108,26 @@ class CurrencyViewController: UIViewController {
             CommonData.shared.tradeData = try decoder.decode(TradeResponse.self, from: contents)
             // 데이터 처리하는 곳
         } catch let DecodingError.dataCorrupted(context) {
-            print(context)
+            fatalError("\(context)")
         } catch let DecodingError.keyNotFound(key, context) {
-            print("Key '\(key)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        } catch let DecodingError.valueNotFound(value, context) {
-            print("Type '\(value)' not found:", context.debugDescription)
-            print("codingPath:", context.codingPath)
-        } catch let DecodingError.typeMismatch(type, context) {
-            print("Type '\(type)' mismatch:", context.debugDescription)
-            print("codingPath:", context.codingPath)
+            fatalError("key : \(key), context : \(context)")
+        } catch let DecodingError.valueNotFound(_, context) {
+            fatalError("\(context)")
+        } catch DecodingError.typeMismatch(_, _) {
+            fatalError("JSON Data Type Mismatched Error")
         } catch {
-            print("Unable to parse JSON : \(error.localizedDescription)")
+            fatalError("Unable to parse JSON : \(error.localizedDescription)")
         }
     }
 
-    func checkCurrencyIndex(_ imageView: UIImageView) {
-        let selectedIndex = imageView.tag - 100
+    func checkCurrencyIndex(_ imageView: UIImageView) { 
+        let selectedIndex = imageView.tag - ViewTag.starImageViewTag
         if self.isSearched == false {
             guard let nowCurrencyString = self.currencyNameString else { return }
-            print("\(selectedIndex): \(nowCurrencyString[selectedIndex])")
+            fatalError("\(selectedIndex): \(nowCurrencyString[selectedIndex])")
         } else {
             guard let shownCurrencyString = self.shownCurrencyNameString else { return }
-            print("\(selectedIndex): \(shownCurrencyString[selectedIndex])")
+            fatalError("\(selectedIndex): \(shownCurrencyString[selectedIndex])")
         }
     }
 
@@ -164,7 +161,7 @@ extension CurrencyViewController: UITableViewDataSource {
             if BithumbCurrencies.bithumbCurrencySetKey[shownCurrencyNameString] == 0 {
                 bithumbTableViewCell.starImageView.image = UIImage(named: "star")
             } else {
-                bithumbTableViewCell.starImageView.image = UIImage(named: "star_")
+                bithumbTableViewCell.starImageView.image = UIImage(named: "star_set")
             }
 
         } else {
