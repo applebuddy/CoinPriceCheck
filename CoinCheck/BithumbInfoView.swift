@@ -15,6 +15,17 @@ class BithumbInfoView: UIView {
         return bithumbTableView
     }()
 
+    let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.textContentType = .name
+        searchBar.autocapitalizationType = .none
+        searchBar.spellCheckingType = .no
+        searchBar.autocorrectionType = .no
+        searchBar.keyboardType = .namePhonePad
+
+        return searchBar
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubviews()
@@ -27,12 +38,20 @@ class BithumbInfoView: UIView {
 
     func addSubviews() {
         addSubview(self.bithumbTableView)
+        addSubview(self.searchBar)
     }
 
     func addConstraints() {
+        self.searchBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0),
+            searchBar.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+            searchBar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+        ])
+
         self.bithumbTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            bithumbTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            bithumbTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             bithumbTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
             bithumbTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
             bithumbTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),

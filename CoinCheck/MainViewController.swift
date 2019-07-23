@@ -57,7 +57,6 @@ class MainViewController: UIViewController {
 
     // MARKL- Touch Event Methodds
     @objc func transitionToNextView(_: UIButton) {
-        print("???")
         let settingViewController = SettingExchangeViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
     }
@@ -65,7 +64,7 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        return 3
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
