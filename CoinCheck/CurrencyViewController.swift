@@ -64,11 +64,17 @@ class CurrencyViewController: UIViewController {
 
     // MARK: - Setting Methods
 
+    func presentAlertViewController(errorString: String) {
+        let alertController = UIAlertController(title: "문제가 발생하였습니다.", message: errorString, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertController.addAction(alertAction)
+        self.present(alertController, animated: true)
+    }
+    
     func setSearchBar() {
         guard let currencyNameString = self.currencyNameString else { return }
         self.mainView.searchBar
-            .rx.text
-            .orEmpty
+            .rx.text.orEmpty
             .debounce(RxTimeInterval.seconds(Int(0.3)), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .filter { !$0.isEmpty }
@@ -108,15 +114,15 @@ class CurrencyViewController: UIViewController {
             CommonData.shared.tradeData = try decoder.decode(TradeResponse.self, from: contents)
             // 데이터 처리하는 곳
         } catch let DecodingError.dataCorrupted(context) {
-            fatalError("\(context)")
+            presentAlertViewController(errorString: "\(context)")
         } catch let DecodingError.keyNotFound(key, context) {
-            fatalError("key : \(key), context : \(context)")
+            presentAlertViewController(errorString: "key: \(key), context: \(context)")
         } catch let DecodingError.valueNotFound(_, context) {
-            fatalError("\(context)")
+            presentAlertViewController(errorString: "\(context)")
         } catch DecodingError.typeMismatch(_, _) {
-            fatalError("JSON Data Type Mismatched Error")
+            presentAlertViewController(errorString: "Type Mismatched")
         } catch {
-            fatalError("Unable to parse JSON : \(error.localizedDescription)")
+            presentAlertViewController(errorString: "\(error.localizedDescription)")
         }
     }
 
