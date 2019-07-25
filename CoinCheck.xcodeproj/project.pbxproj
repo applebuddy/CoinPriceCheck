@@ -118,7 +118,7 @@
 			children = (
 				38BC0F3D22C353D20057BBC9 /* Medel */,
 				38BC0F4322C35FE90057BBC9 /* Main */,
-				38BC0F4422C35FF80057BBC9 /* Setting */,
+				38BC0F4422C35FF80057BBC9 /* Sub */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -144,7 +144,7 @@
 			name = Main;
 			sourceTree = "<group>";
 		};
-		38BC0F4422C35FF80057BBC9 /* Setting */ = {
+		38BC0F4422C35FF80057BBC9 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
 				38BC0F4022C354640057BBC9 /* SettingView.swift */,
@@ -153,7 +153,7 @@
 				3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */,
 				38BC0F4722C36FBA0057BBC9 /* ExchangeTableHeaderView.swift */,
 			);
-			name = Setting;
+			name = Sub;
 			sourceTree = "<group>";
 		};
 		6AC1A7CA925705FEE54E3A6D /* Frameworks */ = {
