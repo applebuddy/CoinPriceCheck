@@ -125,61 +125,25 @@ class CurrencyViewController: UIViewController {
             presentAlertViewController(errorString: "\(error.localizedDescription)")
         }
     }
-
-    func checkCurrencyIndex(_ imageView: UIImageView) { 
-        let selectedIndex = imageView.tag - ViewTag.starImageViewTag
-        if self.isSearched == false {
-            guard let nowCurrencyString = self.currencyNameString else { return }
-            fatalError("\(selectedIndex): \(nowCurrencyString[selectedIndex])")
-        } else {
-            guard let shownCurrencyString = self.shownCurrencyNameString else { return }
-            fatalError("\(selectedIndex): \(shownCurrencyString[selectedIndex])")
-        }
-    }
-
-    @objc func cellStarImageViewPressed(_ sender: UITapGestureRecognizer) {
-        guard let selectedCellStarView = sender.view as? UIImageView,
-            let nowIndexPath = mainView.bithumbTableView.indexPathForSelectedRow,
-            let selectedCell = mainView.bithumbTableView.cellForRow(at: nowIndexPath) as? CurrencyTableViewCell,
-            let selectedCellText = selectedCell.titleLabel.text else { return }
-
-        if BithumbCurrencies.bithumbCurrencySetKey[selectedCellText] == 0 {
-            BithumbCurrencies.bithumbCurrencySetKey.updateValue(1, forKey: selectedCellText)
-        } else {
-            BithumbCurrencies.bithumbCurrencySetKey.updateValue(0, forKey: selectedCellText)
-        }
-
-        self.checkCurrencyIndex(selectedCellStarView)
-    }
 }
 
 extension CurrencyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? CurrencyTableViewCell,
             let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice else { return UITableViewCell() }
-
+        bithumbTableViewCell.delegate = self
         self.nowIndexPath = indexPath
         let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
         if self.isSearched == true {
             guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row] else { return UITableViewCell() }
             bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString)/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
-            if BithumbCurrencies.bithumbCurrencySetKey[shownCurrencyNameString] == 0 {
-                bithumbTableViewCell.starImageView.image = UIImage(named: "star")
-            } else {
-                bithumbTableViewCell.starImageView.image = UIImage(named: "star_set")
-            }
 
         } else {
             bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
         }
 
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.cellStarImageViewPressed(_:)))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        bithumbTableViewCell.starImageView.tag = 100 + indexPath.row
-        bithumbTableViewCell.starImageView.isUserInteractionEnabled = true
-        bithumbTableViewCell.starImageView.addGestureRecognizer(tapGestureRecognizer)
         return bithumbTableViewCell
     }
 
@@ -215,5 +179,12 @@ extension CurrencyViewController: UISearchBarDelegate {
             self.isSearched = true
             self.mainView.bithumbTableView.reloadData()
         }
+    }
+}
+
+extension CurrencyViewController: CurrencyTableViewCellDelegate {
+    func starButtonPressed(index: Int, _ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        print("starButtonPressed!!")
     }
 }
