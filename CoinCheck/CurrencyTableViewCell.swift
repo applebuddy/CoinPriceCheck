@@ -38,8 +38,6 @@ class CurrencyTableViewCell: UITableViewCell {
     let starButton: UIButton = {
         let starButton = UIButton(type: .custom)
         starButton.isUserInteractionEnabled = true
-        starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
-        starButton.setImage(#imageLiteral(resourceName: "star_set"), for: .selected)
         return starButton
     }()
 
@@ -101,5 +99,13 @@ class CurrencyTableViewCell: UITableViewCell {
     
     @objc func starButtonPressed(_ sender: UIButton) {
         delegate?.starButtonPressed(index: self.index, sender)
+        guard let currencyKey = self.titleLabel.text else { return }
+        let key = currencyKey.components(separatedBy: "/KRW")[0]
+        print("\(key)")
+        if BithumbCurrencies.shared.bithumbCurrencyKey[key] == 0 {
+            BithumbCurrencies.shared.bithumbCurrencyKey[key] = 1
+        } else {
+            BithumbCurrencies.shared.bithumbCurrencyKey[key] = 0
+        }
     }
 }

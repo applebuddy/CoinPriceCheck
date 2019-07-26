@@ -91,7 +91,7 @@ class CurrencyViewController: UIViewController {
         guard let exchangeIndex = ExchangeIndex(rawValue: CommonData.shared.selectedExchangeIndex) else { return }
         switch exchangeIndex {
         case .bithumb:
-            self.currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
+            self.currencyNameString = BithumbCurrencies.shared.bithumbCurrencyNameString
             navigationItem.title = "Bithumb 암호화폐 현항"
         }
     }
@@ -133,15 +133,26 @@ extension CurrencyViewController: UITableViewDataSource {
             let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice else { return UITableViewCell() }
         bithumbTableViewCell.delegate = self
         self.nowIndexPath = indexPath
-        let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
+        let currencyNameString = BithumbCurrencies.shared.bithumbCurrencyNameString
+        
         if self.isSearched == true {
             guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row] else { return UITableViewCell() }
             bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString)/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
+            if BithumbCurrencies.shared.bithumbCurrencyKey[shownCurrencyNameString] == 0 {
+                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+            } else {
+                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star_set"), for: .normal)
+            }
 
         } else {
             bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])/KRW"
             bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
+            if BithumbCurrencies.shared.bithumbCurrencyKey[currencyNameString[indexPath.row]] == 0 {
+                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+            } else {
+                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star_set"), for: .normal)
+            } 
         }
 
         return bithumbTableViewCell
@@ -149,7 +160,7 @@ extension CurrencyViewController: UITableViewDataSource {
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionIndex = BithumbTableViewSections(rawValue: section) else { return 0 }
-        let currencyNameString = BithumbCurrencies.bithumbCurrencyNameString
+        let currencyNameString = BithumbCurrencies.shared.bithumbCurrencyNameString
 
         if self.isSearched == true {
             let shownCurrencyNameString = self.shownCurrencyNameString
@@ -186,5 +197,6 @@ extension CurrencyViewController: CurrencyTableViewCellDelegate {
     func starButtonPressed(index: Int, _ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         print("starButtonPressed!!")
+        mainView.bithumbTableView.reloadData()
     }
 }
