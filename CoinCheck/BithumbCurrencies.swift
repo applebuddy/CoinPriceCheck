@@ -9,91 +9,23 @@
 import UIKit
 
 enum ButhumbCurrencyName: String {
-    case btc = "BTC"
-    case eth = "ETH"
-    case dash = "DASH"
-    case ltc = "LTC"
-    case etc = "ETC"
-    case xrp = "XRP"
-    case bch = "BCH"
-    case xmr = "XMR"
-    case zec = "ZEC"
-    case qtum = "QTUM"
-    case btg = "BTG"
-    case eos = "EOS"
-    case icx = "ICX"
-    case vet = "VET"
-    case trx = "TRX"
-    case elf = "ELF"
-    case mith = "MITH"
-    case mco = "MCO"
-    case omg = "OMG"
-    case knc = "KNC"
-    case gnt = "GNT"
-    case zil = "ZIL"
-    case ethos = "ETHOS"
-    case pay = "PAY"
-    case wax = "WAX"
-    case powr = "POWR"
-    case lrc = "LRC"
-    case gto = "GTO"
-    case steem = "STEEM"
-    case strat = "STRAT"
-    case zrx = "ZRX"
-    case rep = "REP"
-    case ae = "AE"
-    case xem = "XEM"
-    case snt = "SNT"
-    case ada = "ADA"
-    case ppt = "PPT"
-    case ctxc = "CTXC"
-    case cmt = "CMT"
-    case theta = "THETA"
-    case wtc = "WTC"
-    case itc = "ITC"
-    case dataTRUE = "TRUE"
-    case abt = "ABT"
-    case rnt = "RNT"
-    case ply = "PLY"
-    case waves = "WAVES"
-    case link = "LINK"
-    case enj = "ENJ"
-    case pst = "PST"
-    case salt = "SALT"
-    case rdn = "RDN"
-    case loom = "LOOM"
-    case pivx = "PIVX"
-    case ins = "INS"
-    case bcd = "BCD"
-    case bznt = "BZNT"
-    case xlm = "XLM"
-    case ocn = "OCN"
-    case bsv = "BSV"
-    case tmtg = "TMTG"
-    case bat = "BAT"
-    case wet = "WET"
-    case xvg = "XVG"
-    case iost = "IOST"
-    case poly = "POLY"
-    case hc = "HC"
-    case rom = "ROM"
-    case amo = "AMO"
-    case etz = "ETZ"
-    case arn = "ARN"
-    case apis = "APIS"
-    case mtl = "MTL"
-    case dacc = "DACC"
-    case dac = "DAC"
-    case bhp = "BHP"
-    case btt = "BTT"
-    case hdac = "HDAC"
-    case npxs = "NPXS"
-    case auto = "AUTO"
-    case gxc = "GXC"
-    case orbs = "ORBS"
-    case valor = "VALOR"
-    case con = "CON"
-    case ankr = "ANKR"
+    case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC"
+    case xrp = "XRP", bch = "BCH", xmr = "XMR", zec = "ZEC", qtum = "QTUM"
+    case btg = "BTG", eos = "EOS", icx = "ICX", vet = "VET", trx = "TRX"
+    case elf = "ELF", mith = "MITH", mco = "MCO", omg = "OMG", knc = "KNC"
+    case gnt = "GNT", zil = "ZIL", ethos = "ETHOS", pay = "PAY", wax = "WAX"
+    case powr = "POWR", lrc = "LRC", gto = "GTO", steem = "STEEM", strat = "STRAT"
+    case zrx = "ZRX", rep = "REP", ae = "AE", xem = "XEM", snt = "SNT"
+    case ada = "ADA", ppt = "PPT", ctxc = "CTXC", cmt = "CMT", theta = "THETA"
+    case wtc = "WTC", itc = "ITC", dataTRUE = "TRUE", abt = "ABT", rnt = "RNT"
+    case ply = "PLY", waves = "WAVES", link = "LINK", enj = "ENJ", pst = "PST"
+    case salt = "SALT", rdn = "RDN", loom = "LOOM", pivx = "PIVX", ins = "INS"
+    case bcd = "BCD", bznt = "BZNT", xlm = "XLM", ocn = "OCN", bsv = "BSV"
+    case tmtg = "TMTG", bat = "BAT", wet = "WET", xvg = "XVG", iost = "IOST"
+    case poly = "POLY", hc = "HC", rom = "ROM", amo = "AMO", etz = "ETZ"
+    case arn = "ARN", apis = "APIS", mtl = "MTL", dacc = "DACC", dac = "DAC"
+    case bhp = "BHP", btt = "BTT", hdac = "HDAC", npxs = "NPXS", auto = "AUTO"
+    case gxc = "GXC", orbs = "ORBS", valor = "VALOR", con = "CON", ankr = "ANKR"
     case mix = "MIX"
 }
 
@@ -102,189 +34,5 @@ class BithumbCurrencies {
     let bithumbCurrencyNameString: [String] = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC", "QTUM", "BTG", "EOS", "ICX", "VET", "TRX", "ELF", "MITH", "MCO", "OMG", "KNC", "GNT", "ZIL", "ETHOS", "PAY", "WAX", "POWR", "LRC", "GTO", "STEEM", "STRAT", "ZRX", "REP", "AE", "XEM", "SNT", "ADA", "PPT", "CTXC", "CMT", "THETA", "WTC", "ITC", "TRUE", "ABT", "RNT", "PLY", "WAVES", "LINK", "ENJ", "PST", "SALT", "RDN", "LOOM", "PIVX", "INS", "BCD", "BZNT", "XLM", "OCN", "BSV", "TMTG", "BAT", "WET", "XVG", "IOST", "POLY", "HC", "ROM", "AMO", "ETZ", "ARN", "APIS", "MTL", "DACC", "DAC", "BHP", "BTT", "HDAC", "NPXS", "AUTO", "GXC", "ORBS", "VALOR", "CON", "ANKR", "MIX"]
 
     var bithumbCurrencyKey: [String: Int] = ["BTC": 0, "ETH": 0, "DASH": 0, "LTC": 0, "ETC": 0, "XRP": 0, "BCH": 0, "XMR": 0, "ZEC": 0, "QTUM": 0, "BTG": 0, "EOS": 0, "ICX": 0, "VET": 0, "TRX": 0, "ELF": 0, "MITH": 0, "MCO": 0, "OMG": 0, "KNC": 0, "GNT": 0, "ZIL": 0, "ETHOS": 0, "PAY": 0, "WAX": 0, "POWR": 0, "LRC": 0, "GTO": 0, "STEEM": 0, "STRAT": 0, "ZRX": 0, "REP": 0, "AE": 0, "XEM": 0, "SNT": 0, "ADA": 0, "PPT": 0, "CTXC": 0, "CMT": 0, "THETA": 0, "WTC": 0, "ITC": 0, "TRUE": 0, "ABT": 0, "RNT": 0, "PLY": 0, "WAVES": 0, "LINK": 0, "ENJ": 0, "PST": 0, "SALT": 0, "RDN": 0, "LOOM": 0, "PIVX": 0, "INS": 0, "BCD": 0, "BZNT": 0, "XLM": 0, "OCN": 0, "BSV": 0, "TMTG": 0, "BAT": 0, "WET": 0, "XVG": 0, "IOST": 0, "POLY": 0, "HC": 0, "ROM": 0, "AMO": 0, "ETZ": 0, "ARN": 0, "APIS": 0, "MTL": 0, "DACC": 0, "DAC": 0, "BHP": 0, "BTT": 0, "HDAC": 0, "NPXS": 0, "AUTO": 0, "GXC": 0, "ORBS": 0, "VALOR": 0, "CON": 0, "ANKR": 0, "MIX": 0]
-//
-//    static let btc = BithumbCurrency(name: "BTC")
-//    static let eth = BithumbCurrency(name: "ETH")
-//    static let dash = BithumbCurrency(name: "DASH")
-//    static let ltc = BithumbCurrency(name: "LTC")
-//    static let etc = BithumbCurrency(name: "ETC")
-//    static let xrp = BithumbCurrency(name: "XRP")
-//    static let bch = BithumbCurrency(name: "BCH")
-//    static let xmr = BithumbCurrency(name: "XMR")
-//    static let zec = BithumbCurrency(name: "ZEC")
-//    static let qtum = BithumbCurrency(name: "QTUM")
-//    static let btg = BithumbCurrency(name: "BTG")
-//    static let eos = BithumbCurrency(name: "EOS")
-//    static let icx = BithumbCurrency(name: "ICX")
-//    static let vet = BithumbCurrency(name: "VET")
-    //    static BithumbCurrenciesurrency(name: "TRX")
-//    static let elf = BithumbCurrency(name: "ELF")
-//    static let mith = BithumbCurrency(name: "MITH")
-//    static let mco = BithumbCurrency(name: "MCO")
-//    static let omg = BithumbCurrency(name: "OMG")
-//    static let knc = BithumbCurrency(name: "KNC")
-//    static let gnt = BithumbCurrency(name: "GNT")
-//    static let zil = BithumbCurrency(name: "ZIL")
-//    static let ethos = BithumbCurrency(name: "ETHOS")
-//    static let pay = BithumbCurrency(name: "PAY")
-//    static let wax = BithumbCurrency(name: "WAX")
-//    static let powr = BithumbCurrency(name: "POWR")
-//    static let lrc = BithumbCurrency(name: "LRC")
-//    static let gto = BithumbCurrency(name: "GTO")
-//    static let steem = BithumbCurrency(name: "STEEM")
-//    static let strat = BithumbCurrency(name: "STRAT")
-//    static let zrx = BithumbCurrency(name: "ZRX")
-//    static let rep = BithumbCurrency(name: "REP")
-//    static let ae = BithumbCurrency(name: "AE")
-//    static let xem = BithumbCurrency(name: "XEM")
-//    static let snt = BithumbCurrency(name: "SNT")
-//    static let ada = BithumbCurrency(name: "ADA")
-//    static let ppt = BithumbCurrency(name: "PPT")
-//    static let ctxc = BithumbCurrency(name: "CTXC")
-//    static let cmt = BithumbCurrency(name: "CMT")
-//    static let theta = BithumbCurrency(name: "THETA")
-//    static let wtc = BithumbCurrency(name: "WTC")
-//    static let itc = BithumbCurrency(name: "ITC")
-//    static let dataTRUE = BithumbCurrency(name: "TRUE")
-//    static let abt = BithumbCurrency(name: "ABT")
-//    static let rnt = BithumbCurrency(name: "RNT")
-//    static let ply = BithumbCurrency(name: "PLY")
-//    static let waves = BithumbCurrency(name: "WAVES")
-//    static let link = BithumbCurrency(name: "LINK")
-//    static let enj = BithumbCurrency(name: "ENJ")
-//    static let pst = BithumbCurrency(name: "PST")
-//    static let salt = BithumbCurrency(name: "SALT")
-//    static let rdn = BithumbCurrency(name: "RDN")
-//    static let loom = BithumbCurrency(name: "LOOM")
-//    static let pivx = BithumbCurrency(name: "PIVX")
-//    static let ins = BithumbCurrency(name: "INS")
-//    static let bcd = BithumbCurrency(name: "BCD")
-//    static let bznt = BithumbCurrency(name: "BZNT")
-//    static let xlm = BithumbCurrency(name: "XLM")
-//    static let ocn = BithumbCurrency(name: "OCN")
-//    static let bsv = BithumbCurrency(name: "BSV")
-//    static let tmtg = BithumbCurrency(name: "TMTG")
-//    static let bat = BithumbCurrency(name: "BAT")
-//    static let wet = BithumbCurrency(name: "WET")
-//    static let xvg = BithumbCurrency(name: "XVG")
-//    static let iost = BithumbCurrency(name: "IOST")
-//    static let poly = BithumbCurrency(name: "POLY")
-//    static let hc = BithumbCurrency(name: "HC")
-//    static let rom = BithumbCurrency(name: "ROM")
-//    static let amo = BithumbCurrency(name: "AMO")
-//    static let etz = BithumbCurrency(name: "ETZ")
-//    static let arn = BithumbCurrency(name: "ARN")
-//    static let apis = BithumbCurrency(name: "APIS")
-//    static let mtl = BithumbCurrency(name: "MTL")
-//    static let dacc = BithumbCurrency(name: "DACC")
-//    static let dac = BithumbCurrency(name: "DAC")
-//    static let bhp = BithumbCurrency(name: "BHP")
-//    static let btt = BithumbCurrency(name: "BTT")
-//    static let hdac = BithumbCurrency(name: "HDAC")
-//    static let npxs = BithumbCurrency(name: "NPXS")
-//    static let auto = BithumbCurrency(name: "AUTO")
-//    static let gxc = BithumbCurrency(name: "GXC")
-//    static let orbs = BithumbCurrency(name: "ORBS")
-//    static let valor = BithumbCurrency(name: "VALOR")
-//    static let con = BithumbCurrency(name: "CON")
-//    static let ankr = BithumbCurrency(name: "ANKR")
-//    static let mix = BithumbCurrency(name: "MIX")
 }
 
-struct BithumbCurrency {
-    var currencyIndex: Int
-    init(name: String) {
-        guard let currency = ButhumbCurrencyName(rawValue: name) else {
-            self.currencyIndex = 99
-            return
-        }
-        switch currency {
-        case .btc: self.currencyIndex = 0
-        case .eth: self.currencyIndex = 1
-        case .dash: self.currencyIndex = 2
-        case .ltc: self.currencyIndex = 3
-        case .etc: self.currencyIndex = 4
-        case .xrp: self.currencyIndex = 5
-        case .bch: self.currencyIndex = 6
-        case .xmr: self.currencyIndex = 7
-        case .zec: self.currencyIndex = 8
-        case .qtum: self.currencyIndex = 9
-        case .btg: self.currencyIndex = 10
-        case .eos: self.currencyIndex = 11
-        case .icx: self.currencyIndex = 12
-        case .vet: self.currencyIndex = 13
-        case .trx: self.currencyIndex = 14
-        case .elf: self.currencyIndex = 15
-        case .mith: self.currencyIndex = 16
-        case .mco: self.currencyIndex = 17
-        case .omg: self.currencyIndex = 18
-        case .knc: self.currencyIndex = 19
-        case .gnt: self.currencyIndex = 20
-        case .zil: self.currencyIndex = 21
-        case .ethos: self.currencyIndex = 22
-        case .pay: self.currencyIndex = 23
-        case .wax: self.currencyIndex = 24
-        case .powr: self.currencyIndex = 25
-        case .lrc: self.currencyIndex = 26
-        case .gto: self.currencyIndex = 27
-        case .steem: self.currencyIndex = 28
-        case .strat: self.currencyIndex = 29
-        case .zrx: self.currencyIndex = 30
-        case .rep: self.currencyIndex = 31
-        case .ae: self.currencyIndex = 32
-        case .xem: self.currencyIndex = 33
-        case .snt: self.currencyIndex = 34
-        case .ada: self.currencyIndex = 35
-        case .ppt: self.currencyIndex = 36
-        case .ctxc: self.currencyIndex = 37
-        case .cmt: self.currencyIndex = 38
-        case .theta: self.currencyIndex = 39
-        case .wtc: self.currencyIndex = 40
-        case .itc: self.currencyIndex = 41
-        case .dataTRUE: self.currencyIndex = 42
-        case .abt: self.currencyIndex = 43
-        case .rnt: self.currencyIndex = 44
-        case .ply: self.currencyIndex = 45
-        case .waves: self.currencyIndex = 46
-        case .link: self.currencyIndex = 47
-        case .enj: self.currencyIndex = 48
-        case .pst: self.currencyIndex = 49
-        case .salt: self.currencyIndex = 50
-        case .rdn: self.currencyIndex = 51
-        case .loom: self.currencyIndex = 52
-        case .pivx: self.currencyIndex = 53
-        case .ins: self.currencyIndex = 54
-        case .bcd: self.currencyIndex = 55
-        case .bznt: self.currencyIndex = 56
-        case .xlm: self.currencyIndex = 57
-        case .ocn: self.currencyIndex = 58
-        case .bsv: self.currencyIndex = 59
-        case .tmtg: self.currencyIndex = 60
-        case .bat: self.currencyIndex = 61
-        case .wet: self.currencyIndex = 62
-        case .xvg: self.currencyIndex = 63
-        case .iost: self.currencyIndex = 64
-        case .poly: self.currencyIndex = 65
-        case .hc: self.currencyIndex = 66
-        case .rom: self.currencyIndex = 67
-        case .amo: self.currencyIndex = 68
-        case .etz: self.currencyIndex = 69
-        case .arn: self.currencyIndex = 70
-        case .apis: self.currencyIndex = 71
-        case .mtl: self.currencyIndex = 72
-        case .dacc: self.currencyIndex = 73
-        case .dac: self.currencyIndex = 74
-        case .bhp: self.currencyIndex = 75
-        case .btt: self.currencyIndex = 76
-        case .hdac: self.currencyIndex = 77
-        case .npxs: self.currencyIndex = 78
-        case .auto: self.currencyIndex = 79
-        case .gxc: self.currencyIndex = 80
-        case .orbs: self.currencyIndex = 81
-        case .valor: self.currencyIndex = 82
-        case .con: self.currencyIndex = 83
-        case .ankr: self.currencyIndex = 84
-        case .mix: self.currencyIndex = 85
-        }
-    }
-}
