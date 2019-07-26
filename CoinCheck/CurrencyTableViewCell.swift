@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CurrencyTableViewCellDelegate {
-    func starButtonPressed(index: Int,_ sender: UIButton)
+    func starButtonPressed(index: Int, _ sender: UIButton)
 }
 
 class CurrencyTableViewCell: UITableViewCell {
@@ -45,7 +45,7 @@ class CurrencyTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.addSubviews()
         self.addContraints()
-        self.starButton.addTarget(self, action: #selector(starButtonPressed(_:)), for: .touchUpInside)
+        self.starButton.addTarget(self, action: #selector(self.starButtonPressed(_:)), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -92,20 +92,25 @@ class CurrencyTableViewCell: UITableViewCell {
             priceLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
         ])
     }
-    
+
     func setCellIndex(cellIndex: Int) {
         self.index = cellIndex
     }
-    
+
     @objc func starButtonPressed(_ sender: UIButton) {
-        delegate?.starButtonPressed(index: self.index, sender)
+        self.delegate?.starButtonPressed(index: self.index, sender)
         guard let currencyKey = self.titleLabel.text else { return }
         let key = currencyKey.components(separatedBy: "/KRW")[0]
         print("\(key)")
-        if BithumbCurrencies.shared.bithumbCurrencyKey[key] == 0 {
-            BithumbCurrencies.shared.bithumbCurrencyKey[key] = 1
+
+        if BithumbCurrencies.shared.currencyKey[key] == 0 {
+            BithumbCurrencies.shared.currencyKey[key] = 1
+            BithumbCurrencies.shared.settingCurrencyKey[key] = 1
         } else {
-            BithumbCurrencies.shared.bithumbCurrencyKey[key] = 0
+            BithumbCurrencies.shared.currencyKey[key] = 0
+            
+            BithumbCurrencies.shared.settingCurrencyKey.removeValue(forKey: key)
+            print(BithumbCurrencies.shared.settingCurrencyKey)
         }
     }
 }

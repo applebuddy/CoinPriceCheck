@@ -32,10 +32,8 @@ class SettingExchangeViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = self.settingView
-        
-        OperationQueue().addOperation() {
-            
-        }
+
+        OperationQueue().addOperation {}
     }
 
     func registCell() {

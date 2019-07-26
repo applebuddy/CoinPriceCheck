@@ -134,18 +134,9 @@ class TradeData: Codable {
 }
 
 class TradeDataOptions: Codable {
-    let openingPrice: String
-    let closingPrice: String
-    let minPrice: String
-    let maxPrice: String
-    let averagePrice: String
-    let tradedUnits: String
-    let volumePer1Day: String
-    let volumePer7Day: String
-    let buyPrice: String
-    let sellPrice: String
-    let fluctateIn24H: String
-    let fluctateRateIn24H: String
+    let openingPrice, closingPrice, minPrice, maxPrice, averagePrice: String
+    let tradedUnits, volumePer1Day, volumePer7Day, buyPrice, sellPrice: String
+    let fluctateIn24H, fluctateRateIn24H: String
 
     var optionArr: [String] {
         return [openingPrice, closingPrice, minPrice, maxPrice, averagePrice, tradedUnits, volumePer1Day, volumePer7Day, buyPrice, sellPrice, fluctateIn24H, fluctateRateIn24H]
@@ -164,5 +155,33 @@ class TradeDataOptions: Codable {
         case sellPrice = "sell_price"
         case fluctateIn24H = "24H_fluctate"
         case fluctateRateIn24H = "24H_fluctate_rate"
+    }
+}
+
+struct CurrencyDataResponse: Codable {
+    let status: String
+    let data: CurrencyData
+}
+
+struct CurrencyData: Codable {
+    let openingPrice, closingPrice, minPrice, maxPrice: String
+    let averagePrice, unitsTraded, volume1Day, volume7Day: String
+    let buyPrice, sellPrice, the24HFluctate, the24HFluctateRate: String
+    let date: String
+
+    enum CodingKeys: String, CodingKey {
+        case openingPrice = "opening_price"
+        case closingPrice = "closing_price"
+        case minPrice = "min_price"
+        case maxPrice = "max_price"
+        case averagePrice = "average_price"
+        case unitsTraded = "units_traded"
+        case volume1Day = "volume_1day"
+        case volume7Day = "volume_7day"
+        case buyPrice = "buy_price"
+        case sellPrice = "sell_price"
+        case the24HFluctate = "24H_fluctate"
+        case the24HFluctateRate = "24H_fluctate_rate"
+        case date
     }
 }
