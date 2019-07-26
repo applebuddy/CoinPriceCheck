@@ -104,11 +104,12 @@ class CurrencyTableViewCell: UITableViewCell {
         print("\(key)")
 
         if BithumbCurrencies.shared.currencyKey[key] == 0 {
-            BithumbCurrencies.shared.currencyKey[key] = 1
-            BithumbCurrencies.shared.settingCurrencyKey[key] = 1
+            BithumbCurrencies.shared.settingCurrencyCount += 1
+            BithumbCurrencies.shared.currencyKey[key] = 1 // starButton 터치상태 확인하는 데 사용하는 딕셔너리 값
+            BithumbCurrencies.shared.settingCurrencyKey[key] = BithumbCurrencies.shared.settingCurrencyCount
         } else {
+            BithumbCurrencies.shared.settingCurrencyCount -= 1
             BithumbCurrencies.shared.currencyKey[key] = 0
-
             BithumbCurrencies.shared.settingCurrencyKey.removeValue(forKey: key)
             print(BithumbCurrencies.shared.settingCurrencyKey)
         }

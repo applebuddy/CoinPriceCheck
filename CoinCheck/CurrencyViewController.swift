@@ -196,7 +196,6 @@ extension CurrencyViewController: UISearchBarDelegate {
 extension CurrencyViewController: CurrencyTableViewCellDelegate {
     func starButtonPressed(index _: Int, _ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        print("starButtonPressed!!")
         self.mainView.bithumbTableView.reloadData()
     }
 }
