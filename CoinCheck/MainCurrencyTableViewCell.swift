@@ -49,29 +49,28 @@ class MainCurrencyTableViewCell: UITableViewCell {
         addSubview(self.titleLabel)
         addSubview(self.titleImageView)
     }
-    
+
     func setConstraints() {
-        
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
             titleImageView.widthAnchor.constraint(equalToConstant: 60),
             titleImageView.heightAnchor.constraint(equalTo: titleImageView.widthAnchor, constant: 0),
-            titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor)
-            ])
-        
+            titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
+        ])
+
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset/2),
+            titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor, constant: 0),
-            titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor, constant: 0)
+            titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor, constant: 0),
         ])
-        
+
         self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             priceLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 0),
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
-            priceLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 0)
-            ])
+            priceLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 0),
+        ])
     }
 }

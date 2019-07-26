@@ -16,12 +16,12 @@ class MainViewController: UIViewController {
     let mainTableViewCellIdentifier = "mainTableViewCell"
     var settingCurrencyData: [String: CurrencyDataResponse] = [:]
     var settingCurrencyIndex: [String] = []
-    
+
     let mainView: MainView = {
         let mainView = MainView()
         return mainView
     }()
-    
+
     var checkTimer: Timer = {
         let checkTimer = Timer()
         return checkTimer
@@ -47,7 +47,7 @@ class MainViewController: UIViewController {
         self.setBarButtonItem()
         self.setBithumbData()
         self.setCellIndexData()
-        checkTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(refreshBithumbData(_:)), userInfo: nil, repeats: true)
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(refreshBithumbData(_:)), userInfo: nil, repeats: true)
     }
 
     override func viewWillAppear(_: Bool) {
@@ -70,12 +70,12 @@ class MainViewController: UIViewController {
     func setCellIndexData() {
         let currencyKey = BithumbCurrencies.shared.settingCurrencyKey
         self.settingCurrencyIndex = []
-        for (key,_) in currencyKey {
+        for (key, _) in currencyKey {
             self.settingCurrencyIndex.append(key)
         }
         print("?? : \(self.settingCurrencyIndex)")
     }
-    
+
     func setBarButtonItem() {
         self.addBarButton.addTarget(self, action: #selector(self.transitionToNextView(_:)), for: UIControl.Event.touchUpInside)
         let addBarButtonItem = UIBarButtonItem(customView: addBarButton)
@@ -89,28 +89,28 @@ class MainViewController: UIViewController {
     }
 }
 
-// MARK:- Networking Extension
-extension MainViewController {
+// MARK: - Networking Extension
 
-        func setBithumbData() {
-            // "https://api.bithumb.com/public/orderbook/ALL"
-            // "https://api.bithumb.com/public/ticker/ALL"
-            let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
-            for (key,_) in settingCurrencyKey {
-                let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
-                RequestAPI.requestCurrencyData(urlString: urlString) { (currencyData) in
-                    print("데이터체크 : \(currencyData.data)")
-                    self.settingCurrencyData[key] = currencyData
-                }
-            }
-            self.mainView.mainTableView.reloadData()
-        }
-    
-    @objc func refreshBithumbData(_ sender: Timer) {
+extension MainViewController {
+    func setBithumbData() {
+        // "https://api.bithumb.com/public/orderbook/ALL"
+        // "https://api.bithumb.com/public/ticker/ALL"
         let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
-        for (key,_) in settingCurrencyKey {
+        for (key, _) in settingCurrencyKey {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
-            RequestAPI.requestCurrencyData(urlString: urlString) { (currencyData) in
+            RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
+                print("데이터체크 : \(currencyData.data)")
+                self.settingCurrencyData[key] = currencyData
+            }
+        }
+        self.mainView.mainTableView.reloadData()
+    }
+
+    @objc func refreshBithumbData(_: Timer) {
+        let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
+        for (key, _) in settingCurrencyKey {
+            let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
+            RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
                 print("데이터체크 : \(currencyData.data)")
                 self.settingCurrencyData[key] = currencyData
             }
@@ -127,7 +127,7 @@ extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: self.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell else { return UITableViewCell() }
         let currencyKey = self.settingCurrencyIndex[indexPath.row]
-        let currencyData = settingCurrencyData[currencyKey]
+        let currencyData = self.settingCurrencyData[currencyKey]
         mainCell.titleLabel.text = currencyKey
         mainCell.priceLabel.text = currencyData?.data.closingPrice ?? "-"
         return mainCell
@@ -145,8 +145,8 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         return ViewSize.cellHeaderHeight
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return ViewSize.cellDefaultHeight
     }
 }

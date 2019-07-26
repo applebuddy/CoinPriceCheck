@@ -6,17 +6,17 @@
 //  Copyright © 2019 Min Kyeong Tae. All rights reserved.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 final class RequestAPI {
     static let shared = RequestAPI()
-    
+
     static func requestCurrencyData(urlString: String, completion: @escaping (CurrencyDataResponse) -> Void) {
         let URL = urlString
-        
-        Alamofire.request(URL, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseData() { response in
-            
+
+        Alamofire.request(URL, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseData { response in
+
             switch response.result {
             // 서버 연결 성공
             case .success:
@@ -33,8 +33,7 @@ final class RequestAPI {
                         print("currencyData Variable Error")
                     }
                 }
-                break
-            case .failure(let error):
+            case let .failure(error):
                 print(error.localizedDescription)
             }
         }

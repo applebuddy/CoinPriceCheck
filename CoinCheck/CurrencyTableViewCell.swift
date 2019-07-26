@@ -108,7 +108,7 @@ class CurrencyTableViewCell: UITableViewCell {
             BithumbCurrencies.shared.settingCurrencyKey[key] = 1
         } else {
             BithumbCurrencies.shared.currencyKey[key] = 0
-            
+
             BithumbCurrencies.shared.settingCurrencyKey.removeValue(forKey: key)
             print(BithumbCurrencies.shared.settingCurrencyKey)
         }
