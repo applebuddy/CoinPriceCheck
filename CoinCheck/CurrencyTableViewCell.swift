@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol CurrencyTableViewCellDelegate {
+    func starButtonPressed(index: Int, _ sender: UIButton)
+}
+
 class CurrencyTableViewCell: UITableViewCell {
     var setCode: Int = 0
+    var index: Int = 0
+    var delegate: CurrencyTableViewCellDelegate?
 
     let titleImageView: UIImageView = {
         let titleImageView = UIImageView()
@@ -29,37 +35,37 @@ class CurrencyTableViewCell: UITableViewCell {
         return priceLabel
     }()
 
-    let starImageView: UIImageView = {
-        let starImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        starImageView.isUserInteractionEnabled = false
-        starImageView.image = #imageLiteral(resourceName: "star")
-        return starImageView
+    let starButton: UIButton = {
+        let starButton = UIButton(type: .custom)
+        starButton.isUserInteractionEnabled = true
+        return starButton
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addSubviews()
-        self.addContraints()
+        self.makeSubviews()
+        self.makeContraints()
+        self.starButton.addTarget(self, action: #selector(self.starButtonPressed(_:)), for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func addSubviews() {
+    func makeSubviews() {
         addSubview(self.titleImageView)
         addSubview(self.titleLabel)
         addSubview(self.priceLabel)
-        addSubview(self.starImageView)
+        addSubview(self.starButton)
     }
 
-    func addContraints() {
-        self.starImageView.translatesAutoresizingMaskIntoConstraints = false
+    func makeContraints() {
+        self.starButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            starImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
-            starImageView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
-            starImageView.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.3),
-            starImageView.widthAnchor.constraint(equalTo: starImageView.heightAnchor),
+            starButton.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
+            starButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+            starButton.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.3),
+            starButton.widthAnchor.constraint(equalTo: starButton.heightAnchor),
         ])
 
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +80,7 @@ class CurrencyTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor),
-            titleLabel.rightAnchor.constraint(equalTo: starImageView.rightAnchor, constant: -ViewInsets.rightInset),
+            titleLabel.rightAnchor.constraint(equalTo: starButton.rightAnchor, constant: -ViewInsets.rightInset),
             titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor),
         ])
 
@@ -85,5 +91,38 @@ class CurrencyTableViewCell: UITableViewCell {
             priceLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 0),
             priceLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
         ])
+    }
+
+    func setCellIndex(cellIndex: Int) {
+        self.index = cellIndex
+    }
+
+    func setCurrencyCellData(title: String, price: String) {
+        self.titleLabel.text = title
+        self.priceLabel.text = price
+    }
+
+    func setStarButton(key: Int) {
+        if key == 0 {
+            self.starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+        } else {
+            self.starButton.setImage(#imageLiteral(resourceName: "star_set"), for: .normal)
+        }
+    }
+
+    @objc func starButtonPressed(_ sender: UIButton) {
+        self.delegate?.starButtonPressed(index: self.index, sender)
+        guard let currencyKey = self.titleLabel.text else { return }
+        let key = currencyKey.components(separatedBy: "/KRW")[0]
+
+        if BithumbCurrencies.shared.currencyKey[key] == 0 {
+            BithumbCurrencies.shared.settingCurrencyCount += 1
+            BithumbCurrencies.shared.currencyKey[key] = 1 // starButton 터치상태 확인하는 데 사용하는 딕셔너리 값
+            BithumbCurrencies.shared.settingCurrencyKey[key] = BithumbCurrencies.shared.settingCurrencyCount
+        } else {
+            BithumbCurrencies.shared.settingCurrencyCount -= 1
+            BithumbCurrencies.shared.currencyKey[key] = 0
+            BithumbCurrencies.shared.settingCurrencyKey.removeValue(forKey: key)
+        }
     }
 }

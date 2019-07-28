@@ -8,6 +8,12 @@
 
 import UIKit
 
+// MARK: - APIData
+
+// API 주소 URL 정보
+// "https://api.bithumb.com/public/orderbook/ALL"
+// "https://api.bithumb.com/public/ticker/ALL"
+
 class TradeResponse: Codable {
     let status: String
     let data: TradeData
@@ -43,109 +49,32 @@ class TradeData: Codable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case btc = "BTC"
-        case eth = "ETH"
-        case dash = "DASH"
-        case ltc = "LTC"
-        case etc = "ETC"
-        case xrp = "XRP"
-        case bch = "BCH"
-        case xmr = "XMR"
-        case zec = "ZEC"
-        case qtum = "QTUM"
-        case btg = "BTG"
-        case eos = "EOS"
-        case icx = "ICX"
-        case vet = "VET"
-        case trx = "TRX"
-        case elf = "ELF"
-        case mith = "MITH"
-        case mco = "MCO"
-        case omg = "OMG"
-        case knc = "KNC"
-        case gnt = "GNT"
-        case zil = "ZIL"
-        case ethos = "ETHOS"
-        case pay = "PAY"
-        case wax = "WAX"
-        case powr = "POWR"
-        case lrc = "LRC"
-        case gto = "GTO"
-        case steem = "STEEM"
-        case strat = "STRAT"
-        case zrx = "ZRX"
-        case rep = "REP"
-        case ae = "AE"
-        case xem = "XEM"
-        case snt = "SNT"
-        case ada = "ADA"
-        case ppt = "PPT"
-        case ctxc = "CTXC"
-        case cmt = "CMT"
-        case theta = "THETA"
-        case wtc = "WTC"
-        case itc = "ITC"
-        case dataTRUE = "TRUE"
-        case abt = "ABT"
-        case rnt = "RNT"
-        case ply = "PLY"
-        case waves = "WAVES"
-        case link = "LINK"
-        case enj = "ENJ"
-        case pst = "PST"
-        case salt = "SALT"
-        case rdn = "RDN"
-        case loom = "LOOM"
-        case pivx = "PIVX"
-        case ins = "INS"
-        case bcd = "BCD"
-        case bznt = "BZNT"
-        case xlm = "XLM"
-        case ocn = "OCN"
-        case bsv = "BSV"
-        case tmtg = "TMTG"
-        case bat = "BAT"
-        case wet = "WET"
-        case xvg = "XVG"
-        case iost = "IOST"
-        case poly = "POLY"
-        case hc = "HC"
-        case rom = "ROM"
-        case amo = "AMO"
-        case etz = "ETZ"
-        case arn = "ARN"
-        case apis = "APIS"
-        case mtl = "MTL"
-        case dacc = "DACC"
-        case dac = "DAC"
-        case bhp = "BHP"
-        case btt = "BTT"
-        case hdac = "HDAC"
-        case npxs = "NPXS"
-        case auto = "AUTO"
-        case gxc = "GXC"
-        case orbs = "ORBS"
-        case valor = "VALOR"
-        case con = "CON"
-        case ankr = "ANKR"
+        case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC"
+        case xrp = "XRP", bch = "BCH", xmr = "XMR", zec = "ZEC", qtum = "QTUM"
+        case btg = "BTG", eos = "EOS", icx = "ICX", vet = "VET", trx = "TRX"
+        case elf = "ELF", mith = "MITH", mco = "MCO", omg = "OMG", knc = "KNC"
+        case gnt = "GNT", zil = "ZIL", ethos = "ETHOS", pay = "PAY", wax = "WAX"
+        case powr = "POWR", lrc = "LRC", gto = "GTO", steem = "STEEM", strat = "STRAT"
+        case zrx = "ZRX", rep = "REP", ae = "AE", xem = "XEM", snt = "SNT"
+        case ada = "ADA", ppt = "PPT", ctxc = "CTXC", cmt = "CMT", theta = "THETA"
+        case wtc = "WTC", itc = "ITC", dataTRUE = "TRUE", abt = "ABT", rnt = "RNT"
+        case ply = "PLY", waves = "WAVES", link = "LINK", enj = "ENJ", pst = "PST"
+        case salt = "SALT", rdn = "RDN", loom = "LOOM", pivx = "PIVX", ins = "INS"
+        case bcd = "BCD", bznt = "BZNT", xlm = "XLM", ocn = "OCN", bsv = "BSV"
+        case tmtg = "TMTG", bat = "BAT", wet = "WET", xvg = "XVG", iost = "IOST"
+        case poly = "POLY", hc = "HC", rom = "ROM", amo = "AMO", etz = "ETZ"
+        case arn = "ARN", apis = "APIS", mtl = "MTL", dacc = "DACC", dac = "DAC"
+        case bhp = "BHP", btt = "BTT", hdac = "HDAC", npxs = "NPXS", auto = "AUTO"
+        case gxc = "GXC", orbs = "ORBS", valor = "VALOR", con = "CON", ankr = "ANKR"
         case mix = "MIX"
         case date
     }
 }
 
 class TradeDataOptions: Codable {
-    let openingPrice: String
-    let closingPrice: String
-    let minPrice: String
-    let maxPrice: String
-    let averagePrice: String
-    let tradedUnits: String
-    let volumePer1Day: String
-    let volumePer7Day: String
-    let buyPrice: String
-    let sellPrice: String
-    let fluctateIn24H: String
-    let fluctateRateIn24H: String
+    let openingPrice, closingPrice, minPrice, maxPrice, averagePrice: String
+    let tradedUnits, volumePer1Day, volumePer7Day, buyPrice, sellPrice: String
+    let fluctateIn24H, fluctateRateIn24H: String
 
     var optionArr: [String] {
         return [openingPrice, closingPrice, minPrice, maxPrice, averagePrice, tradedUnits, volumePer1Day, volumePer7Day, buyPrice, sellPrice, fluctateIn24H, fluctateRateIn24H]
@@ -164,5 +93,33 @@ class TradeDataOptions: Codable {
         case sellPrice = "sell_price"
         case fluctateIn24H = "24H_fluctate"
         case fluctateRateIn24H = "24H_fluctate_rate"
+    }
+}
+
+struct CurrencyDataResponse: Codable {
+    let status: String
+    let data: CurrencyData
+}
+
+struct CurrencyData: Codable {
+    let openingPrice, closingPrice, minPrice, maxPrice: String
+    let averagePrice, unitsTraded, volume1Day, volume7Day: String
+    let buyPrice, sellPrice, the24HFluctate, the24HFluctateRate: String
+    let date: String
+
+    enum CodingKeys: String, CodingKey {
+        case openingPrice = "opening_price"
+        case closingPrice = "closing_price"
+        case minPrice = "min_price"
+        case maxPrice = "max_price"
+        case averagePrice = "average_price"
+        case unitsTraded = "units_traded"
+        case volume1Day = "volume_1day"
+        case volume7Day = "volume_7day"
+        case buyPrice = "buy_price"
+        case sellPrice = "sell_price"
+        case the24HFluctate = "24H_fluctate"
+        case the24HFluctateRate = "24H_fluctate_rate"
+        case date
     }
 }

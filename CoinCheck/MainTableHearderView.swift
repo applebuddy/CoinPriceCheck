@@ -11,7 +11,7 @@ import UIKit
 class MainTableHeaderView: UIView {
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.text = "메인 헤더"
+        titleLabel.text = "암호화폐 정보"
         titleLabel.textColor = UIColor.headerTitle
         return titleLabel
     }()

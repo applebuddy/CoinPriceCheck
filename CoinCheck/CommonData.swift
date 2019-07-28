@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommonData {
+final class CommonData {
     static let shared: CommonData = CommonData()
     // 셋팅한 암호화폐의 거래소코드:암호화폐명 정보를 담는다.
     var currencyList: [Int: String]
@@ -36,6 +36,7 @@ struct ViewSize {
     static let titleWidth: CGFloat = 100
     static let cellTextWidth: CGFloat = 60
     static let cellHeaderHeight: CGFloat = 60
+    static let cellDefaultHeight: CGFloat = 100
 }
 
 extension UIFont {

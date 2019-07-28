@@ -7,6 +7,7 @@ target 'CoinCheck' do
 
 pod "RxSwift"
 pod "RxCocoa"
+pod "Alamofire"
 
 
   # Pods for CoinCheck

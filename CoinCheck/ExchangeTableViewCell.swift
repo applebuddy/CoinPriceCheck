@@ -25,20 +25,20 @@ class ExchangeTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addSubviews()
-        self.setConstraints()
+        self.makeSubviews()
+        self.makeConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func addSubviews() {
+    func makeSubviews() {
         addSubview(self.titleLabel)
         addSubview(self.titleImageView)
     }
 
-    func setConstraints() {
+    func makeConstraints() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
@@ -58,5 +58,9 @@ class ExchangeTableViewCell: UITableViewCell {
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor),
         ])
+    }
+
+    func setExchangeCellData(title: String) {
+        self.titleLabel.text = title
     }
 }
