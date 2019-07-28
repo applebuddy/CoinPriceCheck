@@ -43,8 +43,8 @@ class CurrencyTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addSubviews()
-        self.addContraints()
+        self.makeSubviews()
+        self.makeContraints()
         self.starButton.addTarget(self, action: #selector(self.starButtonPressed(_:)), for: .touchUpInside)
     }
 
@@ -52,14 +52,14 @@ class CurrencyTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func addSubviews() {
+    func makeSubviews() {
         addSubview(self.titleImageView)
         addSubview(self.titleLabel)
         addSubview(self.priceLabel)
         addSubview(self.starButton)
     }
 
-    func addContraints() {
+    func makeContraints() {
         self.starButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             starButton.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
@@ -97,11 +97,23 @@ class CurrencyTableViewCell: UITableViewCell {
         self.index = cellIndex
     }
 
+    func setCurrencyCellData(title: String, price: String) {
+        self.titleLabel.text = title
+        self.priceLabel.text = price
+    }
+
+    func setStarButton(key: Int) {
+        if key == 0 {
+            self.starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
+        } else {
+            self.starButton.setImage(#imageLiteral(resourceName: "star_set"), for: .normal)
+        }
+    }
+
     @objc func starButtonPressed(_ sender: UIButton) {
         self.delegate?.starButtonPressed(index: self.index, sender)
         guard let currencyKey = self.titleLabel.text else { return }
         let key = currencyKey.components(separatedBy: "/KRW")[0]
-        print("\(key)")
 
         if BithumbCurrencies.shared.currencyKey[key] == 0 {
             BithumbCurrencies.shared.settingCurrencyCount += 1
@@ -111,7 +123,6 @@ class CurrencyTableViewCell: UITableViewCell {
             BithumbCurrencies.shared.settingCurrencyCount -= 1
             BithumbCurrencies.shared.currencyKey[key] = 0
             BithumbCurrencies.shared.settingCurrencyKey.removeValue(forKey: key)
-            print(BithumbCurrencies.shared.settingCurrencyKey)
         }
     }
 }

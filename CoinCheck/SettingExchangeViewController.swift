@@ -50,10 +50,9 @@ extension SettingExchangeViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let settingTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? ExchangeTableViewCell else { return UITableViewCell() }
-        settingTableViewCell.titleLabel.text = "\(Exchanges.ExchangeListString[indexPath.row])"
-//        settingTableViewCell.titleLabel.text = exchangeData.data.abt.
-        return settingTableViewCell
+        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? ExchangeTableViewCell else { return UITableViewCell() }
+        exchangeTableViewCell.setExchangeCellData(title: "\(Exchanges.ExchangeListString[indexPath.row])")
+        return exchangeTableViewCell
     }
 }
 

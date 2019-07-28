@@ -129,32 +129,23 @@ class CurrencyViewController: UIViewController {
 
 extension CurrencyViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let currencyNameString = BithumbCurrencies.shared.currencyNameString
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: bithumbTableViewCellIdentifier, for: indexPath) as? CurrencyTableViewCell,
-            let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice else { return UITableViewCell() }
+            let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice,
+            let currencyButtonKey = BithumbCurrencies.shared.currencyKey[currencyNameString[indexPath.row]] else { return UITableViewCell() }
+
         bithumbTableViewCell.delegate = self
         self.nowIndexPath = indexPath
-        let currencyNameString = BithumbCurrencies.shared.currencyNameString
 
         if self.isSearched == true {
-            guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row] else { return UITableViewCell() }
-            bithumbTableViewCell.titleLabel.text = "\(shownCurrencyNameString)/KRW"
-            bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
-            if BithumbCurrencies.shared.currencyKey[shownCurrencyNameString] == 0 {
-                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
-            } else {
-                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star_set"), for: .normal)
-            }
-
+            guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row],
+                let currencyButtonKey = BithumbCurrencies.shared.currencyKey[shownCurrencyNameString] else { return UITableViewCell() }
+            bithumbTableViewCell.setCurrencyCellData(title: "\(shownCurrencyNameString)/KRW", price: "\(currencyPrice)원")
+            bithumbTableViewCell.setStarButton(key: currencyButtonKey)
         } else {
-            bithumbTableViewCell.titleLabel.text = "\(currencyNameString[indexPath.row])/KRW"
-            bithumbTableViewCell.priceLabel.text = "\(currencyPrice)원"
-            if BithumbCurrencies.shared.currencyKey[currencyNameString[indexPath.row]] == 0 {
-                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star"), for: .normal)
-            } else {
-                bithumbTableViewCell.starButton.setImage(#imageLiteral(resourceName: "star_set"), for: .normal)
-            }
+            bithumbTableViewCell.setCurrencyCellData(title: "\(currencyNameString[indexPath.row])/KRW", price: "\(currencyPrice)원")
+            bithumbTableViewCell.setStarButton(key: currencyButtonKey)
         }
-
         return bithumbTableViewCell
     }
 

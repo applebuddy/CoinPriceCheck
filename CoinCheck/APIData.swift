@@ -8,6 +8,12 @@
 
 import UIKit
 
+// MARK: - APIData
+
+// API 주소 URL 정보
+// "https://api.bithumb.com/public/orderbook/ALL"
+// "https://api.bithumb.com/public/ticker/ALL"
+
 class TradeResponse: Codable {
     let status: String
     let data: TradeData

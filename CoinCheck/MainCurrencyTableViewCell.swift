@@ -34,8 +34,8 @@ class MainCurrencyTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.addSubviews()
-        self.setConstraints()
+        self.makeSubviews()
+        self.makeConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,13 +44,13 @@ class MainCurrencyTableViewCell: UITableViewCell {
 
     // MARK: - Setting Methods
 
-    func addSubviews() {
+    func makeSubviews() {
         addSubview(self.priceLabel)
         addSubview(self.titleLabel)
         addSubview(self.titleImageView)
     }
 
-    func setConstraints() {
+    func makeConstraints() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
@@ -72,5 +72,10 @@ class MainCurrencyTableViewCell: UITableViewCell {
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
             priceLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 0),
         ])
+    }
+
+    func setMainCellData(title: String, price: String) {
+        self.titleLabel.text = title
+        self.priceLabel.text = price
     }
 }
