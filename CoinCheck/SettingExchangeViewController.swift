@@ -8,36 +8,36 @@
 
 import UIKit
 
-enum SettingTableViewSections: Int {
+public enum SettingTableViewSections: Int {
     case mainSection = 0
 }
 
-class SettingExchangeViewController: UIViewController {
+internal class SettingExchangeViewController: UIViewController {
+    // MARK: - Properties
+
     let settingTableViewIdentifier = "SettingTableView"
     var exchangeDataList: TradeResponse?
 
-    let settingView: SettingView = {
-        let settingView = SettingView()
+    // MARK: - UIs
+
+    let settingView: SettingExchangeView = {
+        let settingView = SettingExchangeView()
         return settingView
     }()
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "암호화폐 거래소 목록"
-        self.settingView.settingTableView.delegate = self
-        self.settingView.settingTableView.dataSource = self
-        self.registCell()
+        self.settingView.settingExchangeTableView.delegate = self
+        self.settingView.settingExchangeTableView.dataSource = self
+        self.registerCell()
     }
 
     override func loadView() {
         super.loadView()
         self.view = self.settingView
-
-        OperationQueue().addOperation {}
-    }
-
-    func registCell() {
-        self.settingView.settingTableView.register(ExchangeTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
     }
 }
 
@@ -60,7 +60,7 @@ extension SettingExchangeViewController: UITableViewDelegate {
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return UIView() }
         switch sectionIndex {
-        case .mainSection: return SettingTableHeaderView()
+        case .mainSection: return ExchangeTableHeaderView()
         }
     }
 
@@ -83,5 +83,10 @@ extension SettingExchangeViewController: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
         let currencyViewController = CurrencyViewController()
         self.navigationController?.pushViewController(currencyViewController, animated: true)
+    }
+}
+
+extension SettingExchangeViewController: UITableViewCellSettingProtocol {
+    func registerCell() { self.settingView.settingExchangeTableView.register(ExchangeTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
     }
 }

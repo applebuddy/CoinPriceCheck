@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainCurrencyTableViewCell: UITableViewCell {
+internal class MainCurrencyTableViewCell: UITableViewCell {
     // MARK: - UIs
 
     let titleImageView: UIImageView = {
@@ -34,23 +34,22 @@ class MainCurrencyTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.makeSubviews()
-        self.makeConstraints()
+        self.setSubView()
+        self.setConstraint()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    // MARK: - Setting Methods
+    // MARK: - Set Method
 
-    func makeSubviews() {
-        addSubview(self.priceLabel)
-        addSubview(self.titleLabel)
-        addSubview(self.titleImageView)
+    func setMainCellData(title: String, price: String) {
+        self.titleLabel.text = title
+        self.priceLabel.text = price
     }
 
-    func makeConstraints() {
+    func setTitleImageViewContraint() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
@@ -58,14 +57,18 @@ class MainCurrencyTableViewCell: UITableViewCell {
             titleImageView.heightAnchor.constraint(equalTo: titleImageView.widthAnchor, constant: 0),
             titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
         ])
+    }
 
+    func setTitleLabelConstraint() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor, constant: 0),
             titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor, constant: 0),
         ])
+    }
 
+    func setPriceLabelConstraint() {
         self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             priceLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 0),
@@ -73,9 +76,18 @@ class MainCurrencyTableViewCell: UITableViewCell {
             priceLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 0),
         ])
     }
+}
 
-    func setMainCellData(title: String, price: String) {
-        self.titleLabel.text = title
-        self.priceLabel.text = price
+extension MainCurrencyTableViewCell: UIViewSettingProtocol {
+    func setConstraint() {
+        self.setTitleImageViewContraint()
+        self.setTitleLabelConstraint()
+        self.setPriceLabelConstraint()
+    }
+
+    func setSubView() {
+        addSubview(self.priceLabel)
+        addSubview(self.titleLabel)
+        addSubview(self.titleImageView)
     }
 }

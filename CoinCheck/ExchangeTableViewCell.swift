@@ -8,7 +8,9 @@
 
 import UIKit
 
-class ExchangeTableViewCell: UITableViewCell {
+internal class ExchangeTableViewCell: UITableViewCell {
+    // MARK: - UIs
+
     let titleImageView: UIImageView = {
         let titleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         titleImageView.backgroundColor = #colorLiteral(red: 0.5514791608, green: 0.6702116728, blue: 0.2510133386, alpha: 1)
@@ -23,22 +25,21 @@ class ExchangeTableViewCell: UITableViewCell {
         return titleLabel
     }()
 
+    // MARK: - Initialization
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.makeSubviews()
-        self.makeConstraints()
+        self.setSubView()
+        self.setConstraint()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func makeSubviews() {
-        addSubview(self.titleLabel)
-        addSubview(self.titleImageView)
-    }
+    // MARK: - Set Method
 
-    func makeConstraints() {
+    func setTitleImageViewContraint() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
@@ -48,7 +49,9 @@ class ExchangeTableViewCell: UITableViewCell {
             titleImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             titleImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
         ])
+    }
 
+    func setTitleLabelConstraint() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
@@ -62,5 +65,17 @@ class ExchangeTableViewCell: UITableViewCell {
 
     func setExchangeCellData(title: String) {
         self.titleLabel.text = title
+    }
+}
+
+extension ExchangeTableViewCell: UIViewSettingProtocol {
+    func setConstraint() {
+        self.setTitleImageViewContraint()
+        self.setTitleLabelConstraint()
+    }
+
+    func setSubView() {
+        addSubview(self.titleLabel)
+        addSubview(self.titleImageView)
     }
 }

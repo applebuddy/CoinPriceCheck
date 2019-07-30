@@ -8,14 +8,18 @@
 
 import UIKit
 
-enum MainTableViewSections: Int {
+public enum MainTableViewSections: Int {
     case mainSection = 0
 }
 
-class MainViewController: UIViewController {
+internal class MainViewController: UIViewController {
+    // MARK: - Properties
+
     let mainTableViewCellIdentifier = "mainTableViewCell"
     var settingCurrencyData: [String: CurrencyDataResponse] = [:]
     var settingCurrencyIndex: [String] = []
+
+    // MARK: - UIs
 
     let mainView: MainView = {
         let mainView = MainView()
@@ -36,6 +40,8 @@ class MainViewController: UIViewController {
         addBarButton.isUserInteractionEnabled = true
         return addBarButton
     }()
+
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,10 +68,6 @@ class MainViewController: UIViewController {
     }
 
     // MARK: - Setting Methods
-
-    func registerCell() {
-        self.mainView.mainTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: self.mainTableViewCellIdentifier)
-    }
 
     func setCellIndexData() {
         let currencyKey = BithumbCurrencies.shared.settingCurrencyKey.sorted { (arg0, arg1) -> Bool in
@@ -149,5 +151,11 @@ extension MainViewController: UITableViewDelegate {
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return ViewSize.cellDefaultHeight
+    }
+}
+
+extension MainViewController: UITableViewCellSettingProtocol {
+    func registerCell() {
+        self.mainView.mainTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: self.mainTableViewCellIdentifier)
     }
 }

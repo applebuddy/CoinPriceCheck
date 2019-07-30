@@ -10,11 +10,11 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-enum BithumbTableViewSections: Int {
+public enum BithumbTableViewSections: Int {
     case mainSection = 0
 }
 
-class CurrencyViewController: UIViewController {
+internal class CurrencyViewController: UIViewController {
     // MARK: - Properties
 
     let disposeBag = DisposeBag() // 뷰가 할당 해제될 때 놓아줄 수 있는 일회용품의 Rx 가방
@@ -33,12 +33,12 @@ class CurrencyViewController: UIViewController {
 
     // MARK: - UIs
 
-    let mainView: BithumbInfoView = {
-        let mainView = BithumbInfoView()
+    let mainView: CurrencyView = {
+        let mainView = CurrencyView()
         return mainView
     }()
 
-    // MARK: - ViewController App Cycle
+    // MARK: - Life Cycle
 
     override func loadView() {
         super.loadView()
@@ -47,11 +47,11 @@ class CurrencyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainView.bithumbTableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: self.bithumbTableViewCellIdentifier)
-        self.mainView.bithumbTableView.delegate = self
-        self.mainView.bithumbTableView.dataSource = self
+        self.registerCell()
+        self.mainView.currencyTableView.delegate = self
+        self.mainView.currencyTableView.dataSource = self
         self.mainView.searchBar.delegate = self
-        self.mainView.bithumbTableView.allowsSelection = false
+        self.mainView.currencyTableView.allowsSelection = false
         self.setBithumbData()
         self.setCellData()
         self.setSearchBar()
@@ -62,7 +62,7 @@ class CurrencyViewController: UIViewController {
         super.viewDidAppear(true)
     }
 
-    // MARK: - Setting Methods
+    // MARK: - Set Methods
 
     func presentAlertViewController(errorString: String) {
         let alertController = UIAlertController(title: "문제가 발생하였습니다.", message: errorString, preferredStyle: .alert)
@@ -82,7 +82,7 @@ class CurrencyViewController: UIViewController {
                 self?.shownCurrencyNameString = currencyNameString.filter {
                     $0.uppercased().hasPrefix(query.uppercased())
                 }
-                self?.mainView.bithumbTableView.reloadData()
+                self?.mainView.currencyTableView.reloadData()
             })
             .disposed(by: self.disposeBag)
     }
@@ -99,7 +99,7 @@ class CurrencyViewController: UIViewController {
     @objc func refreshBithumbData(_: Timer) {
         self.setBithumbData()
         self.setCellData()
-        self.mainView.bithumbTableView.reloadData()
+        self.mainView.currencyTableView.reloadData()
     }
 
     func setBithumbData() {
@@ -176,10 +176,10 @@ extension CurrencyViewController: UISearchBarDelegate {
     func searchBar(_: UISearchBar, textDidChange _: String) {
         if self.mainView.searchBar.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
             self.isSearched = false
-            self.mainView.bithumbTableView.reloadData()
+            self.mainView.currencyTableView.reloadData()
         } else {
             self.isSearched = true
-            self.mainView.bithumbTableView.reloadData()
+            self.mainView.currencyTableView.reloadData()
         }
     }
 }
@@ -187,6 +187,12 @@ extension CurrencyViewController: UISearchBarDelegate {
 extension CurrencyViewController: CurrencyTableViewCellDelegate {
     func starButtonPressed(index _: Int, _ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        self.mainView.bithumbTableView.reloadData()
+        self.mainView.currencyTableView.reloadData()
+    }
+}
+
+extension CurrencyViewController: UITableViewCellSettingProtocol {
+    func registerCell() {
+        self.mainView.currencyTableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: self.bithumbTableViewCellIdentifier)
     }
 }

@@ -8,7 +8,9 @@
 
 import UIKit
 
-class SettingTableHeaderView: UIView {
+internal class ExchangeTableHeaderView: UIView {
+    // MARK: - UIs
+
     let headerTitleLabel: UILabel = {
         let headerTitleLabel = UILabel()
         headerTitleLabel.text = "암호화폐 거래소를 선택해주세요."
@@ -16,27 +18,37 @@ class SettingTableHeaderView: UIView {
         return headerTitleLabel
     }()
 
+    // MARK: - Initialization
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.cellHeaderBackground
-        self.addSubviews()
-        self.setConstraints()
+        self.setSubView()
+        self.setConstraint()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func addSubviews() {
-        addSubview(self.headerTitleLabel)
-    }
+    // MARK: - Set Method
 
-    func setConstraints() {
+    func setHeaderTitleLabelConstraint() {
         self.headerTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             headerTitleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
             headerTitleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
             headerTitleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
         ])
+    }
+}
+
+extension ExchangeTableHeaderView: UIViewSettingProtocol {
+    func setConstraint() {
+        self.setHeaderTitleLabelConstraint()
+    }
+
+    func setSubView() {
+        addSubview(self.headerTitleLabel)
     }
 }
