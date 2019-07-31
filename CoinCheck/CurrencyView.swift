@@ -8,8 +8,10 @@
 
 import UIKit
 
-class BithumbInfoView: UIView {
-    let bithumbTableView: UITableView = {
+internal class CurrencyView: UIView {
+    // MARK: - UIs
+
+    let currencyTableView: UITableView = {
         let bithumbTableView = UITableView(frame: CGRect(x: 0, y: 0, width: 20, height: 20), style: .plain)
         bithumbTableView.backgroundColor = UIColor.tableViewBackground
         return bithumbTableView
@@ -26,35 +28,48 @@ class BithumbInfoView: UIView {
         return searchBar
     }()
 
+    // MARK: - Initialization
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubviews()
-        self.addConstraints()
+        self.setSubView()
+        self.setConstraint()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func addSubviews() {
-        addSubview(self.bithumbTableView)
-        addSubview(self.searchBar)
-    }
+    // MARK; - Set Method
 
-    func addConstraints() {
+    func setSearchBarConstraint() {
         self.searchBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0),
             searchBar.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
             searchBar.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
         ])
+    }
 
-        self.bithumbTableView.translatesAutoresizingMaskIntoConstraints = false
+    func setCurrencyTableViewConstraint() {
+        self.currencyTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            bithumbTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            bithumbTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
-            bithumbTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
-            bithumbTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            currencyTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            currencyTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+            currencyTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+            currencyTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
         ])
+    }
+}
+
+extension CurrencyView: UIViewSettingProtocol {
+    func setConstraint() {
+        self.setSearchBarConstraint()
+        self.setCurrencyTableViewConstraint()
+    }
+
+    func setSubView() {
+        addSubview(self.currencyTableView)
+        addSubview(self.searchBar)
     }
 }

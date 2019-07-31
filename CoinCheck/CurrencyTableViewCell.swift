@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol CurrencyTableViewCellDelegate {
-    func starButtonPressed(index: Int, _ sender: UIButton)
-}
+internal class CurrencyTableViewCell: UITableViewCell {
+    // MARK: - Properties
 
-class CurrencyTableViewCell: UITableViewCell {
     var setCode: Int = 0
     var index: Int = 0
     var delegate: CurrencyTableViewCellDelegate?
+
+    // MARK: - UIs
 
     let titleImageView: UIImageView = {
         let titleImageView = UIImageView()
@@ -41,10 +41,12 @@ class CurrencyTableViewCell: UITableViewCell {
         return starButton
     }()
 
+    // MARK: - Initialization
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.makeSubviews()
-        self.makeContraints()
+        self.setSubView()
+        self.setConstraint()
         self.starButton.addTarget(self, action: #selector(self.starButtonPressed(_:)), for: .touchUpInside)
     }
 
@@ -52,14 +54,9 @@ class CurrencyTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    func makeSubviews() {
-        addSubview(self.titleImageView)
-        addSubview(self.titleLabel)
-        addSubview(self.priceLabel)
-        addSubview(self.starButton)
-    }
+    // MARK: - Set Method
 
-    func makeContraints() {
+    func setStarButtonConstraint() {
         self.starButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             starButton.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
@@ -67,7 +64,9 @@ class CurrencyTableViewCell: UITableViewCell {
             starButton.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.3),
             starButton.widthAnchor.constraint(equalTo: starButton.heightAnchor),
         ])
+    }
 
+    func setTitleImageViewContraint() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
@@ -75,7 +74,9 @@ class CurrencyTableViewCell: UITableViewCell {
             titleImageView.heightAnchor.constraint(equalToConstant: 60),
             titleImageView.widthAnchor.constraint(equalTo: titleImageView.heightAnchor, multiplier: 1.0),
         ])
+    }
 
+    func setTitleLabelConstraint() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
@@ -83,7 +84,9 @@ class CurrencyTableViewCell: UITableViewCell {
             titleLabel.rightAnchor.constraint(equalTo: starButton.rightAnchor, constant: -ViewInsets.rightInset),
             titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor),
         ])
+    }
 
+    func setPriceLabelConstraint() {
         self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
@@ -110,6 +113,8 @@ class CurrencyTableViewCell: UITableViewCell {
         }
     }
 
+    // MARK: - Events
+
     @objc func starButtonPressed(_ sender: UIButton) {
         self.delegate?.starButtonPressed(index: self.index, sender)
         guard let currencyKey = self.titleLabel.text else { return }
@@ -124,5 +129,21 @@ class CurrencyTableViewCell: UITableViewCell {
             BithumbCurrencies.shared.currencyKey[key] = 0
             BithumbCurrencies.shared.settingCurrencyKey.removeValue(forKey: key)
         }
+    }
+}
+
+extension CurrencyTableViewCell: UIViewSettingProtocol {
+    func setConstraint() {
+        self.setStarButtonConstraint()
+        self.setTitleImageViewContraint()
+        self.setTitleLabelConstraint()
+        self.setPriceLabelConstraint()
+    }
+
+    func setSubView() {
+        addSubview(self.titleImageView)
+        addSubview(self.titleLabel)
+        addSubview(self.priceLabel)
+        addSubview(self.starButton)
     }
 }

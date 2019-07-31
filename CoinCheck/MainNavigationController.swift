@@ -8,11 +8,15 @@
 
 import UIKit
 
-class MainNavigationCnotroller: UINavigationController {
+internal class MainNavigationCnotroller: UINavigationController {
+    // MARK: - UIs
+
     let settingViewController: SettingExchangeViewController = {
         let settingViewController = SettingExchangeViewController()
         return settingViewController
     }()
+
+    // MARK: - Initialization
 
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
@@ -28,12 +32,16 @@ class MainNavigationCnotroller: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Set Method
+
     func setNavigationBar() {
         self.navigationBar.topItem?.title = "네비게이션 바 타이틀"
         self.navigationBar.barTintColor = UIColor.navigationBarButtonItemBackground
         self.navigationBar.barStyle = .blackTranslucent
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.transitionToSelectView(_:)))
     }
+
+    // MARK: - Events
 
     @objc func transitionToSelectView(_: UIBarButtonItem) {}
 }

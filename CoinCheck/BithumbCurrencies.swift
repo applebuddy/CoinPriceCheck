@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum BithumbCurrencyName: String {
+public enum BithumbCurrencyName: String {
     case btc = "BTC", eth = "ETH", dash = "DASH", ltc = "LTC", etc = "ETC"
     case xrp = "XRP", bch = "BCH", xmr = "XMR", zec = "ZEC", qtum = "QTUM"
     case btg = "BTG", eos = "EOS", icx = "ICX", vet = "VET", trx = "TRX"
@@ -29,7 +29,7 @@ enum BithumbCurrencyName: String {
     case mix = "MIX"
 }
 
-class BithumbCurrencies {
+public class BithumbCurrencies {
     static let shared = BithumbCurrencies()
     let currencyNameString: [String] = ["BTC", "ETH", "DASH", "LTC", "ETC", "XRP", "BCH", "XMR", "ZEC", "QTUM", "BTG", "EOS", "ICX", "VET", "TRX", "ELF", "MITH", "MCO", "OMG", "KNC", "GNT", "ZIL", "ETHOS", "PAY", "WAX", "POWR", "LRC", "GTO", "STEEM", "STRAT", "ZRX", "REP", "AE", "XEM", "SNT", "ADA", "PPT", "CTXC", "CMT", "THETA", "WTC", "ITC", "TRUE", "ABT", "RNT", "PLY", "WAVES", "LINK", "ENJ", "PST", "SALT", "RDN", "LOOM", "PIVX", "INS", "BCD", "BZNT", "XLM", "OCN", "BSV", "TMTG", "BAT", "WET", "XVG", "IOST", "POLY", "HC", "ROM", "AMO", "ETZ", "ARN", "APIS", "MTL", "DACC", "DAC", "BHP", "BTT", "HDAC", "NPXS", "AUTO", "GXC", "ORBS", "VALOR", "CON", "ANKR", "MIX"]
 

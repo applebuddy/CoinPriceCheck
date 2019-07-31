@@ -8,7 +8,9 @@
 
 import UIKit
 
-class MainTableHeaderView: UIView {
+internal class MainTableHeaderView: UIView {
+    // MARK: - UIs
+
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "암호화폐 정보"
@@ -16,26 +18,36 @@ class MainTableHeaderView: UIView {
         return titleLabel
     }()
 
+    // MARK: - Initialization
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.cellHeaderBackground
-        self.addSubviews()
-        self.setConstraints()
+        self.setSubView()
+        self.setConstraint()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    func addSubviews() {
-        addSubview(self.titleLabel)
-    }
+    // MARK: - Set Method
 
-    func setConstraints() {
+    func setTitleLabelConstraint() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
             titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
         ])
+    }
+}
+
+extension MainTableHeaderView: UIViewSettingProtocol {
+    func setConstraint() {
+        self.setTitleLabelConstraint()
+    }
+
+    func setSubView() {
+        addSubview(self.titleLabel)
     }
 }

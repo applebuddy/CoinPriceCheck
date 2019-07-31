@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum ExchangeIndex: Int {
+public enum ExchangeIndex: Int {
     case bithumb = 0
 }
 
-struct Exchanges {
+final class Exchanges {
     static let ExchangeListString: [String] = ["Bithumb"]
 }

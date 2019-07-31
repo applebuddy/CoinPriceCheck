@@ -8,17 +8,21 @@
 
 import UIKit
 
-class MainView: UIView {
+internal class MainView: UIView {
+    // MARK: - UIs
+
     let mainTableView: UITableView = {
         let mainTableView = UITableView(frame: CGRect.zero, style: UITableView.Style.grouped)
         mainTableView.backgroundColor = UIColor.tableViewBackground
         return mainTableView
     }()
 
+    // MARK: - Initialization
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setSubviews()
-        self.setMainViewConstraints()
+        self.setSubView()
+        self.setConstraint()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -27,7 +31,7 @@ class MainView: UIView {
 
     // MARK: - Setting Methods
 
-    func setMainViewConstraints() {
+    func setMainTableViewConstraint() {
         self.mainTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mainTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
@@ -36,8 +40,14 @@ class MainView: UIView {
             mainTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
         ])
     }
+}
 
-    func setSubviews() {
+extension MainView: UIViewSettingProtocol {
+    func setConstraint() {
+        self.setMainTableViewConstraint()
+    }
+
+    func setSubView() {
         addSubview(self.mainTableView)
     }
 }
