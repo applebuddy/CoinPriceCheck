@@ -121,7 +121,7 @@
 			path = CoinCheck;
 			sourceTree = "<group>";
 		};
-		38BC0F3D22C353D20057BBC9 /* Medel */ = {
+		38BC0F3D22C353D20057BBC9 /* MedelView */ = {
 			isa = PBXGroup;
 			children = (
 				3840D33E22BFC0CD00FA865D /* CommonData.swift */,
@@ -130,15 +130,15 @@
 				3896544B22C9AAC200362A60 /* Exchanges.swift */,
 				0703836522EB3100009C24B4 /* RequestAPIData.swift */,
 			);
-			name = Medel;
+			name = MedelView;
 			sourceTree = "<group>";
 		};
 		38BC0F3E22C353E20057BBC9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				38BC0F3D22C353D20057BBC9 /* Medel */,
-				38BC0F4322C35FE90057BBC9 /* Main */,
-				38BC0F4422C35FF80057BBC9 /* Sub */,
+				38BC0F3D22C353D20057BBC9 /* MedelView */,
+				38BC0F4322C35FE90057BBC9 /* MainView */,
+				38BC0F4422C35FF80057BBC9 /* SubView */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -154,17 +154,17 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		38BC0F4322C35FE90057BBC9 /* Main */ = {
+		38BC0F4322C35FE90057BBC9 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
 				3840D33622BFA0D500FA865D /* MainView.swift */,
 				3840D33A22BFB07400FA865D /* MainTableHearderView.swift */,
 				3840D33822BFABD600FA865D /* MainCurrencyTableViewCell.swift */,
 			);
-			name = Main;
+			name = MainView;
 			sourceTree = "<group>";
 		};
-		38BC0F4422C35FF80057BBC9 /* Sub */ = {
+		38BC0F4422C35FF80057BBC9 /* SubView */ = {
 			isa = PBXGroup;
 			children = (
 				38BC0F4022C354640057BBC9 /* SettingExchangeView.swift */,
@@ -173,7 +173,7 @@
 				3896545122C9FB6000362A60 /* CurrencyTableViewCell.swift */,
 				38BC0F4722C36FBA0057BBC9 /* ExchangeTableHeaderView.swift */,
 			);
-			name = Sub;
+			name = SubView;
 			sourceTree = "<group>";
 		};
 		6AC1A7CA925705FEE54E3A6D /* Frameworks */ = {
