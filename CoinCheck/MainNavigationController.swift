@@ -35,7 +35,7 @@ internal class MainNavigationCnotroller: UINavigationController {
     // MARK: - Set Method
 
     func setNavigationBar() {
-        self.navigationBar.topItem?.title = "네비게이션 바 타이틀"
+        self.navigationBar.topItem?.title = "Coin Price Check"
         self.navigationBar.barTintColor = UIColor.navigationBarButtonItemBackground
         self.navigationBar.barStyle = .blackTranslucent
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.transitionToSelectView(_:)))
