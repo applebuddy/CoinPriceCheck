@@ -8,11 +8,7 @@
 
 import UIKit
 
-public enum SettingTableViewSections: Int {
-    case mainSection = 0
-}
-
-internal class SettingExchangeViewController: UIViewController {
+class ExchangeSettingViewController: UIViewController {
     // MARK: - Properties
 
     let settingTableViewIdentifier = "SettingTableView"
@@ -20,8 +16,8 @@ internal class SettingExchangeViewController: UIViewController {
 
     // MARK: - UIs
 
-    let settingView: SettingExchangeView = {
-        let settingView = SettingExchangeView()
+    let settingView: ExchangeSettingView = {
+        let settingView = ExchangeSettingView()
         return settingView
     }()
 
@@ -30,8 +26,8 @@ internal class SettingExchangeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "암호화폐 거래소 목록"
-        self.settingView.settingExchangeTableView.delegate = self
-        self.settingView.settingExchangeTableView.dataSource = self
+        self.settingView.exchangeSettingTableView.delegate = self
+        self.settingView.exchangeSettingTableView.dataSource = self
         self.registerCell()
     }
 
@@ -41,26 +37,26 @@ internal class SettingExchangeViewController: UIViewController {
     }
 }
 
-extension SettingExchangeViewController: UITableViewDataSource {
+extension ExchangeSettingViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return 0 }
+        guard let sectionIndex = ExchangeSettingTableViewSections(rawValue: section) else { return 0 }
         switch sectionIndex {
         case .mainSection: return Exchanges.ExchangeListString.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? ExchangeTableViewCell else { return UITableViewCell() }
+        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? ExchangeSettingTableViewCell else { return UITableViewCell() }
         exchangeTableViewCell.setExchangeCellData(title: "\(Exchanges.ExchangeListString[indexPath.row])")
         return exchangeTableViewCell
     }
 }
 
-extension SettingExchangeViewController: UITableViewDelegate {
+extension ExchangeSettingViewController: UITableViewDelegate {
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return UIView() }
+        guard let sectionIndex = ExchangeSettingTableViewSections(rawValue: section) else { return UIView() }
         switch sectionIndex {
-        case .mainSection: return ExchangeTableHeaderView()
+        case .mainSection: return ExchangeSettingTableHeaderView()
         }
     }
 
@@ -69,7 +65,7 @@ extension SettingExchangeViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let sectionIndex = SettingTableViewSections(rawValue: section) else { return CGFloat.leastNonzeroMagnitude }
+        guard let sectionIndex = ExchangeSettingTableViewSections(rawValue: section) else { return CGFloat.leastNonzeroMagnitude }
         switch sectionIndex {
         case .mainSection: return ViewSize.cellHeaderHeight
         }
@@ -81,12 +77,12 @@ extension SettingExchangeViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        let currencyViewController = CurrencyViewController()
+        let currencyViewController = CurrencySettingViewController()
         self.navigationController?.pushViewController(currencyViewController, animated: true)
     }
 }
 
-extension SettingExchangeViewController: UITableViewCellSettingProtocol {
-    func registerCell() { self.settingView.settingExchangeTableView.register(ExchangeTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
+extension ExchangeSettingViewController: UITableViewCellSettingProtocol {
+    func registerCell() { self.settingView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
     }
 }

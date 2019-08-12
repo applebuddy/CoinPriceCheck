@@ -11,13 +11,13 @@ import UIKit
 final class CommonData {
     static let shared: CommonData = CommonData()
     // 셋팅한 암호화폐의 거래소코드:암호화폐명 정보를 담는다.
-    var currencyList: [Int: String]
+//    var currencyList: [Int: String]
     var selectedExchangeIndex: Int
     var currencyCount: Int
     var tradeData: TradeResponse?
 
     init() {
-        self.currencyList = [:]
+//        self.currencyList = [:]
         self.currencyCount = 0
         self.selectedExchangeIndex = 0
     }
@@ -30,6 +30,8 @@ struct ViewTag {
 struct ViewInsets {
     static let leftInset: CGFloat = 16
     static let rightInset: CGFloat = 16
+    static let topInset: CGFloat = 8
+    static let bottomInset: CGFloat = 8
 }
 
 struct ViewSize {
@@ -39,18 +41,12 @@ struct ViewSize {
     static let cellDefaultHeight: CGFloat = 100
 }
 
-extension UIFont {
-    func mainFont(size: CGFloat) -> UIFont {
-        guard let mainFont = UIFont(name: "HelveticaNeue-Thin", size: size) else { return UIFont() }
-        return mainFont
-    }
+struct CellIdentifier {
+    static let bithumbTableViewCellIdentifier: String = "bithumbTableViewCell"
+    static let mainTableViewCellIdentifier: String = "mainTableViewCell"
 }
 
-extension UIColor {
-    static let navigationBarButtonItemBackground = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-    static let navigationBarTitle = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-    static let headerTitle = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-    static let tableViewBackground = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-    static let cellHeaderBackground = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-    static let cellText = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+struct DataIdentifier {
+    static let bithumbSettingCurrencyKey: String = "BithumbSettingCurrencyKey"
+    static let bithumbCurrencyKey: String = "BithumbCurrencyKey"
 }

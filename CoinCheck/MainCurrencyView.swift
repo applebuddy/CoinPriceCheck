@@ -8,10 +8,10 @@
 
 import UIKit
 
-internal class MainView: UIView {
+class MainCurrencyView: UIView {
     // MARK: - UIs
 
-    let mainTableView: UITableView = {
+    let mainCurrencyTableView: UITableView = {
         let mainTableView = UITableView(frame: CGRect.zero, style: UITableView.Style.grouped)
         mainTableView.backgroundColor = UIColor.tableViewBackground
         return mainTableView
@@ -32,22 +32,22 @@ internal class MainView: UIView {
     // MARK: - Setting Methods
 
     func setMainTableViewConstraint() {
-        self.mainTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.mainCurrencyTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mainTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            mainTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
-            mainTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
-            mainTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            mainCurrencyTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            mainCurrencyTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+            mainCurrencyTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+            mainCurrencyTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
         ])
     }
 }
 
-extension MainView: UIViewSettingProtocol {
+extension MainCurrencyView: UIViewSettingProtocol {
     func setConstraint() {
         self.setMainTableViewConstraint()
     }
 
     func setSubView() {
-        addSubview(self.mainTableView)
+        addSubview(self.mainCurrencyTableView)
     }
 }
