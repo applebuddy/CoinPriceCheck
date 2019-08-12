@@ -11,7 +11,6 @@ import UIKit
 class MainCurrencyViewController: UIViewController {
     // MARK: - Properties
 
-    let mainTableViewCellIdentifier = "mainTableViewCell"
     var settingCurrencyData: [String: CurrencyDataResponse] = [:]
     var settingCurrencyIndex: [String] = []
 
@@ -134,7 +133,7 @@ extension MainCurrencyViewController: UITableViewDataSource {
         let currencyTitle = self.settingCurrencyIndex[indexPath.row]
         let currencyData = self.settingCurrencyData[currencyTitle]
 
-        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: self.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell,
+        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell,
             let closingPrice = currencyData?.data.closingPrice,
             let risingRate = currencyData?.data.the24HFluctateRate else { return UITableViewCell() }
 
@@ -162,6 +161,6 @@ extension MainCurrencyViewController: UITableViewDelegate {
 
 extension MainCurrencyViewController: UITableViewCellSettingProtocol {
     func registerCell() {
-        self.mainCurrencyView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: self.mainTableViewCellIdentifier)
+        self.mainCurrencyView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: CellIdentifier.mainTableViewCellIdentifier)
     }
 }

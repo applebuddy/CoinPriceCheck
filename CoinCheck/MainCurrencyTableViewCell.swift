@@ -34,6 +34,7 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
         let priceRisingRateLabel = UILabel()
         priceRisingRateLabel.textColor = .cellText
         priceRisingRateLabel.font = .systemFont(ofSize: 16)
+        priceRisingRateLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return priceRisingRateLabel
     }()
 
@@ -53,7 +54,7 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
 
     func setMainCellData(title: String, price: String, risingRate: String) {
         self.titleLabel.text = "\(title)/KRW"
-        self.priceLabel.text = price
+        self.priceLabel.text = "\(price)원"
         self.setRisingRateLabel(rate: risingRate)
     }
 
@@ -86,7 +87,6 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor, constant: 0),
             titleLabel.heightAnchor.constraint(equalTo: titleImageView.heightAnchor, multiplier: 0.5),
-            titleLabel.widthAnchor.constraint(equalToConstant: 80),
         ])
     }
 
@@ -105,7 +105,8 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             priceRisingRateLabel.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
             priceRisingRateLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: ViewInsets.leftInset / 2),
-            priceRisingRateLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -ViewInsets.rightInset),
+            // trailing Anchor 설정을 lessThanorEqualTo 로 설정해주면 좌측 라벨에 찰싹 붙는다.
+            priceRisingRateLabel.rightAnchor.constraint(lessThanOrEqualTo: rightAnchor, constant: -ViewInsets.rightInset),
             priceRisingRateLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor),
         ])
     }

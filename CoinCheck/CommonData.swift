@@ -42,9 +42,11 @@ struct ViewSize {
 }
 
 struct CellIdentifier {
-    static let bithumbTableViewCellIdentifier: String = "bithumbTableViewCellIdentifier"
+    static let bithumbTableViewCellIdentifier: String = "bithumbTableViewCell"
+    static let mainTableViewCellIdentifier: String = "mainTableViewCell"
 }
 
 struct DataIdentifier {
-    static let bithumbSettingCurrencyKey: String = "BithumbCurrencyKey"
+    static let bithumbSettingCurrencyKey: String = "BithumbSettingCurrencyKey"
+    static let bithumbCurrencyKey: String = "BithumbCurrencyKey"
 }

@@ -132,14 +132,14 @@ extension CurrencySettingViewController: UITableViewDataSource {
         let currencyNameString = BithumbCurrencies.shared.currencyNameString
         guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.bithumbTableViewCellIdentifier, for: indexPath) as? CurrencySettingTableViewCell,
             let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice,
-            let currencyButtonKey = BithumbCurrencies.shared.currencyKey[currencyNameString[indexPath.row]] else { return UITableViewCell() }
+            let currencyButtonKey = BithumbCurrencies.shared.entireCurrencyKey[currencyNameString[indexPath.row]] else { return UITableViewCell() }
 
         bithumbTableViewCell.delegate = self
         self.nowIndexPath = indexPath
 
         if self.isSearched == true {
             guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row],
-                let currencyButtonKey = BithumbCurrencies.shared.currencyKey[shownCurrencyNameString] else { return UITableViewCell() }
+                let currencyButtonKey = BithumbCurrencies.shared.entireCurrencyKey[shownCurrencyNameString] else { return UITableViewCell() }
             let title = "\(shownCurrencyNameString)"
             let price = "\(currencyPrice)"
             bithumbTableViewCell.setCurrencyCellData(title: title, price: price)
