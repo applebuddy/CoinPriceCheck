@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ExchangeIndex: Int {
+enum ExchangeIndex: Int {
     case bithumb = 0
 }
 

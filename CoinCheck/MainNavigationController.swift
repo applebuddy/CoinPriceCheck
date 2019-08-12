@@ -8,11 +8,11 @@
 
 import UIKit
 
-internal class MainNavigationCnotroller: UINavigationController {
+class MainNavigationCnotroller: UINavigationController {
     // MARK: - UIs
 
-    let settingViewController: SettingExchangeViewController = {
-        let settingViewController = SettingExchangeViewController()
+    let settingViewController: ExchangeSettingViewController = {
+        let settingViewController = ExchangeSettingViewController()
         return settingViewController
     }()
 

@@ -8,10 +8,10 @@
 
 import UIKit
 
-internal class SettingExchangeView: UIView {
+class ExchangeSettingView: UIView {
     // MARK: - UIs
 
-    let settingExchangeTableView: UITableView = {
+    let exchangeSettingTableView: UITableView = {
         let settingExchangeTableView = UITableView(frame: CGRect.zero, style: UITableView.Style.grouped)
         settingExchangeTableView.backgroundColor = UIColor.tableViewBackground
         return settingExchangeTableView
@@ -30,18 +30,18 @@ internal class SettingExchangeView: UIView {
     }
 }
 
-extension SettingExchangeView: UIViewSettingProtocol {
+extension ExchangeSettingView: UIViewSettingProtocol {
     func setConstraint() {
-        self.settingExchangeTableView.translatesAutoresizingMaskIntoConstraints = false
+        self.exchangeSettingTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            settingExchangeTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            settingExchangeTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            settingExchangeTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
-            settingExchangeTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
+            exchangeSettingTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            exchangeSettingTableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            exchangeSettingTableView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor),
+            exchangeSettingTableView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor),
         ])
     }
 
     func setSubView() {
-        addSubview(self.settingExchangeTableView)
+        addSubview(self.exchangeSettingTableView)
     }
 }

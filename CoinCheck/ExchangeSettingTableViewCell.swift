@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class ExchangeTableViewCell: UITableViewCell {
+class ExchangeSettingTableViewCell: UITableViewCell {
     // MARK: - UIs
 
     let titleImageView: UIImageView = {
@@ -68,7 +68,7 @@ internal class ExchangeTableViewCell: UITableViewCell {
     }
 }
 
-extension ExchangeTableViewCell: UIViewSettingProtocol {
+extension ExchangeSettingTableViewCell: UIViewSettingProtocol {
     func setConstraint() {
         self.setTitleImageViewContraint()
         self.setTitleLabelConstraint()

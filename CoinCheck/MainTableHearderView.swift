@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class MainTableHeaderView: UIView {
+class MainTableHeaderView: UIView {
     // MARK: - UIs
 
     let titleLabel: UILabel = {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class CurrencyView: UIView {
+class CurrencySettingView: UIView {
     // MARK: - UIs
 
     let currencyTableView: UITableView = {
@@ -62,7 +62,7 @@ internal class CurrencyView: UIView {
     }
 }
 
-extension CurrencyView: UIViewSettingProtocol {
+extension CurrencySettingView: UIViewSettingProtocol {
     func setConstraint() {
         self.setSearchBarConstraint()
         self.setCurrencyTableViewConstraint()

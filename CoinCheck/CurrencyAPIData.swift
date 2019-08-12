@@ -14,12 +14,12 @@ import UIKit
 // "https://api.bithumb.com/public/orderbook/ALL"
 // "https://api.bithumb.com/public/ticker/ALL"
 
-public class TradeResponse: Codable {
+class TradeResponse: Codable {
     let status: String
     let data: TradeData
 }
 
-public class TradeData: Codable {
+class TradeData: Codable {
     let btc, eth, dash, ltc: TradeDataOptions
     let etc, xrp, bch, xmr: TradeDataOptions
     let zec, qtum, btg, eos: TradeDataOptions
@@ -71,7 +71,7 @@ public class TradeData: Codable {
     }
 }
 
-public class TradeDataOptions: Codable {
+class TradeDataOptions: Codable {
     let openingPrice, closingPrice, minPrice, maxPrice, averagePrice: String
     let tradedUnits, volumePer1Day, volumePer7Day, buyPrice, sellPrice: String
     let fluctateIn24H, fluctateRateIn24H: String
@@ -96,12 +96,12 @@ public class TradeDataOptions: Codable {
     }
 }
 
-public struct CurrencyDataResponse: Codable {
+struct CurrencyDataResponse: Codable {
     let status: String
     let data: CurrencyData
 }
 
-public struct CurrencyData: Codable {
+struct CurrencyData: Codable {
     let openingPrice, closingPrice, minPrice, maxPrice: String
     let averagePrice, unitsTraded, volume1Day, volume7Day: String
     let buyPrice, sellPrice, the24HFluctate, the24HFluctateRate: String

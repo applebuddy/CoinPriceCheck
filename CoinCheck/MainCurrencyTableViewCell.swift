@@ -19,15 +19,22 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
 
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.textColor = UIColor.cellText
+        titleLabel.textColor = .cellText
         return titleLabel
     }()
 
     let priceLabel: UILabel = {
         let priceLabel = UILabel()
-        priceLabel.textColor = UIColor.cellText
-        priceLabel.font = UIFont.boldSystemFont(ofSize: 23)
+        priceLabel.textColor = .cellText
+        priceLabel.font = .boldSystemFont(ofSize: 23)
         return priceLabel
+    }()
+
+    let priceRisingRateLabel: UILabel = {
+        let priceRisingRateLabel = UILabel()
+        priceRisingRateLabel.textColor = .cellText
+        priceRisingRateLabel.font = .systemFont(ofSize: 16)
+        return priceRisingRateLabel
     }()
 
     // MARK: - Initialization
@@ -44,18 +51,32 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
 
     // MARK: - Set Method
 
-    func setMainCellData(title: String, price: String) {
-        self.titleLabel.text = title
+    func setMainCellData(title: String, price: String, risingRate: String) {
+        self.titleLabel.text = "\(title)/KRW"
         self.priceLabel.text = price
+        self.setRisingRateLabel(rate: risingRate)
+    }
+
+    func setRisingRateLabel(rate: String) {
+        let rateHeadString = Array(rate)[0]
+        if rateHeadString == "-" {
+            self.priceRisingRateLabel.textColor = .blue
+            self.priceRisingRateLabel.text = "\(rate)▼"
+        } else {
+            self.priceRisingRateLabel.textColor = .red
+            self.priceRisingRateLabel.text = "\(rate)▲"
+        }
     }
 
     func setTitleImageViewContraint() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
+            titleImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: ViewInsets.leftInset),
             titleImageView.widthAnchor.constraint(equalToConstant: 60),
             titleImageView.heightAnchor.constraint(equalTo: titleImageView.widthAnchor, constant: 0),
-            titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
+            titleImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleImageView.topAnchor.constraint(equalTo: topAnchor, constant: ViewInsets.topInset),
+            titleImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -ViewInsets.bottomInset),
         ])
     }
 
@@ -64,7 +85,8 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor, constant: 0),
-            titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor, constant: 0),
+            titleLabel.heightAnchor.constraint(equalTo: titleImageView.heightAnchor, multiplier: 0.5),
+            titleLabel.widthAnchor.constraint(equalToConstant: 80),
         ])
     }
 
@@ -74,6 +96,17 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
             priceLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 0),
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
             priceLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor, constant: 0),
+            priceLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -ViewInsets.rightInset),
+        ])
+    }
+
+    func setPriceRisingRateLabelConstraint() {
+        self.priceRisingRateLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            priceRisingRateLabel.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
+            priceRisingRateLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: ViewInsets.leftInset / 2),
+            priceRisingRateLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -ViewInsets.rightInset),
+            priceRisingRateLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor),
         ])
     }
 }
@@ -83,11 +116,13 @@ extension MainCurrencyTableViewCell: UIViewSettingProtocol {
         self.setTitleImageViewContraint()
         self.setTitleLabelConstraint()
         self.setPriceLabelConstraint()
+        self.setPriceRisingRateLabelConstraint()
     }
 
     func setSubView() {
         addSubview(self.priceLabel)
         addSubview(self.titleLabel)
         addSubview(self.titleImageView)
+        addSubview(self.priceRisingRateLabel)
     }
 }

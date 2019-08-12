@@ -8,11 +8,7 @@
 
 import UIKit
 
-public enum MainTableViewSections: Int {
-    case mainSection = 0
-}
-
-internal class MainViewController: UIViewController {
+class MainCurrencyViewController: UIViewController {
     // MARK: - Properties
 
     let mainTableViewCellIdentifier = "mainTableViewCell"
@@ -21,8 +17,8 @@ internal class MainViewController: UIViewController {
 
     // MARK: - UIs
 
-    let mainView: MainView = {
-        let mainView = MainView()
+    let mainCurrencyView: MainCurrencyView = {
+        let mainView = MainCurrencyView()
         return mainView
     }()
 
@@ -46,14 +42,15 @@ internal class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.mainView.mainTableView.delegate = self
-        self.mainView.mainTableView.dataSource = self
-        self.mainView.mainTableView.allowsSelection = false
+        self.mainCurrencyView.mainCurrencyTableView.delegate = self
+        self.mainCurrencyView.mainCurrencyTableView.dataSource = self
+        self.mainCurrencyView.mainCurrencyTableView.allowsSelection = false
         self.registerCell()
-        self.setBarButtonItem()
         self.setCellIndexData()
         self.setBithumbData()
-        self.checkTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(refreshBithumbData(_:)), userInfo: nil, repeats: true)
+        self.setBarButtonItem()
+
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 6.0, target: self, selector: #selector(refreshBithumbData(_:)), userInfo: nil, repeats: true)
     }
 
     override func viewWillAppear(_: Bool) {
@@ -64,12 +61,13 @@ internal class MainViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        self.view = self.mainView
+        self.view = self.mainCurrencyView
     }
 
     // MARK: - Setting Methods
 
     func setCellIndexData() {
+        BithumbCurrencies.shared.setCurrencyData()
         let currencyKey = BithumbCurrencies.shared.settingCurrencyKey.sorted { (arg0, arg1) -> Bool in
             if arg0.value > arg1.value {
                 return false
@@ -82,6 +80,10 @@ internal class MainViewController: UIViewController {
         for (key, _) in currencyKey {
             self.settingCurrencyIndex.append(key)
         }
+
+        DispatchQueue.main.async {
+            self.mainCurrencyView.mainCurrencyTableView.reloadData()
+        }
     }
 
     func setBarButtonItem() {
@@ -92,23 +94,23 @@ internal class MainViewController: UIViewController {
 
     // MARKL- Touch Event Methodds
     @objc func transitionToNextView(_: UIButton) {
-        let settingViewController = SettingExchangeViewController()
+        let settingViewController = ExchangeSettingViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
     }
 }
 
 // MARK: - Networking Extension
 
-extension MainViewController {
+extension MainCurrencyViewController {
     func setBithumbData() {
         let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
         for (key, _) in settingCurrencyKey {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
             RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
                 self.settingCurrencyData[key] = currencyData
+                self.mainCurrencyView.mainCurrencyTableView.reloadData()
             }
         }
-        self.mainView.mainTableView.reloadData()
     }
 
     @objc func refreshBithumbData(_: Timer) {
@@ -117,29 +119,33 @@ extension MainViewController {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
             RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
                 self.settingCurrencyData[key] = currencyData
+                self.mainCurrencyView.mainCurrencyTableView.reloadData()
             }
         }
-        self.mainView.mainTableView.reloadData()
     }
 }
 
-extension MainViewController: UITableViewDataSource {
+extension MainCurrencyViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return BithumbCurrencies.shared.settingCurrencyKey.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: self.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell else { return UITableViewCell() }
-        let currencyKey = self.settingCurrencyIndex[indexPath.row]
-        let currencyData = self.settingCurrencyData[currencyKey]
-        mainCell.setMainCellData(title: currencyKey, price: currencyData?.data.closingPrice ?? "-")
+        let currencyTitle = self.settingCurrencyIndex[indexPath.row]
+        let currencyData = self.settingCurrencyData[currencyTitle]
+
+        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: self.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell,
+            let closingPrice = currencyData?.data.closingPrice,
+            let risingRate = currencyData?.data.the24HFluctateRate else { return UITableViewCell() }
+
+        mainCell.setMainCellData(title: currencyTitle, price: closingPrice, risingRate: risingRate)
         return mainCell
     }
 }
 
-extension MainViewController: UITableViewDelegate {
+extension MainCurrencyViewController: UITableViewDelegate {
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let nowSection = MainTableViewSections(rawValue: section) else { return UIView() }
+        guard let nowSection = MainCurrencyTableViewSections(rawValue: section) else { return UIView() }
         switch nowSection {
         case .mainSection: return MainTableHeaderView()
         }
@@ -150,12 +156,12 @@ extension MainViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return ViewSize.cellDefaultHeight
+        return UITableView.automaticDimension
     }
 }
 
-extension MainViewController: UITableViewCellSettingProtocol {
+extension MainCurrencyViewController: UITableViewCellSettingProtocol {
     func registerCell() {
-        self.mainView.mainTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: self.mainTableViewCellIdentifier)
+        self.mainCurrencyView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: self.mainTableViewCellIdentifier)
     }
 }

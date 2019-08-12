@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class CurrencyTableViewCell: UITableViewCell {
+class CurrencySettingTableViewCell: UITableViewCell {
     // MARK: - Properties
 
     var setCode: Int = 0
@@ -101,8 +101,8 @@ internal class CurrencyTableViewCell: UITableViewCell {
     }
 
     func setCurrencyCellData(title: String, price: String) {
-        self.titleLabel.text = title
-        self.priceLabel.text = price
+        self.titleLabel.text = "\(title)/KRW"
+        self.priceLabel.text = "\(price)원"
     }
 
     func setStarButton(key: Int) {
@@ -119,20 +119,11 @@ internal class CurrencyTableViewCell: UITableViewCell {
         self.delegate?.starButtonPressed(index: self.index, sender)
         guard let currencyKey = self.titleLabel.text else { return }
         let key = currencyKey.components(separatedBy: "/KRW")[0]
-
-        if BithumbCurrencies.shared.currencyKey[key] == 0 {
-            BithumbCurrencies.shared.settingCurrencyCount += 1
-            BithumbCurrencies.shared.currencyKey[key] = 1 // starButton 터치상태 확인하는 데 사용하는 딕셔너리 값
-            BithumbCurrencies.shared.settingCurrencyKey[key] = BithumbCurrencies.shared.settingCurrencyCount
-        } else {
-            BithumbCurrencies.shared.settingCurrencyCount -= 1
-            BithumbCurrencies.shared.currencyKey[key] = 0
-            BithumbCurrencies.shared.settingCurrencyKey.removeValue(forKey: key)
-        }
+        BithumbCurrencies.shared.setBithumbCurrenyKey(key: key)
     }
 }
 
-extension CurrencyTableViewCell: UIViewSettingProtocol {
+extension CurrencySettingTableViewCell: UIViewSettingProtocol {
     func setConstraint() {
         self.setStarButtonConstraint()
         self.setTitleImageViewContraint()

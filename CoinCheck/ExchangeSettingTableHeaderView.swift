@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal class ExchangeTableHeaderView: UIView {
+class ExchangeSettingTableHeaderView: UIView {
     // MARK: - UIs
 
     let headerTitleLabel: UILabel = {
@@ -43,7 +43,7 @@ internal class ExchangeTableHeaderView: UIView {
     }
 }
 
-extension ExchangeTableHeaderView: UIViewSettingProtocol {
+extension ExchangeSettingTableHeaderView: UIViewSettingProtocol {
     func setConstraint() {
         self.setHeaderTitleLabelConstraint()
     }
