@@ -27,7 +27,7 @@ class TradeData: Codable {
     let mith, mco, omg, knc: TradeDataOptions
     let gnt, zil, ethos, pay: TradeDataOptions
     let wax, powr, lrc, gto: TradeDataOptions
-    let steem, strat, zrx, rep: TradeDataOptions
+    let strat, zrx, rep: TradeDataOptions
     let ae, xem, snt, ada: TradeDataOptions
     let ppt, ctxc, cmt, theta: TradeDataOptions
     let wtc, itc, dataTRUE, abt: TradeDataOptions
@@ -45,7 +45,7 @@ class TradeData: Codable {
     let date: String
 
     var arr: [TradeDataOptions] {
-        return [btc, eth, dash, ltc, etc, xrp, bch, xmr, zec, qtum, btg, eos, icx, vet, trx, elf, mith, mco, omg, knc, gnt, zil, ethos, pay, wax, powr, lrc, gto, steem, strat, zrx, rep, ae, xem, snt, ada, ppt, ctxc, cmt, theta, wtc, itc, dataTRUE, abt, rnt, ply, waves, link, enj, pst, salt, rdn, loom, pivx, ins, bcd, bznt, xlm, ocn, bsv, tmtg, bat, wet, xvg, iost, poly, hc, rom, amo, etz, arn, apis, mtl, dacc, dac, bhp, btt, hdac, npxs, auto, gxc, orbs, valor, con, ankr, mix]
+        return [btc, eth, dash, ltc, etc, xrp, bch, xmr, zec, qtum, btg, eos, icx, vet, trx, elf, mith, mco, omg, knc, gnt, zil, ethos, pay, wax, powr, lrc, gto, strat, zrx, rep, ae, xem, snt, ada, ppt, ctxc, cmt, theta, wtc, itc, dataTRUE, abt, rnt, ply, waves, link, enj, pst, salt, rdn, loom, pivx, ins, bcd, bznt, xlm, ocn, bsv, tmtg, bat, wet, xvg, iost, poly, hc, rom, amo, etz, arn, apis, mtl, dacc, dac, bhp, btt, hdac, npxs, auto, gxc, orbs, valor, con, ankr, mix]
     }
 
     enum CodingKeys: String, CodingKey {
@@ -54,7 +54,7 @@ class TradeData: Codable {
         case btg = "BTG", eos = "EOS", icx = "ICX", vet = "VET", trx = "TRX"
         case elf = "ELF", mith = "MITH", mco = "MCO", omg = "OMG", knc = "KNC"
         case gnt = "GNT", zil = "ZIL", ethos = "ETHOS", pay = "PAY", wax = "WAX"
-        case powr = "POWR", lrc = "LRC", gto = "GTO", steem = "STEEM", strat = "STRAT"
+        case powr = "POWR", lrc = "LRC", gto = "GTO", strat = "STRAT"
         case zrx = "ZRX", rep = "REP", ae = "AE", xem = "XEM", snt = "SNT"
         case ada = "ADA", ppt = "PPT", ctxc = "CTXC", cmt = "CMT", theta = "THETA"
         case wtc = "WTC", itc = "ITC", dataTRUE = "TRUE", abt = "ABT", rnt = "RNT"
@@ -72,12 +72,12 @@ class TradeData: Codable {
 }
 
 class TradeDataOptions: Codable {
-    let openingPrice, closingPrice, minPrice, maxPrice: String
-    let unitsTraded, accTradeValue, prevClosingPrice, unitsTraded24H: String
-    let accTradeValue24H, fluctate24H, fluctateRate24H: String
+    let openingPrice, closingPrice, minPrice, maxPrice: String?
+    let unitsTraded, accTradeValue, prevClosingPrice, unitsTraded24H: String?
+    let accTradeValue24H, fluctate24H, fluctateRate24H: String?
 
     var optionArr: [String] {
-        return [openingPrice, closingPrice, minPrice, maxPrice, unitsTraded, accTradeValue, prevClosingPrice, unitsTraded24H, accTradeValue24H, fluctate24H, fluctateRate24H]
+        return [openingPrice ?? "", closingPrice ?? "", minPrice ?? "", maxPrice ?? "", unitsTraded ?? "", accTradeValue ?? "", prevClosingPrice ?? "", unitsTraded24H ?? "", accTradeValue24H ?? "", fluctate24H ?? "", fluctateRate24H ?? ""]
     }
 
     enum CodingKeys: String, CodingKey {

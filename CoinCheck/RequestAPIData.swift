@@ -37,6 +37,14 @@ final class RequestAPI {
                             completion(tradeData)
                         }
 
+                    } catch let DecodingError.dataCorrupted(context) {
+                        print("\(context)")
+                    } catch let DecodingError.keyNotFound(key, context) {
+                        print("key: \(key), context: \(context)")
+                    } catch let DecodingError.valueNotFound(_, context) {
+                        print("\(context)")
+                    } catch let DecodingError.typeMismatch(type, context) {
+                        print("Type, \(type) Mismatched : \(context)")
                     } catch {
                         /* catch 문으로 오게 될 시 대부분 제대로 디코딩이 이루어지지 못한 상황입니다.
                          보통 codable 실수가 대부분입니다.
@@ -54,14 +62,3 @@ final class RequestAPI {
 
 // * MARK: 예외처리 catch 종류 *
 //
-//        catch let DecodingError.dataCorrupted(context) {
-//            presentAlertViewController(errorString: "\(context)")
-//        } catch let DecodingError.keyNotFound(key, context) {
-//            presentAlertViewController(errorString: "key: \(key), context: \(context)")
-//        } catch let DecodingError.valueNotFound(_, context) {
-//            presentAlertViewController(errorString: "\(context)")
-//        } catch DecodingError.typeMismatch(let type, let context) {
-//            self.presentAlertViewController(errorString: "Type, \(type) Mismatched : \(context)")
-//        } catch {
-//            self.presentAlertViewController(errorString: "\(error.localizedDescription)")
-//        }
