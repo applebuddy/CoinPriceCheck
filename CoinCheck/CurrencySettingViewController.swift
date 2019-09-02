@@ -87,7 +87,7 @@ class CurrencySettingViewController: UIViewController {
             decoder.dateDecodingStrategy = .iso8601
             let contents = try Data(contentsOf: url)
             CommonData.shared.tradeData = try decoder.decode(TradeResponse.self, from: contents)
-            // 데이터 처리하는 곳
+
         } catch let DecodingError.dataCorrupted(context) {
             presentAlertViewController(errorString: "\(context)")
         } catch let DecodingError.keyNotFound(key, context) {
@@ -118,13 +118,17 @@ extension CurrencySettingViewController: UITableViewDataSource {
         bithumbTableViewCell.delegate = self
         self.nowIndexPath = indexPath
 
+        // 검색 중일 경우
         if self.isSearched == true {
             guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row],
                 let currencyButtonKey = BithumbCurrencies.shared.entireCurrencyKey[shownCurrencyNameString] else { return UITableViewCell() }
             let title = "\(shownCurrencyNameString)"
             let price = "\(currencyPrice)"
+
             bithumbTableViewCell.setCurrencyCellData(title: title, price: price)
             bithumbTableViewCell.setStarButton(key: currencyButtonKey)
+
+            // 검색 중이지 않을 경우
         } else {
             let title = "\(currencyNameString[indexPath.row])"
             let price = "\(currencyPrice)"
@@ -158,12 +162,15 @@ extension CurrencySettingViewController: UITableViewDelegate {
 }
 
 extension CurrencySettingViewController: UISearchBarDelegate {
-    func searchBar(_: UISearchBar, textDidChange _: String) {
+    func searchBar(_: UISearchBar, textDidChange changedText: String) {
         if self.mainView.searchBar.text?.trimmingCharacters(in: .whitespaces).isEmpty == true {
             self.isSearched = false
             self.mainView.currencyTableView.reloadData()
         } else {
             self.isSearched = true
+            self.shownCurrencyNameString = self.currencyNameString?.filter {
+                $0.uppercased().hasPrefix(changedText.uppercased())
+            }
             self.mainView.currencyTableView.reloadData()
         }
     }

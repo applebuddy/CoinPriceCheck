@@ -16,7 +16,7 @@ class MainCurrencyViewController: UIViewController {
 
     // MARK: - UIs
 
-    let mainCurrencyView: MainCurrencyView = {
+    let mainView: MainCurrencyView = {
         let mainView = MainCurrencyView()
         return mainView
     }()
@@ -41,9 +41,9 @@ class MainCurrencyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.mainCurrencyView.mainCurrencyTableView.delegate = self
-        self.mainCurrencyView.mainCurrencyTableView.dataSource = self
-        self.mainCurrencyView.mainCurrencyTableView.allowsSelection = false
+        self.mainView.mainCurrencyTableView.delegate = self
+        self.mainView.mainCurrencyTableView.dataSource = self
+        self.mainView.mainCurrencyTableView.allowsSelection = false
         self.registerCell()
         self.setCellIndexData()
         self.setBithumbData()
@@ -60,7 +60,7 @@ class MainCurrencyViewController: UIViewController {
 
     override func loadView() {
         super.loadView()
-        self.view = self.mainCurrencyView
+        self.view = self.mainView
     }
 
     // MARK: - Setting Methods
@@ -81,7 +81,7 @@ class MainCurrencyViewController: UIViewController {
         }
 
         DispatchQueue.main.async {
-            self.mainCurrencyView.mainCurrencyTableView.reloadData()
+            self.mainView.mainCurrencyTableView.reloadData()
         }
     }
 
@@ -107,7 +107,7 @@ extension MainCurrencyViewController {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
             RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
                 self.settingCurrencyData[key] = currencyData
-                self.mainCurrencyView.mainCurrencyTableView.reloadData()
+                self.mainView.mainCurrencyTableView.reloadData()
             }
         }
     }
@@ -118,7 +118,7 @@ extension MainCurrencyViewController {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
             RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
                 self.settingCurrencyData[key] = currencyData
-                self.mainCurrencyView.mainCurrencyTableView.reloadData()
+                self.mainView.mainCurrencyTableView.reloadData()
             }
         }
     }
@@ -161,6 +161,6 @@ extension MainCurrencyViewController: UITableViewDelegate {
 
 extension MainCurrencyViewController: UITableViewCellSettingProtocol {
     func registerCell() {
-        self.mainCurrencyView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: CellIdentifier.mainTableCell)
+        self.mainView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: CellIdentifier.mainTableCell)
     }
 }

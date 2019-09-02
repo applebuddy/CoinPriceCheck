@@ -15,7 +15,7 @@ class ExchangeSettingViewController: UIViewController {
 
     // MARK: - UIs
 
-    private let settingView: ExchangeSettingView = {
+    private let mainView: ExchangeSettingView = {
         let settingView = ExchangeSettingView()
         return settingView
     }()
@@ -25,14 +25,14 @@ class ExchangeSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "암호화폐 거래소 목록"
-        self.settingView.exchangeSettingTableView.delegate = self
-        self.settingView.exchangeSettingTableView.dataSource = self
+        self.mainView.exchangeSettingTableView.delegate = self
+        self.mainView.exchangeSettingTableView.dataSource = self
         self.registerCell()
     }
 
     override func loadView() {
         super.loadView()
-        self.view = self.settingView
+        self.view = self.mainView
     }
 }
 
@@ -82,6 +82,6 @@ extension ExchangeSettingViewController: UITableViewDelegate {
 }
 
 extension ExchangeSettingViewController: UITableViewCellSettingProtocol {
-    func registerCell() { self.settingView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.settingTableCell)
+    func registerCell() { self.mainView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.settingTableCell)
     }
 }
