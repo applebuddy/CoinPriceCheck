@@ -31,7 +31,7 @@ class MainCurrencyView: UIView {
 
     // MARK: - Setting Methods
 
-    func setMainTableViewConstraint() {
+    private func setMainTableViewConstraint() {
         self.mainCurrencyTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             mainCurrencyTableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),

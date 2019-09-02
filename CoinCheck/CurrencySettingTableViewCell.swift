@@ -11,31 +11,30 @@ import UIKit
 class CurrencySettingTableViewCell: UITableViewCell {
     // MARK: - Properties
 
-    var setCode: Int = 0
-    var index: Int = 0
-    var delegate: CurrencyTableViewCellDelegate?
+    var cellIndex: Int = 0
+    weak var delegate: CurrencyTableViewCellDelegate?
 
     // MARK: - UIs
 
-    let titleImageView: UIImageView = {
+    private let titleImageView: UIImageView = {
         let titleImageView = UIImageView()
-        titleImageView.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        titleImageView.backgroundColor = .black
         return titleImageView
     }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        titleLabel.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        titleLabel.textColor = .black
         return titleLabel
     }()
 
-    let priceLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let priceLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         priceLabel.font = UIFont.boldSystemFont(ofSize: 23)
         return priceLabel
     }()
 
-    let starButton: UIButton = {
+    private let starButton: UIButton = {
         let starButton = UIButton(type: .custom)
         starButton.isUserInteractionEnabled = true
         return starButton
@@ -56,48 +55,48 @@ class CurrencySettingTableViewCell: UITableViewCell {
 
     // MARK: - Set Method
 
-    func setStarButtonConstraint() {
+    private func setStarButtonConstraint() {
         self.starButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             starButton.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
-            starButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+            starButton.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewData.Insets.rightInset),
             starButton.heightAnchor.constraint(equalTo: safeAreaLayoutGuide.heightAnchor, multiplier: 0.3),
             starButton.widthAnchor.constraint(equalTo: starButton.heightAnchor),
         ])
     }
 
-    func setTitleImageViewContraint() {
+    private func setTitleImageViewContraint() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
-            titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
+            titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewData.Insets.leftInset),
             titleImageView.heightAnchor.constraint(equalToConstant: 60),
             titleImageView.widthAnchor.constraint(equalTo: titleImageView.heightAnchor, multiplier: 1.0),
         ])
     }
 
-    func setTitleLabelConstraint() {
+    private func setTitleLabelConstraint() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
+            titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewData.Insets.leftInset / 2),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor),
-            titleLabel.rightAnchor.constraint(equalTo: starButton.rightAnchor, constant: -ViewInsets.rightInset),
+            titleLabel.rightAnchor.constraint(equalTo: starButton.rightAnchor, constant: -ViewData.Insets.rightInset),
             titleLabel.bottomAnchor.constraint(equalTo: titleImageView.centerYAnchor),
         ])
     }
 
-    func setPriceLabelConstraint() {
+    private func setPriceLabelConstraint() {
         self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             priceLabel.bottomAnchor.constraint(equalTo: titleImageView.bottomAnchor),
             priceLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 0),
-            priceLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+            priceLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewData.Insets.rightInset),
         ])
     }
 
     func setCellIndex(cellIndex: Int) {
-        self.index = cellIndex
+        self.cellIndex = cellIndex
     }
 
     func setCurrencyCellData(title: String, price: String) {
@@ -116,7 +115,7 @@ class CurrencySettingTableViewCell: UITableViewCell {
     // MARK: - Events
 
     @objc func starButtonPressed(_ sender: UIButton) {
-        self.delegate?.starButtonPressed(index: self.index, sender)
+        self.delegate?.starButtonPressed(index: self.cellIndex, sender)
         guard let currencyKey = self.titleLabel.text else { return }
         let key = currencyKey.components(separatedBy: "/KRW")[0]
         BithumbCurrencies.shared.setBithumbCurrenyKey(key: key)

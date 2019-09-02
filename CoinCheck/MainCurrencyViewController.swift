@@ -11,22 +11,22 @@ import UIKit
 class MainCurrencyViewController: UIViewController {
     // MARK: - Properties
 
-    var settingCurrencyData: [String: CurrencyDataResponse] = [:]
-    var settingCurrencyIndex: [String] = []
+    private var settingCurrencyData: [String: CurrencyDataResponse] = [:]
+    private var settingCurrencyIndex: [String] = []
 
     // MARK: - UIs
 
-    let mainCurrencyView: MainCurrencyView = {
+    let mainView: MainCurrencyView = {
         let mainView = MainCurrencyView()
         return mainView
     }()
 
-    var checkTimer: Timer = {
+    private var checkTimer: Timer = {
         let checkTimer = Timer()
         return checkTimer
     }()
 
-    let addBarButton: UIButton = {
+    private let addBarButton: UIButton = {
         let addBarButton = UIButton(type: .custom)
         addBarButton.setTitle("＋", for: .normal)
         addBarButton.setTitleColor(UIColor.navigationBarTitle, for: .normal)
@@ -41,9 +41,9 @@ class MainCurrencyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.mainCurrencyView.mainCurrencyTableView.delegate = self
-        self.mainCurrencyView.mainCurrencyTableView.dataSource = self
-        self.mainCurrencyView.mainCurrencyTableView.allowsSelection = false
+        self.mainView.mainCurrencyTableView.delegate = self
+        self.mainView.mainCurrencyTableView.dataSource = self
+        self.mainView.mainCurrencyTableView.allowsSelection = false
         self.registerCell()
         self.setCellIndexData()
         self.setBithumbData()
@@ -59,13 +59,12 @@ class MainCurrencyViewController: UIViewController {
     }
 
     override func loadView() {
-        super.loadView()
-        self.view = self.mainCurrencyView
+        self.view = self.mainView
     }
 
     // MARK: - Setting Methods
 
-    func setCellIndexData() {
+    private func setCellIndexData() {
         BithumbCurrencies.shared.setCurrencyData()
         let currencyKey = BithumbCurrencies.shared.settingCurrencyKey.sorted { (arg0, arg1) -> Bool in
             if arg0.value > arg1.value {
@@ -81,18 +80,18 @@ class MainCurrencyViewController: UIViewController {
         }
 
         DispatchQueue.main.async {
-            self.mainCurrencyView.mainCurrencyTableView.reloadData()
+            self.mainView.mainCurrencyTableView.reloadData()
         }
     }
 
-    func setBarButtonItem() {
+    private func setBarButtonItem() {
         self.addBarButton.addTarget(self, action: #selector(self.transitionToNextView(_:)), for: UIControl.Event.touchUpInside)
         let addBarButtonItem = UIBarButtonItem(customView: addBarButton)
         self.navigationItem.rightBarButtonItem = addBarButtonItem
     }
 
     // MARKL- Touch Event Methodds
-    @objc func transitionToNextView(_: UIButton) {
+    @objc private func transitionToNextView(_: UIButton) {
         let settingViewController = ExchangeSettingViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
     }
@@ -105,9 +104,9 @@ extension MainCurrencyViewController {
         let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
         for (key, _) in settingCurrencyKey {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
-            RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
+            RequestAPI.requestCurrencyData(urlString: urlString, returnType: CurrencyDataResponse.self, requestType: .currencyData) { currencyData in
                 self.settingCurrencyData[key] = currencyData
-                self.mainCurrencyView.mainCurrencyTableView.reloadData()
+                self.mainView.mainCurrencyTableView.reloadData()
             }
         }
     }
@@ -116,9 +115,9 @@ extension MainCurrencyViewController {
         let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
         for (key, _) in settingCurrencyKey {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
-            RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
+            RequestAPI.requestCurrencyData(urlString: urlString, returnType: CurrencyDataResponse.self, requestType: .currencyData) { currencyData in
                 self.settingCurrencyData[key] = currencyData
-                self.mainCurrencyView.mainCurrencyTableView.reloadData()
+                self.mainView.mainCurrencyTableView.reloadData()
             }
         }
     }
@@ -133,9 +132,9 @@ extension MainCurrencyViewController: UITableViewDataSource {
         let currencyTitle = self.settingCurrencyIndex[indexPath.row]
         let currencyData = self.settingCurrencyData[currencyTitle]
 
-        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell,
+        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.mainTableCell, for: indexPath) as? MainCurrencyTableViewCell,
             let closingPrice = currencyData?.data.closingPrice,
-            let risingRate = currencyData?.data.the24HFluctateRate else { return UITableViewCell() }
+            let risingRate = currencyData?.data.fluctateRate24H else { return UITableViewCell() }
 
         mainCell.setMainCellData(title: currencyTitle, price: closingPrice, risingRate: risingRate)
         return mainCell
@@ -151,7 +150,7 @@ extension MainCurrencyViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return ViewSize.cellHeaderHeight
+        return ViewData.Size.cellHeaderHeight
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
@@ -161,6 +160,6 @@ extension MainCurrencyViewController: UITableViewDelegate {
 
 extension MainCurrencyViewController: UITableViewCellSettingProtocol {
     func registerCell() {
-        self.mainCurrencyView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: CellIdentifier.mainTableViewCellIdentifier)
+        self.mainView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: CellIdentifier.mainTableCell)
     }
 }

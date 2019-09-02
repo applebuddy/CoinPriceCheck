@@ -11,7 +11,7 @@ import UIKit
 class ExchangeSettingTableHeaderView: UIView {
     // MARK: - UIs
 
-    let headerTitleLabel: UILabel = {
+    private let headerTitleLabel: UILabel = {
         let headerTitleLabel = UILabel()
         headerTitleLabel.text = "암호화폐 거래소를 선택해주세요."
         headerTitleLabel.textColor = UIColor.headerTitle
@@ -33,12 +33,12 @@ class ExchangeSettingTableHeaderView: UIView {
 
     // MARK: - Set Method
 
-    func setHeaderTitleLabelConstraint() {
+    private func setHeaderTitleLabelConstraint() {
         self.headerTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             headerTitleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
-            headerTitleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
-            headerTitleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewInsets.rightInset),
+            headerTitleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewData.Insets.leftInset),
+            headerTitleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -ViewData.Insets.rightInset),
         ])
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol UIViewSettingProtocol {
+protocol UIViewSettingProtocol: AnyObject {
     func setConstraint()
     func setSubView()
 }

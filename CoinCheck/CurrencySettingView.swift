@@ -13,7 +13,7 @@ class CurrencySettingView: UIView {
 
     let currencyTableView: UITableView = {
         let bithumbTableView = UITableView(frame: CGRect(x: 0, y: 0, width: 20, height: 20), style: .plain)
-        bithumbTableView.backgroundColor = UIColor.tableViewBackground
+        bithumbTableView.backgroundColor = .tableViewBackground
         return bithumbTableView
     }()
 
@@ -42,7 +42,7 @@ class CurrencySettingView: UIView {
 
     // MARK; - Set Method
 
-    func setSearchBarConstraint() {
+    private func setSearchBarConstraint() {
         self.searchBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0),
@@ -51,7 +51,7 @@ class CurrencySettingView: UIView {
         ])
     }
 
-    func setCurrencyTableViewConstraint() {
+    private func setCurrencyTableViewConstraint() {
         self.currencyTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             currencyTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),

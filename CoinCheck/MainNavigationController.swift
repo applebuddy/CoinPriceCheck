@@ -11,7 +11,7 @@ import UIKit
 class MainNavigationCnotroller: UINavigationController {
     // MARK: - UIs
 
-    let settingViewController: ExchangeSettingViewController = {
+    private let settingViewController: ExchangeSettingViewController = {
         let settingViewController = ExchangeSettingViewController()
         return settingViewController
     }()
@@ -34,7 +34,7 @@ class MainNavigationCnotroller: UINavigationController {
 
     // MARK: - Set Method
 
-    func setNavigationBar() {
+    private func setNavigationBar() {
         self.navigationBar.topItem?.title = "Coin Price Check"
         self.navigationBar.barTintColor = UIColor.navigationBarButtonItemBackground
         self.navigationBar.barStyle = .blackTranslucent

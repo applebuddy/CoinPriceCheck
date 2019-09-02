@@ -11,12 +11,12 @@ import UIKit
 class ExchangeSettingViewController: UIViewController {
     // MARK: - Properties
 
-    let settingTableViewIdentifier = "SettingTableView"
-    var exchangeDataList: TradeResponse?
+    private var exchangeDataList: TradeDataResponse?
+    private let currencyViewController = CurrencySettingViewController()
 
     // MARK: - UIs
 
-    let settingView: ExchangeSettingView = {
+    private let mainView: ExchangeSettingView = {
         let settingView = ExchangeSettingView()
         return settingView
     }()
@@ -26,14 +26,13 @@ class ExchangeSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "암호화폐 거래소 목록"
-        self.settingView.exchangeSettingTableView.delegate = self
-        self.settingView.exchangeSettingTableView.dataSource = self
+        self.mainView.exchangeSettingTableView.delegate = self
+        self.mainView.exchangeSettingTableView.dataSource = self
         self.registerCell()
     }
 
     override func loadView() {
-        super.loadView()
-        self.view = self.settingView
+        self.view = self.mainView
     }
 }
 
@@ -46,7 +45,7 @@ extension ExchangeSettingViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? ExchangeSettingTableViewCell else { return UITableViewCell() }
+        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.exchangeTableCell, for: indexPath) as? ExchangeSettingTableViewCell else { return UITableViewCell() }
         exchangeTableViewCell.setExchangeCellData(title: "\(Exchanges.ExchangeListString[indexPath.row])")
         return exchangeTableViewCell
     }
@@ -67,7 +66,7 @@ extension ExchangeSettingViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let sectionIndex = ExchangeSettingTableViewSections(rawValue: section) else { return CGFloat.leastNonzeroMagnitude }
         switch sectionIndex {
-        case .mainSection: return ViewSize.cellHeaderHeight
+        case .mainSection: return ViewData.Size.cellHeaderHeight
         }
     }
 
@@ -77,12 +76,11 @@ extension ExchangeSettingViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        let currencyViewController = CurrencySettingViewController()
-        self.navigationController?.pushViewController(currencyViewController, animated: true)
+        self.navigationController?.pushViewController(self.currencyViewController, animated: true)
     }
 }
 
 extension ExchangeSettingViewController: UITableViewCellSettingProtocol {
-    func registerCell() { self.settingView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
+    func registerCell() { self.mainView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.exchangeTableCell)
     }
 }

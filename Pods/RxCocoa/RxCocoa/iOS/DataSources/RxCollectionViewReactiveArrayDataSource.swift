@@ -62,8 +62,8 @@ class RxCollectionViewReactiveArrayDataSource<Element>:
 
     var itemModels: [Element]?
 
-    func modelAtIndex(_ index: Int) -> Element? {
-        return self.itemModels?[index]
+    func modelAtIndex(_ cellIndex: Int) -> Element? {
+        return self.itemModels?[cellIndex]
     }
 
     func model(at indexPath: IndexPath) throws -> Any {

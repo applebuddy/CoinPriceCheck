@@ -11,14 +11,14 @@ import UIKit
 class ExchangeSettingTableViewCell: UITableViewCell {
     // MARK: - UIs
 
-    let titleImageView: UIImageView = {
+    private let titleImageView: UIImageView = {
         let titleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         titleImageView.backgroundColor = #colorLiteral(red: 0.5514791608, green: 0.6702116728, blue: 0.2510133386, alpha: 1)
         titleImageView.alpha = 0.7
         return titleImageView
     }()
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "항목"
         titleLabel.textColor = UIColor.cellText
@@ -39,10 +39,10 @@ class ExchangeSettingTableViewCell: UITableViewCell {
 
     // MARK: - Set Method
 
-    func setTitleImageViewContraint() {
+    private func setTitleImageViewContraint() {
         self.titleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
+            titleImageView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewData.Insets.leftInset),
             titleImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
             titleImageView.widthAnchor.constraint(equalToConstant: 60),
             titleImageView.heightAnchor.constraint(equalTo: titleImageView.widthAnchor, multiplier: 1.0),
@@ -51,11 +51,11 @@ class ExchangeSettingTableViewCell: UITableViewCell {
         ])
     }
 
-    func setTitleLabelConstraint() {
+    private func setTitleLabelConstraint() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor),
-            titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewInsets.leftInset / 2),
+            titleLabel.leftAnchor.constraint(equalTo: titleImageView.rightAnchor, constant: ViewData.Insets.leftInset / 2),
             titleLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -10),
             titleLabel.heightAnchor.constraint(equalToConstant: 60),
             titleLabel.topAnchor.constraint(equalTo: titleImageView.topAnchor),
