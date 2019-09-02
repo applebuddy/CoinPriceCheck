@@ -13,7 +13,7 @@ class ExchangeSettingView: UIView {
 
     let exchangeSettingTableView: UITableView = {
         let settingExchangeTableView = UITableView(frame: CGRect.zero, style: UITableView.Style.grouped)
-        settingExchangeTableView.backgroundColor = UIColor.tableViewBackground
+        settingExchangeTableView.backgroundColor = .tableViewBackground
         return settingExchangeTableView
     }()
 

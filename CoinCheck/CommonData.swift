@@ -13,7 +13,7 @@ final class CommonData {
 
     var selectedExchangeIndex: Int
     var currencyCount: Int
-    var tradeData: TradeResponse?
+    var tradeData: TradeDataResponse?
 
     init() {
         self.currencyCount = 0

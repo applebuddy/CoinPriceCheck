@@ -11,7 +11,8 @@ import UIKit
 class ExchangeSettingViewController: UIViewController {
     // MARK: - Properties
 
-    private var exchangeDataList: TradeResponse?
+    private var exchangeDataList: TradeDataResponse?
+    private let currencyViewController = CurrencySettingViewController()
 
     // MARK: - UIs
 
@@ -31,7 +32,6 @@ class ExchangeSettingViewController: UIViewController {
     }
 
     override func loadView() {
-        super.loadView()
         self.view = self.mainView
     }
 }
@@ -45,7 +45,7 @@ extension ExchangeSettingViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.settingTableCell, for: indexPath) as? ExchangeSettingTableViewCell else { return UITableViewCell() }
+        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.exchangeTableCell, for: indexPath) as? ExchangeSettingTableViewCell else { return UITableViewCell() }
         exchangeTableViewCell.setExchangeCellData(title: "\(Exchanges.ExchangeListString[indexPath.row])")
         return exchangeTableViewCell
     }
@@ -76,12 +76,11 @@ extension ExchangeSettingViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
-        let currencyViewController = CurrencySettingViewController()
-        self.navigationController?.pushViewController(currencyViewController, animated: true)
+        self.navigationController?.pushViewController(self.currencyViewController, animated: true)
     }
 }
 
 extension ExchangeSettingViewController: UITableViewCellSettingProtocol {
-    func registerCell() { self.mainView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.settingTableCell)
+    func registerCell() { self.mainView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.exchangeTableCell)
     }
 }

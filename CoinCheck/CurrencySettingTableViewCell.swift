@@ -12,7 +12,7 @@ class CurrencySettingTableViewCell: UITableViewCell {
     // MARK: - Properties
 
     var cellIndex: Int = 0
-    var delegate: CurrencyTableViewCellDelegate?
+    weak var delegate: CurrencyTableViewCellDelegate?
 
     // MARK: - UIs
 

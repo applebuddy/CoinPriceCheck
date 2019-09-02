@@ -9,7 +9,7 @@
 import UIKit
 
 struct CellIdentifier {
-    static let bithumbTableCell: String = "bithumbTableViewCell"
+    static let setCurrencyTableCell: String = "setCurrencyTableCell"
     static let mainTableCell: String = "mainTableViewCell"
-    static let settingTableCell = "settingTableViewCell"
+    static let exchangeTableCell: String = "exchangeTableViewCell"
 }

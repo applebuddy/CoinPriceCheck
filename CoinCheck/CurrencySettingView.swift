@@ -13,7 +13,7 @@ class CurrencySettingView: UIView {
 
     let currencyTableView: UITableView = {
         let bithumbTableView = UITableView(frame: CGRect(x: 0, y: 0, width: 20, height: 20), style: .plain)
-        bithumbTableView.backgroundColor = UIColor.tableViewBackground
+        bithumbTableView.backgroundColor = .tableViewBackground
         return bithumbTableView
     }()
 

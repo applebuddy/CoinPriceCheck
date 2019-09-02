@@ -59,7 +59,6 @@ class MainCurrencyViewController: UIViewController {
     }
 
     override func loadView() {
-        super.loadView()
         self.view = self.mainView
     }
 
@@ -105,7 +104,7 @@ extension MainCurrencyViewController {
         let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
         for (key, _) in settingCurrencyKey {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
-            RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
+            RequestAPI.requestCurrencyData(urlString: urlString, returnType: CurrencyDataResponse.self, requestType: .currencyData) { currencyData in
                 self.settingCurrencyData[key] = currencyData
                 self.mainView.mainCurrencyTableView.reloadData()
             }
@@ -116,7 +115,7 @@ extension MainCurrencyViewController {
         let settingCurrencyKey = BithumbCurrencies.shared.settingCurrencyKey
         for (key, _) in settingCurrencyKey {
             let urlString: String = "https://api.bithumb.com/public/ticker/\(key)"
-            RequestAPI.requestCurrencyData(urlString: urlString) { currencyData in
+            RequestAPI.requestCurrencyData(urlString: urlString, returnType: CurrencyDataResponse.self, requestType: .currencyData) { currencyData in
                 self.settingCurrencyData[key] = currencyData
                 self.mainView.mainCurrencyTableView.reloadData()
             }

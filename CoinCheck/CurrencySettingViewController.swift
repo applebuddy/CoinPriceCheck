@@ -33,24 +33,26 @@ class CurrencySettingViewController: UIViewController {
     // MARK: - Life Cycle
 
     override func loadView() {
-        super.loadView()
         view = self.mainView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainView.currencyTableView.delegate = self
-        self.mainView.currencyTableView.dataSource = self
-        self.mainView.searchBar.delegate = self
-        self.mainView.currencyTableView.allowsSelection = false
         self.registerCell()
-        self.setBithumbData()
-        self.setCellData()
+        self.mainView.searchBar.delegate = self
+
         self.setCheckTimer()
+        self.setBithumbData()
+        self.setCurrencyData()
     }
 
     override func viewDidAppear(_: Bool) {
         super.viewDidAppear(true)
+    }
+
+    override func viewWillDisappear(_: Bool) {
+        super.viewWillDisappear(true)
+        self.checkTimer.invalidate()
     }
 
     // MARK: - Methods
@@ -58,7 +60,7 @@ class CurrencySettingViewController: UIViewController {
     // MARK: Setting
 
     private func setCheckTimer() {
-        self.checkTimer = Timer.scheduledTimer(timeInterval: 6.0, target: self, selector: #selector(self.refreshBithumbData(_:)), userInfo: nil, repeats: true)
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.refreshBithumbData(_:)), userInfo: nil, repeats: true)
     }
 
     private func presentAlertViewController(errorString: String) {
@@ -68,7 +70,7 @@ class CurrencySettingViewController: UIViewController {
         self.present(alertController, animated: true)
     }
 
-    private func setCellData() {
+    private func setCurrencyData() {
         guard let exchangeIndex = ExchangeIndex(rawValue: CommonData.shared.selectedExchangeIndex) else { return }
         switch exchangeIndex {
         case .bithumb:
@@ -77,65 +79,63 @@ class CurrencySettingViewController: UIViewController {
         }
     }
 
+    // MARK: -  ** API 데이터를 받아 온 뒤 델리게이션 사용을 해야 나오는데, 어떻게 개선해야할 지 생각해봐야 한다.**
+
     func setBithumbData() {
         // "https://api.bithumb.com/public/orderbook/ALL"
         // "https://api.bithumb.com/public/ticker/ALL"
         let urlString: String = "https://api.bithumb.com/public/ticker/ALL"
-        guard let url = URL(string: urlString) else { return }
-        do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            let contents = try Data(contentsOf: url)
-            CommonData.shared.tradeData = try decoder.decode(TradeResponse.self, from: contents)
+        RequestAPI.requestCurrencyData(urlString: urlString, returnType: TradeDataResponse.self, requestType: .tradeData) { tradeData in
+            CommonData.shared.tradeData = tradeData
 
-        } catch let DecodingError.dataCorrupted(context) {
-            presentAlertViewController(errorString: "\(context)")
-        } catch let DecodingError.keyNotFound(key, context) {
-            presentAlertViewController(errorString: "key: \(key), context: \(context)")
-        } catch let DecodingError.valueNotFound(_, context) {
-            presentAlertViewController(errorString: "\(context)")
-        } catch DecodingError.typeMismatch(_, _) {
-            self.presentAlertViewController(errorString: "Type Mismatched")
-        } catch {
-            self.presentAlertViewController(errorString: "\(error.localizedDescription)")
+            self.mainView.currencyTableView.dataSource = self
+            self.mainView.currencyTableView.delegate = self
+            DispatchQueue.main.async {
+                self.mainView.currencyTableView.reloadData()
+            }
         }
+    }
+
+    func registerCell() {
+        self.mainView.currencyTableView.register(CurrencySettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.setCurrencyTableCell)
     }
 
     @objc func refreshBithumbData(_: Timer) {
         self.setBithumbData()
-        self.setCellData()
-        self.mainView.currencyTableView.reloadData()
+        self.setCurrencyData()
     }
 }
 
 extension CurrencySettingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let currencyNameString = BithumbCurrencies.shared.currencyNameString
-        guard let bithumbTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.bithumbTableCell, for: indexPath) as? CurrencySettingTableViewCell,
+        guard let currencySettingTableCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.setCurrencyTableCell, for: indexPath) as? CurrencySettingTableViewCell,
             let currencyPrice = CommonData.shared.tradeData?.data.arr[indexPath.row].closingPrice,
             let currencyButtonKey = BithumbCurrencies.shared.entireCurrencyKey[currencyNameString[indexPath.row]] else { return UITableViewCell() }
 
-        bithumbTableViewCell.delegate = self
+        currencySettingTableCell.delegate = self
         self.nowIndexPath = indexPath
 
         // 검색 중일 경우
         if self.isSearched == true {
             guard let shownCurrencyNameString = self.shownCurrencyNameString?[indexPath.row],
-                let currencyButtonKey = BithumbCurrencies.shared.entireCurrencyKey[shownCurrencyNameString] else { return UITableViewCell() }
+                let currencyButtonKey = BithumbCurrencies.shared.entireCurrencyKey[shownCurrencyNameString],
+                let currencyIndex = currencyNameString.firstIndex(of: shownCurrencyNameString),
+                let currencyPrice = CommonData.shared.tradeData?.data.arr[currencyIndex].closingPrice else { return UITableViewCell() }
             let title = "\(shownCurrencyNameString)"
             let price = "\(currencyPrice)"
 
-            bithumbTableViewCell.setCurrencyCellData(title: title, price: price)
-            bithumbTableViewCell.setStarButton(key: currencyButtonKey)
+            currencySettingTableCell.setCurrencyCellData(title: title, price: price)
+            currencySettingTableCell.setStarButton(key: currencyButtonKey)
 
             // 검색 중이지 않을 경우
         } else {
             let title = "\(currencyNameString[indexPath.row])"
             let price = "\(currencyPrice)"
-            bithumbTableViewCell.setCurrencyCellData(title: title, price: price)
-            bithumbTableViewCell.setStarButton(key: currencyButtonKey)
+            currencySettingTableCell.setCurrencyCellData(title: title, price: price)
+            currencySettingTableCell.setStarButton(key: currencyButtonKey)
         }
-        return bithumbTableViewCell
+        return currencySettingTableCell
     }
 
     func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -180,11 +180,5 @@ extension CurrencySettingViewController: CurrencyTableViewCellDelegate {
     func starButtonPressed(index _: Int, _ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         self.mainView.currencyTableView.reloadData()
-    }
-}
-
-extension CurrencySettingViewController: UITableViewCellSettingProtocol {
-    func registerCell() {
-        self.mainView.currencyTableView.register(CurrencySettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.bithumbTableCell)
     }
 }

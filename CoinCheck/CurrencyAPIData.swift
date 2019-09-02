@@ -14,7 +14,7 @@ import UIKit
 // "https://api.bithumb.com/public/orderbook/ALL"
 // "https://api.bithumb.com/public/ticker/ALL"
 
-class TradeResponse: Codable {
+class TradeDataResponse: Codable {
     let status: String
     let data: TradeData
 }
