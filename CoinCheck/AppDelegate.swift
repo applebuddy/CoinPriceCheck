@@ -4,7 +4,7 @@
 //
 //  Created by Min Kyeong Tae on 23/06/2019.
 //  Copyright © 2019 Min Kyeong Tae. All rights reserved.
-//  Now Branch : Feature/AddCurrencyDetailData
+//  Now Branch : Formatting/Codes
 
 import UIKit
 
