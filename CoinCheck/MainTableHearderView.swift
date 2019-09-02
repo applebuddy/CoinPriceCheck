@@ -11,7 +11,7 @@ import UIKit
 class MainTableHeaderView: UIView {
     // MARK: - UIs
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "암호화폐 정보"
         titleLabel.textColor = UIColor.headerTitle
@@ -33,11 +33,11 @@ class MainTableHeaderView: UIView {
 
     // MARK: - Set Method
 
-    func setTitleLabelConstraint() {
+    private func setTitleLabelConstraint() {
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: 0),
-            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewInsets.leftInset),
+            titleLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: ViewData.Insets.leftInset),
         ])
     }
 }

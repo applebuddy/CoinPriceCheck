@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol CurrencyTableViewCellDelegate {
+protocol CurrencyTableViewCellDelegate: AnyObject {
     func starButtonPressed(index: Int, _ sender: UIButton)
 }

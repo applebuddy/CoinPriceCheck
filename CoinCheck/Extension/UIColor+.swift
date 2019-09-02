@@ -8,13 +8,6 @@
 
 import UIKit
 
-extension UIFont {
-    func mainFont(size: CGFloat) -> UIFont {
-        guard let mainFont = UIFont(name: "HelveticaNeue-Thin", size: size) else { return UIFont() }
-        return mainFont
-    }
-}
-
 extension UIColor {
     static let navigationBarButtonItemBackground = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     static let navigationBarTitle = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)

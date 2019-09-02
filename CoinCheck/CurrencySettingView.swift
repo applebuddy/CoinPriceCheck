@@ -42,7 +42,7 @@ class CurrencySettingView: UIView {
 
     // MARK; - Set Method
 
-    func setSearchBarConstraint() {
+    private func setSearchBarConstraint() {
         self.searchBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0),
@@ -51,7 +51,7 @@ class CurrencySettingView: UIView {
         ])
     }
 
-    func setCurrencyTableViewConstraint() {
+    private func setCurrencyTableViewConstraint() {
         self.currencyTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             currencyTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),

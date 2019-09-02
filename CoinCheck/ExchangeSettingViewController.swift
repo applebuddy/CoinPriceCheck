@@ -11,12 +11,11 @@ import UIKit
 class ExchangeSettingViewController: UIViewController {
     // MARK: - Properties
 
-    let settingTableViewIdentifier = "SettingTableView"
-    var exchangeDataList: TradeResponse?
+    private var exchangeDataList: TradeResponse?
 
     // MARK: - UIs
 
-    let settingView: ExchangeSettingView = {
+    private let settingView: ExchangeSettingView = {
         let settingView = ExchangeSettingView()
         return settingView
     }()
@@ -46,7 +45,7 @@ extension ExchangeSettingViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: settingTableViewIdentifier, for: indexPath) as? ExchangeSettingTableViewCell else { return UITableViewCell() }
+        guard let exchangeTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.settingTableCell, for: indexPath) as? ExchangeSettingTableViewCell else { return UITableViewCell() }
         exchangeTableViewCell.setExchangeCellData(title: "\(Exchanges.ExchangeListString[indexPath.row])")
         return exchangeTableViewCell
     }
@@ -67,7 +66,7 @@ extension ExchangeSettingViewController: UITableViewDelegate {
     func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let sectionIndex = ExchangeSettingTableViewSections(rawValue: section) else { return CGFloat.leastNonzeroMagnitude }
         switch sectionIndex {
-        case .mainSection: return ViewSize.cellHeaderHeight
+        case .mainSection: return ViewData.Size.cellHeaderHeight
         }
     }
 
@@ -83,6 +82,6 @@ extension ExchangeSettingViewController: UITableViewDelegate {
 }
 
 extension ExchangeSettingViewController: UITableViewCellSettingProtocol {
-    func registerCell() { self.settingView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: self.settingTableViewIdentifier)
+    func registerCell() { self.settingView.exchangeSettingTableView.register(ExchangeSettingTableViewCell.self, forCellReuseIdentifier: CellIdentifier.settingTableCell)
     }
 }

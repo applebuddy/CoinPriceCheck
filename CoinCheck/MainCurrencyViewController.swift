@@ -11,8 +11,8 @@ import UIKit
 class MainCurrencyViewController: UIViewController {
     // MARK: - Properties
 
-    var settingCurrencyData: [String: CurrencyDataResponse] = [:]
-    var settingCurrencyIndex: [String] = []
+    private var settingCurrencyData: [String: CurrencyDataResponse] = [:]
+    private var settingCurrencyIndex: [String] = []
 
     // MARK: - UIs
 
@@ -21,12 +21,12 @@ class MainCurrencyViewController: UIViewController {
         return mainView
     }()
 
-    var checkTimer: Timer = {
+    private var checkTimer: Timer = {
         let checkTimer = Timer()
         return checkTimer
     }()
 
-    let addBarButton: UIButton = {
+    private let addBarButton: UIButton = {
         let addBarButton = UIButton(type: .custom)
         addBarButton.setTitle("＋", for: .normal)
         addBarButton.setTitleColor(UIColor.navigationBarTitle, for: .normal)
@@ -65,7 +65,7 @@ class MainCurrencyViewController: UIViewController {
 
     // MARK: - Setting Methods
 
-    func setCellIndexData() {
+    private func setCellIndexData() {
         BithumbCurrencies.shared.setCurrencyData()
         let currencyKey = BithumbCurrencies.shared.settingCurrencyKey.sorted { (arg0, arg1) -> Bool in
             if arg0.value > arg1.value {
@@ -85,14 +85,14 @@ class MainCurrencyViewController: UIViewController {
         }
     }
 
-    func setBarButtonItem() {
+    private func setBarButtonItem() {
         self.addBarButton.addTarget(self, action: #selector(self.transitionToNextView(_:)), for: UIControl.Event.touchUpInside)
         let addBarButtonItem = UIBarButtonItem(customView: addBarButton)
         self.navigationItem.rightBarButtonItem = addBarButtonItem
     }
 
     // MARKL- Touch Event Methodds
-    @objc func transitionToNextView(_: UIButton) {
+    @objc private func transitionToNextView(_: UIButton) {
         let settingViewController = ExchangeSettingViewController()
         self.navigationController?.pushViewController(settingViewController, animated: true)
     }
@@ -133,7 +133,7 @@ extension MainCurrencyViewController: UITableViewDataSource {
         let currencyTitle = self.settingCurrencyIndex[indexPath.row]
         let currencyData = self.settingCurrencyData[currencyTitle]
 
-        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell,
+        guard let mainCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.mainTableCell, for: indexPath) as? MainCurrencyTableViewCell,
             let closingPrice = currencyData?.data.closingPrice,
             let risingRate = currencyData?.data.fluctateRate24H else { return UITableViewCell() }
 
@@ -151,7 +151,7 @@ extension MainCurrencyViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return ViewSize.cellHeaderHeight
+        return ViewData.Size.cellHeaderHeight
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
@@ -161,6 +161,6 @@ extension MainCurrencyViewController: UITableViewDelegate {
 
 extension MainCurrencyViewController: UITableViewCellSettingProtocol {
     func registerCell() {
-        self.mainCurrencyView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: CellIdentifier.mainTableViewCellIdentifier)
+        self.mainCurrencyView.mainCurrencyTableView.register(MainCurrencyTableViewCell.self, forCellReuseIdentifier: CellIdentifier.mainTableCell)
     }
 }

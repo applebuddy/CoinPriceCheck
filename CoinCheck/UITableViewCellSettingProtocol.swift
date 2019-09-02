@@ -8,6 +8,6 @@
 
 import UIKit
 
-protocol UITableViewCellSettingProtocol {
+protocol UITableViewCellSettingProtocol: AnyObject {
     func registerCell()
 }

@@ -47,17 +47,17 @@ extension Reactive where Base: UISearchBar {
     /// Reactive wrapper for `selectedScopeButtonIndex` property.
     public var selectedScopeButtonIndex: ControlProperty<Int> {
         let source: Observable<Int> = Observable.deferred { [weak source = self.base as UISearchBar] () -> Observable<Int> in
-            let index = source?.selectedScopeButtonIndex ?? 0
+            let cellIndex = source?.selectedScopeButtonIndex ?? 0
 
             return (source?.rx.delegate.methodInvoked(#selector(UISearchBarDelegate.searchBar(_:selectedScopeButtonIndexDidChange:))) ?? Observable.empty())
                 .map { a in
                     try castOrThrow(Int.self, a[1])
                 }
-                .startWith(index)
+                .startWith(cellIndex)
         }
 
-        let bindingObserver = Binder(self.base) { (searchBar, index: Int) in
-            searchBar.selectedScopeButtonIndex = index
+        let bindingObserver = Binder(self.base) { (searchBar, cellIndex: Int) in
+            searchBar.selectedScopeButtonIndex = cellIndex
         }
 
         return ControlProperty(values: source, valueSink: bindingObserver)
