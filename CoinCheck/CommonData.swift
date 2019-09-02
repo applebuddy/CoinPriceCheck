@@ -11,13 +11,12 @@ import UIKit
 final class CommonData {
     static let shared: CommonData = CommonData()
     // 셋팅한 암호화폐의 거래소코드:암호화폐명 정보를 담는다.
-//    var currencyList: [Int: String]
+
     var selectedExchangeIndex: Int
     var currencyCount: Int
     var tradeData: TradeResponse?
 
     init() {
-//        self.currencyList = [:]
         self.currencyCount = 0
         self.selectedExchangeIndex = 0
     }

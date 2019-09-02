@@ -77,7 +77,7 @@ internal class MainCurrencyTableViewCell: UITableViewCell {
             titleImageView.heightAnchor.constraint(equalTo: titleImageView.widthAnchor, constant: 0),
             titleImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleImageView.topAnchor.constraint(equalTo: topAnchor, constant: ViewInsets.topInset),
-            titleImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -ViewInsets.bottomInset)
+            titleImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -ViewInsets.bottomInset),
         ])
     }
 

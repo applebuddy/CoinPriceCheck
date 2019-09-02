@@ -135,7 +135,7 @@ extension MainCurrencyViewController: UITableViewDataSource {
 
         guard let mainCell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.mainTableViewCellIdentifier, for: indexPath) as? MainCurrencyTableViewCell,
             let closingPrice = currencyData?.data.closingPrice,
-            let risingRate = currencyData?.data.the24HFluctateRate else { return UITableViewCell() }
+            let risingRate = currencyData?.data.fluctateRate24H else { return UITableViewCell() }
 
         mainCell.setMainCellData(title: currencyTitle, price: closingPrice, risingRate: risingRate)
         return mainCell
